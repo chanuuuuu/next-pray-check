@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+공동체 내의 기도제목을 공유하고 출석을 체크하는 모바일 웹앱입니다.
 
-## Getting Started
+## 구현 배경
 
-First, run the development server:
+### 기도제목 공유 방식 전환
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+기존, 공동체 내에서 기도제목을 공유하는 방식은 단톡방 내에 간사/리더가 취합하여 올리는 방식으로 진행됩니다. 이로 인해 두가지 문제가 발생합니다.
+
+1. 행사 공지 및 대화가 진행되는 팀 단톡방 내에서 다른 대화와 섞이게 되면서 기도제목에 집중하기 어렵게 만듭니다.
+
+2. 단톡방에 올라온 기도제목들은 실시간으로 업데이트가 되지 않아 공동체원들의 현재 기도제목이 어떤 것인지 파악하기 어렵습니다.
+
+이러한 문제를 해결하기 위해 웹앱으로 구현하여 기도제목과 단톡방을 분리하고, 공동체원들의 기도제목을 실시간으로 공유할 수 있도록 구현하고자 합니다.
+
+### 2. 출석 방식 전환
+
+기존, 공동체 내에서의 출석은 리더가 취합하여 카카오톡으로 작성하여 간사에게 제출하는 방식입니다. 아래는 출석 제출 메시지 예제입니다.
+
+```
+찬우조
+
+대예배 : A, B, C, D
+조모임 : A, B, C
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+조가 N개 일 경우, 공동체 출석을 취합하기 위해서는 N개의 제출된 메시지를 요약하는 과정이 필요하게 됩니다. 웹페이지 내에서 인원에 대한 클릭만으로 출석 체크가 가능하도록 간편화하고, 공동체 별로 요약된 출석을 노출할 수 있도록 하는 기능을 제공하고자 합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<br/>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 주요 기능
 
-## Learn More
+1. 팀원 로그인
 
-To learn more about Next.js, take a look at the following resources:
+   - 등록된 팀원일 경우, 이름과 생년월일(6자리)를 통해 로그인할 수 있다.
+   - 3일 동안 세션을 통해 자동적으로 로그인할 수 있다.
+   - 로그아웃을 할 수 있다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. 팀원 추가 및 수정(간사)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - 간사는 팀원을 추가할 수 있다.
+   - 이름, 생년월일, 조ID, 리더 여부를 입력하여 추가할 수 있다.
+   - 간사는 팀원 정보를 수정할 수 있다.
+   - 이름, 생년월일, 조ID, 리더 여부를 수정할 수 있다.
 
-## Deploy on Vercel
+3. 기도제목 작성
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   - 공동체원 모두가 기도제목을 작성할 수 있다.
+   - 기도제목의 공유 범위를 설정할 수 있다.
+   - 리더의 경우, 팀원들의 기도제목을 작성할 수 있다.
+   - 기도제목을 작성할 때, 가장 최신의 기도제목을 불러온다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. 기도제목 목록
+
+   - 공동체원들의 기도제목을 볼 수 있다.
+   - 유효한 기도제목에 한하여 기도제목 목록을 제공한다. (유효한 기도제목 - 2주 내의 수정 및 추가된 기도제목)
+   - 팀별, 조별 간의 기도제목을 필터링할 수 있다.
+
+5. 기도제목 삭제
+
+   - 본인의 기도제목을 삭제할 수 있다.
+   - 리더의 경우, 팀원의 기도제목을 삭제할 수 있다.
+
+출석 기능은 리더에 대하여 활성화 됩니다.
+
+6. 출석 작성
+
+   - 조원의 출석을 체크할 수 있다.
+   - 출석은 대예배, 조모임 순으로 체크하며 하위 순서의 항목은 자동으로 체크된다.
+
+7. 출석 조회
+
+   - 조원들의 출석을 확인할 수 있으며, 수정할 수 있다.
+   - 팀내 조별 출석 현황을 볼 수 있다. 조별/항목별 목록화하여 노출한다.
+     ```
+     찬우조
+     - 대예배 : A, B, C
+     - 조모임 : A, B
+     ```
+   - 모든 출석 조회는 주간별로 제공할 수 있다.
+
+### 추가 예정 기능
+
+- 특정 기도제목을 즐겨찾기 할 수 있다.
+- 기도 체크 버튼을 통해 기도 현황을 보여준다.
+
+<br/>
+
+## 기술 스택
+
+비용 절감 및 기술 숙련도 향상을 위해 기술 스택을 간소화 하였습니다.
+
+Before
+
+1. Javascript
+2. Next.js
+3. AWS EC2
+4. AWS RDS
+
+After
+
+1. Typescript
+2. Next.js
+3. Neon
+
+사용 라이브러리
+
+- [jose](https://www.npmjs.com/package/jose)
+- [zod](https://zod.dev/basics)
+- [Neon](https://neon.com/)
+
+<br/>
+
+## 구현 절차
+
+1. 팀원 로그인이 가능한 랜딩 페이지를 구현한다.
+
+   - Server Component - Server Action 기반
+   - 'zod'를 통한 User 스키마 생성 및 Validation
+
+2. 인증 절차를 구현한다.
+
+   - 'jose'를 통한 JWT 토큰생성 및 쿠키에 추가
+   - middleware에서 인증 및 인가 유효성 검사
+   - Neon DB에 저장
+
+3. 기도제목 대시보드를 구현한다.
+
+<br/>
+
+## 기존 레파지토리 히스토리
+
+연지교회 청년부 출석부 웹앱 (2020년)
+
+- https://github.com/chanuuuuu/yeonji-app
+
+삼일교회 출석부 및 기도제목 공유 웹앱 (2024년)
+
+- https://github.com/chanuuuuu/samil-pray-check
