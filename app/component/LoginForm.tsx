@@ -1,39 +1,42 @@
-export default async function LoginForm() {
+"use client";
+
+import { actionLogin } from "../action/userActions";
+import { useActionState } from "react";
+
+export default function LoginForm() {
+  const [state, formAction, pending] = useActionState(actionLogin, {});
+
   return (
-    <form>
+    // Server Component는 server action을 전달한다.
+    <form action={formAction}>
       <article>
-        <h1>[2청 2진] 기도제목 한줄 나눔</h1>
+        <h1>[2청] 기도제목 한줄 나눔</h1>
         <section>
           <article>
-            <label>이름</label>
+            <label htmlFor="name">이름</label>
             <input
+              id="name"
               name="name"
               placeholder="이름을 입력하세요"
-              required
               autoComplete="off"
               autoFocus
             />
+            {!pending && state?.error?.name && <p>{state?.error?.name}</p>}
           </article>
           <article>
-            <label>비밀번호</label>
+            <label htmlFor="birth">생년월일</label>
             <input
-              name="password"
+              id="birth"
+              name="birth"
               placeholder="생년월일 6자리입니다"
-              required
               autoComplete="off"
             />
+            {!pending && state?.error?.birth && <p>{state?.error?.birth}</p>}
           </article>
-          {/* {error && (
-            <div id={`error`}>
-              {"[경고]"} {error}
-            </div>
-          )}
-          <div>
-            {isLoading && <span>로그인 중입니다..</span>}
-         
-          </div> */}
-          <button type="submit">로그인</button>
         </section>
+        <button type="submit" disabled={pending}>
+          {pending ? "..." : "로그인"}
+        </button>
       </article>
     </form>
   );
