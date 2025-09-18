@@ -32,19 +32,16 @@ export interface UserState {
   };
 }
 
-export async function actionLogin(
-  state: UserState,
-  formData: FormData
-): Promise<UserState> {
-  // 데이터 입력 검증
+export async function actionLogin(formData: FormData) {
   const validationResult = validateloginInput({
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
   });
-  if (!validationResult.success)
-    return {
-      error: validationResult.error,
-    };
+  if (!validationResult.success) {
+    if (validationResult.error.name) redirect("/login?errorCode=01");
+    if (validationResult.error.birth) redirect("/login?errorCode=02");
+    redirect("/login?errorCode=03");
+  }
 
   // DB 데이터 조회
   const user = await userService.fetchUser({
@@ -52,7 +49,7 @@ export async function actionLogin(
     birth: validationResult.data.birth,
   });
 
-  if (!user) return {};
+  if (!user) redirect("/login?errorCode=04");
 
   // Session 데이터 저장
   // 데이터 암호화

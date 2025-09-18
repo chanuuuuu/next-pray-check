@@ -1,3 +1,4 @@
+"server only";
 import { SignJWT, jwtVerify, JWTPayload } from "jose";
 import { User } from "@/types/user.type";
 import { cookies } from "next/headers";
@@ -35,7 +36,7 @@ const cookie = {
     sameSite: "lax" as const,
     path: "/",
   },
-  duration: 7 * 24 * 60 * 60 * 1000,
+  duration: 7 * 24 * 60 * 60 * 1000, // 7일
 };
 
 export async function createSession(user: User) {
@@ -48,9 +49,9 @@ export async function createSession(user: User) {
 export async function verifySession(): Promise<User> {
   const cookie = (await cookies()).get(cookies.name)?.value;
   const session = await decrypt(cookie || "");
-  if (!session) {
-    redirect("/");
-  }
+
+  if (!session) redirect("/");
+
   return {
     groupId: Number(session.groupId),
     cellId: Number(session.cellId),
