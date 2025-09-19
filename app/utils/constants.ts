@@ -10,3 +10,9 @@ export const LOGIN_ERROR_CODE = {
   API_ERROR: { errorCode: "03", message: "API 오류가 발생했습니다." },
   USER_NOT_FOUND: { errorCode: "04", message: "사용자를 찾을 수 없습니다." },
 };
+
+export const LEVEL_OPTIONS = {
+  1: "팀원",
+  2: "리더",
+  3: "간사",
+};

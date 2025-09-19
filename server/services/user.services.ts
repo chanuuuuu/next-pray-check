@@ -1,4 +1,4 @@
-import { User, UserLoginInput } from "@/types/user.type";
+import { Leader, User, UserLoginInput } from "@/types/user.type";
 import { UserRepository } from "../dal/user.repository";
 
 export class UserService {
@@ -17,6 +17,11 @@ export class UserService {
     const result = await this.userRepository.createUser(user);
     if (result) return;
     throw new Error("User creation failed");
+  }
+
+  // 현재 리더 인원 조회
+  async getLeaders(): Promise<Leader[]> {
+    return await this.userRepository.getLeaders();
   }
 }
 

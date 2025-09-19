@@ -1,4 +1,4 @@
-import { User, UserLoginInput, UserRow } from "@/types/user.type";
+import { Leader, User, UserLoginInput, UserRow } from "@/types/user.type";
 import { sql } from "@/db/neon";
 // 팀원 Data Access Layer
 export class UserRepository {
@@ -46,5 +46,16 @@ export class UserRepository {
       };
     }
     return undefined;
+  }
+
+  async getLeaders(groupId: number = 1): Promise<Leader[]> {
+    const leaders =
+      await sql`SELECT * FROM users WHERE group_id = ${groupId} AND level = 2`;
+    return leaders.map((leader) => ({
+      groupId: leader.group_id as number,
+      cellId: leader.cell_id as number,
+      name: leader.name as string,
+      level: leader.level as number,
+    }));
   }
 }

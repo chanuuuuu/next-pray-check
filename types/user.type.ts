@@ -20,6 +20,14 @@ export interface User {
   level: number; // 권한
 }
 
+// 인원 등록시에 조편성을 위한 리더 타입
+export interface Leader {
+  groupId: number; // 소속 그룹
+  cellId: number; // 소속 셀
+  name: string; // 이름
+  level: number; // 권한
+}
+
 export interface UserLoginInput {
   name: string; // 이름
   birth: string; // 생년월일
