@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { userService } from "@/server/services/user.services";
-import { redirect } from "next/navigation";
+import { createSession } from "@/server/session";
 
 const UserLoginSchema = z.object({
   name: z.string().min(1, { error: "최소 1자 이상 입력해주세요" }),
@@ -26,21 +26,32 @@ function validateloginInput(input: unknown) {
 }
 
 export interface UserState {
-  error?: {
-    name: string;
-    birth: string;
-  };
+  success: boolean;
+  error:
+    | {
+        name?: string;
+        birth?: string;
+        user?: string;
+      }
+    | undefined;
 }
 
-export async function actionLogin(formData: FormData) {
+export async function actionLogin(
+  state: UserState,
+  formData: FormData
+): Promise<UserState> {
   const validationResult = validateloginInput({
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
   });
   if (!validationResult.success) {
-    if (validationResult.error.name) redirect("/login?errorCode=01");
-    if (validationResult.error.birth) redirect("/login?errorCode=02");
-    redirect("/login?errorCode=03");
+    return {
+      success: false,
+      error: {
+        name: validationResult.error.name,
+        birth: validationResult.error.birth,
+      },
+    };
   }
 
   // DB 데이터 조회
@@ -49,10 +60,19 @@ export async function actionLogin(formData: FormData) {
     birth: validationResult.data.birth,
   });
 
-  if (!user) redirect("/login?errorCode=04");
+  if (!user)
+    return {
+      success: false,
+      error: {
+        user: "사용자가 존재하지 않습니다.",
+      },
+    };
 
-  // Session 데이터 저장
-  // 데이터 암호화
+  // session 생성하기.
+  await createSession(user);
 
-  redirect("/requests");
+  return {
+    success: true,
+    error: undefined,
+  };
 }

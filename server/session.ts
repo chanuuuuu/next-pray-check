@@ -17,7 +17,7 @@ async function encrypt(data: unknown) {
   return token;
 }
 
-async function decrypt(session: string) {
+export async function decrypt(session: string) {
   try {
     const { payload } = await jwtVerify(session, hmac, {
       algorithms: ["HS256"],
@@ -28,7 +28,7 @@ async function decrypt(session: string) {
   }
 }
 
-const cookie = {
+export const cookie = {
   name: "session",
   options: {
     httpOnly: true,
@@ -42,13 +42,12 @@ const cookie = {
 export async function createSession(user: User) {
   const expires = new Date(Date.now() + cookie.duration);
   const session = await encrypt({ ...user, expires });
-
   (await cookies()).set(cookie.name, session, { ...cookie.options, expires });
 }
 
 export async function verifySession(): Promise<User> {
-  const cookie = (await cookies()).get(cookies.name)?.value;
-  const session = await decrypt(cookie || "");
+  const sessonCookie = (await cookies()).get(cookie.name)?.value;
+  const session = await decrypt(sessonCookie || "");
 
   if (!session) redirect("/");
 
