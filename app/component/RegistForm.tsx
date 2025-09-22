@@ -10,6 +10,10 @@ import { useEffect } from "react";
 export function RegistForm({ leaders }: { leaders: Leader[] }) {
   const [state, formAction, isPending] = useActionState(actionRegist, {
     error: undefined,
+    formData: {
+      cellId: 1,
+      level: 1,
+    },
   } as RegistState);
 
   const router = useRouter();
@@ -23,6 +27,22 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
     }
   }, [state.success, router]);
 
+  // error에 따라 focus 처리
+  useEffect(() => {
+    if (state.error?.name) {
+      document.getElementById("name")?.focus();
+    }
+    if (state.error?.birth) {
+      document.getElementById("birth")?.focus();
+    }
+    if (state.error?.cellId) {
+      document.getElementById("cellId")?.focus();
+    }
+    if (state.error?.level) {
+      document.getElementById("level")?.focus();
+    }
+  }, [state.error]);
+
   return (
     <form action={formAction}>
       <section>
@@ -33,8 +53,12 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
           placeholder="이름을 입력하세요"
           autoComplete="off"
           autoFocus
+          defaultValue={state.formData?.name || ""}
+          key={state.success ? "name-reset" : "name-keep"}
         />
-        {state.error?.name && <p>{state.error?.name}</p>}
+        {state.error?.name && (
+          <p style={{ color: "red" }}>{state.error?.name}</p>
+        )}
       </section>
       <section>
         <label htmlFor="birth">생년월일</label>
@@ -43,8 +67,12 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
           name="birth"
           placeholder="생년월일 6자리입니다"
           autoComplete="off"
+          defaultValue={state.formData?.birth || ""}
+          key={state.success ? "birth-reset" : "birth-keep"}
         />
-        {state.error?.birth && <p>{state.error?.birth}</p>}
+        {state.error?.birth && (
+          <p style={{ color: "red" }}>{state.error?.birth}</p>
+        )}
       </section>
       <section style={{ display: "none" }}>
         <label htmlFor="groupId">그룹</label>
@@ -54,25 +82,39 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
       </section>
       <section>
         <label htmlFor="cellId">셀</label>
-        <select id="cellId" name="cellId">
+        <select
+          id="cellId"
+          name="cellId"
+          defaultValue={state.formData?.cellId || ""}
+          key={state.success ? "cellId-reset" : "cellId-keep"}
+        >
           {leaders.map((leader: Leader) => (
             <option key={leader.cellId} value={leader.cellId}>
               {leader.name}
             </option>
           ))}
         </select>
-        {state.error?.cellId && <p>{state.error?.cellId}</p>}
+        {state.error?.cellId && (
+          <p style={{ color: "red" }}>{state.error?.cellId}</p>
+        )}
       </section>
       <section>
         <label htmlFor="level">권한</label>
-        <select id="level" name="level" defaultValue={1}>
+        <select
+          id="level"
+          name="level"
+          defaultValue={state.formData?.level || ""}
+          key={state.success ? "level-reset" : "level-keep"}
+        >
           {Object.keys(LEVEL_OPTIONS).map((level: string) => (
             <option key={level} value={level}>
               {LEVEL_OPTIONS[level as unknown as keyof typeof LEVEL_OPTIONS]}
             </option>
           ))}
         </select>
-        {state.error?.level && <p>{state.error?.level}</p>}
+        {state.error?.level && (
+          <p style={{ color: "red" }}>{state.error?.level}</p>
+        )}
       </section>
       {state.error?.regist && <p>{state.error?.regist}</p>}
       <button type="submit" disabled={isPending}>

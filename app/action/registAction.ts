@@ -29,6 +29,13 @@ export interface RegistState {
         regist?: string; // 등록 관련 에러
       }
     | undefined;
+  // 입력값 유지를 위한 필드 추가
+  formData?: {
+    name?: string;
+    birth?: string;
+    cellId?: number;
+    level?: number;
+  };
 }
 
 function validateRegistInput(input: unknown) {
@@ -63,13 +70,16 @@ export async function actionRegist(
   state: RegistState,
   formData: FormData
 ): Promise<RegistState> {
-  const validationResult = validateRegistInput({
+  // 입력된 값들을 저장
+  const inputData = {
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
     groupId: Number(formData.get("groupId")) as number,
     cellId: Number(formData.get("cellId")) as number,
     level: Number(formData.get("level")) as number,
-  });
+  };
+
+  const validationResult = validateRegistInput(inputData);
 
   if (!validationResult.success) {
     return {
@@ -79,6 +89,13 @@ export async function actionRegist(
         birth: validationResult.error.birth,
         cellId: validationResult.error.cellId,
         level: validationResult.error.level,
+      },
+      // 입력값 유지
+      formData: {
+        name: inputData.name,
+        birth: inputData.birth,
+        cellId: inputData.cellId,
+        level: inputData.level,
       },
     };
   }
@@ -98,11 +115,20 @@ export async function actionRegist(
       error: {
         regist: "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
       },
+      // 실패 시에도 입력값 유지
+      formData: {
+        name: inputData.name,
+        birth: inputData.birth,
+        cellId: inputData.cellId,
+        level: inputData.level,
+      },
     };
   }
 
   return {
     success: true,
     error: undefined,
+    // 성공 시에는 formData를 제거하여 form 초기화
+    formData: undefined,
   };
 }
