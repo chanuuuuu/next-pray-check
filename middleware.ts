@@ -1,5 +1,4 @@
-import { cookie, decrypt } from "@/server/session";
-import { cookies } from "next/headers";
+import { getUserBySession } from "@/server/session";
 import { NextRequest, NextResponse } from "next/server";
 
 // 페이지 진입에 대해서만 권한을 체크한다. API 요청에 대해서는 API 측에서 관리한다.
@@ -10,10 +9,9 @@ export default async function middleware(request: NextRequest) {
 
   if (protectedRoutes.includes(pathname)) {
     // 세션 체크
-    const sessonCookie = (await cookies()).get(cookie.name)?.value;
-    const session = await decrypt(sessonCookie || "");
+    const user = await getUserBySession();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 

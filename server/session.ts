@@ -45,20 +45,29 @@ export async function createSession(user: User) {
   (await cookies()).set(cookie.name, session, { ...cookie.options, expires });
 }
 
-export async function verifySession(): Promise<User> {
+export async function getUserBySession(): Promise<User | undefined> {
   const sessonCookie = (await cookies()).get(cookie.name)?.value;
   const session = await decrypt(sessonCookie || "");
+  if (session) {
+    return {
+      groupId: Number(session.groupId),
+      cellId: Number(session.cellId),
+      name: session.name as string,
+      birth: session.birth as string,
+      gisu: Number(session.gisu),
+      level: Number(session.level),
+    };
+  }
+  return undefined;
+}
 
-  if (!session) redirect("/");
+// 서버 측에서 수행하는 검증 로직
+export async function verifySession(): Promise<User> {
+  const user = await getUserBySession();
 
-  return {
-    groupId: Number(session.groupId),
-    cellId: Number(session.cellId),
-    name: session.name as string,
-    birth: session.birth as string,
-    gisu: Number(session.gisu),
-    level: Number(session.level),
-  };
+  if (!user) redirect("/");
+
+  return user;
 }
 
 export async function deleteSession() {
