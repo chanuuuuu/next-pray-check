@@ -1,15 +1,48 @@
 // 실제 사용자를 입력하는 창
 import { RegistForm } from "../component/RegistForm";
+import { getUserBySession } from "@/server/session";
+import { redirect } from "next/navigation";
+import { Leader } from "@/types/user.type";
+import { userService } from "@/server/services/user.services";
 
 export default async function RegistPage() {
-  // server 측에서는 반드시 Absolute URL을 사용해야 한다.
-  const leaders = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/leaders`
-  ).then((res) => res.json());
+  const [leaders, user] = await Promise.all([
+    userService.getLeaders(), // 직접 서비스 호출
+    getUserBySession(),
+  ]);
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  let max = 1;
+  const filteredLeaders = leaders.reduce((acc, leader) => {
+    if (leader.cellId >= max) max = leader.cellId + 1;
+    if (leader.groupId === user?.groupId) {
+      const findLeader = acc.findIndex((l) => l.cellId === leader.cellId);
+      if (findLeader > -1) {
+        acc[findLeader] = {
+          ...acc[findLeader],
+          name: acc[findLeader].name + ", " + leader.name,
+        };
+      } else {
+        acc.push(leader);
+      }
+    }
+    return acc;
+  }, [] as Leader[]);
+
+  filteredLeaders.push({
+    groupId: user?.groupId as number,
+    cellId: max,
+    name: "신규 등록",
+    level: 2,
+  } as Leader);
 
   return (
-    <div>
-      <RegistForm leaders={leaders} />
-    </div>
+    <article>
+      <h1>등록 페이지</h1>
+      <RegistForm leaders={filteredLeaders} />
+    </article>
   );
 }
