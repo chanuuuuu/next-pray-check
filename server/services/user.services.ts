@@ -13,10 +13,15 @@ export class UserService {
     return await this.userRepository.getUser(userInput);
   }
 
-  async createUser(user: User): Promise<void> {
-    const result = await this.userRepository.createUser(user);
-    if (result) return;
-    throw new Error("User creation failed");
+  async createUser(user: User): Promise<boolean> {
+    try {
+      const result = await this.userRepository.createUser(user);
+      if (result) return true;
+      throw new Error("User creation failed");
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 
   // 현재 리더 인원 조회
