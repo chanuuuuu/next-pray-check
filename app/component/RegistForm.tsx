@@ -3,17 +3,24 @@
 import { Leader } from "@/types/user.type";
 import { LEVEL_OPTIONS } from "@/app/utils/constants";
 import { useActionState } from "react";
-import { actionRegist, RegistState } from "../action/registAction";
+import {
+  actionRegist,
+  RegistState,
+  FormDataType,
+} from "../action/registAction";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export function RegistForm({ leaders }: { leaders: Leader[] }) {
+export function RegistForm({
+  leaders,
+  initialData,
+}: {
+  leaders: Leader[];
+  initialData: FormDataType;
+}) {
   const [state, formAction, isPending] = useActionState(actionRegist, {
     error: undefined,
-    formData: {
-      cellId: 1,
-      level: 1,
-    },
+    formData: initialData,
   } as RegistState);
 
   const router = useRouter();
@@ -21,7 +28,6 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
   // 등록 성공 시 페이지 새로고침
   useEffect(() => {
     if (state.success) {
-      // 성공 메시지 표시 후 페이지 새로고침
       alert("사용자가 성공적으로 등록되었습니다!");
       router.refresh(); // 서버 컴포넌트 데이터 새로고침
     }
@@ -106,9 +112,9 @@ export function RegistForm({ leaders }: { leaders: Leader[] }) {
           defaultValue={state.formData?.level || ""}
           key={state.success ? "level-reset" : "level-keep"}
         >
-          {Object.keys(LEVEL_OPTIONS).map((level: string) => (
-            <option key={level} value={level}>
-              {LEVEL_OPTIONS[level as unknown as keyof typeof LEVEL_OPTIONS]}
+          {Object.values(LEVEL_OPTIONS).map(({ label }: { label: string }) => (
+            <option key={label} value={label}>
+              {label}
             </option>
           ))}
         </select>

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  // userActionState
   const [state, formAction, isPending] = useActionState(actionLogin, {
     error: undefined,
   } as UserState);

@@ -12,7 +12,7 @@ export const LOGIN_ERROR_CODE = {
 };
 
 export const LEVEL_OPTIONS = {
-  1: "팀원",
-  2: "리더",
-  3: "간사",
+  TEAM_MEMBER: { value: 1 as const, label: "팀원" as const },
+  LEADER: { value: 2 as const, label: "리더" as const },
+  ASSISTANT: { value: 3 as const, label: "간사" as const },
 };

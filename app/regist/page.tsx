@@ -4,6 +4,8 @@ import { getUserBySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { Leader } from "@/types/user.type";
 import { userService } from "@/server/services/user.services";
+import { FormDataType } from "../action/registAction";
+import { LEVEL_OPTIONS } from "../utils/constants";
 
 export default async function RegistPage() {
   const [leaders, user] = await Promise.all([
@@ -39,10 +41,15 @@ export default async function RegistPage() {
     level: 2,
   } as Leader);
 
+  const initialData = {
+    cellId: filteredLeaders[0].cellId,
+    level: LEVEL_OPTIONS.TEAM_MEMBER.label,
+  } as FormDataType;
+
   return (
     <article>
       <h1>등록 페이지</h1>
-      <RegistForm leaders={filteredLeaders} />
+      <RegistForm leaders={filteredLeaders} initialData={initialData} />
     </article>
   );
 }
