@@ -28,6 +28,10 @@ export class UserService {
   async getLeaders(): Promise<Leader[]> {
     return await this.userRepository.getLeaders();
   }
+
+  async fetchUsers(groupId: number): Promise<User[]> {
+    return await this.userRepository.getUsers(groupId);
+  }
 }
 
 export const userService = new UserService();

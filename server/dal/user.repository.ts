@@ -58,4 +58,18 @@ export class UserRepository {
       level: leader.level as number,
     }));
   }
+
+  async getUsers(groupId: number): Promise<User[]> {
+    const users =
+      await sql`SELECT * FROM users WHERE group_id = ${groupId} ORDER BY cell_id, level, user_id`;
+
+    return users.map((user) => ({
+      groupId: user?.group_id as number,
+      cellId: user?.cell_id as number,
+      name: user?.name as string,
+      birth: user?.birth as string,
+      gisu: user?.gisu as number,
+      level: user?.level as number,
+    }));
+  }
 }
