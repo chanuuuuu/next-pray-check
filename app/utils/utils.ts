@@ -2,7 +2,7 @@
 
 import { LEVEL_OPTIONS } from "./constants";
 
-export function getGisu(birth: string) {
+export async function getGisu(birth: string) {
   if (!birth) return 0;
   const BASE = {
     fullYear: "1994",
@@ -15,7 +15,10 @@ export function getGisu(birth: string) {
   return targetGisu;
 }
 
-export function getLevel(level: string, type: "label" | "value" = "label") {
+export async function getLevel(
+  level: string,
+  type: "label" | "value" = "label"
+) {
   return (
     Object.values(LEVEL_OPTIONS).find((option) => option[type] === level)?.[
       type

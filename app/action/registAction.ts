@@ -42,7 +42,7 @@ export async function actionRegist(
     level: formData.get("level") as string,
   };
 
-  const validationResult = validateInput(inputData);
+  const validationResult = await validateInput(inputData);
 
   if (!validationResult.success) {
     return {
@@ -62,14 +62,18 @@ export async function actionRegist(
       },
     };
   }
+
+  const level = await getLevel(validationResult.data.level);
+  const gisu = await getGisu(validationResult.data.birth);
+
   // DB 데이터 생성
   const regist = await userService.createUser({
     name: validationResult.data.name,
     birth: validationResult.data.birth,
     groupId: validationResult.data.groupId,
     cellId: validationResult.data.cellId,
-    level: getLevel(validationResult.data.level),
-    gisu: getGisu(validationResult.data.birth),
+    level: level,
+    gisu: gisu,
   } as User);
 
   if (!regist) {

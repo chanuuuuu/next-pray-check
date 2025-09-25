@@ -11,9 +11,7 @@ const UserLoginSchema = z.object({
     .regex(/^\d+$/, { error: "생년월일은 숫자만 입력 가능합니다." }),
 });
 
-export const LevelValues = Object.values(LEVEL_OPTIONS).map(
-  (option) => option.label
-);
+const LevelValues = Object.values(LEVEL_OPTIONS).map((option) => option.label);
 
 const UserRegistSchema = UserLoginSchema.extend({
   groupId: z.number().min(1, { message: "그룹을 선택해주세요" }),
@@ -21,7 +19,7 @@ const UserRegistSchema = UserLoginSchema.extend({
   level: z.enum(LevelValues, { message: "권한을 선택해주세요" }),
 });
 
-export function validateInput(input: unknown) {
+export async function validateInput(input: unknown) {
   const result = UserRegistSchema.safeParse(input);
   if (result.success) return result;
   const e = z.flattenError(result.error).fieldErrors;
@@ -36,5 +34,17 @@ export function validateInput(input: unknown) {
   };
 }
 
+export async function validateLoginInput(input: unknown) {
+  const result = UserLoginSchema.safeParse(input);
+  if (result.success) return result;
+  const e = z.flattenError(result.error).fieldErrors;
+  return {
+    ...result,
+    error: {
+      name: e.name ? e.name[0] : "",
+      birth: e.birth ? e.birth[0] : "",
+    },
+  };
+}
 // 기도제목 입력 검증
 // 출석 입력 검증

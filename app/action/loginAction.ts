@@ -2,7 +2,7 @@
 
 import { userService } from "@/server/services/user.services";
 import { createSession } from "@/server/session";
-import { validateInput } from "../utils/validation";
+import { validateLoginInput } from "../utils/validation";
 
 export interface UserState {
   success: boolean;
@@ -19,10 +19,11 @@ export async function actionLogin(
   state: UserState,
   formData: FormData
 ): Promise<UserState> {
-  const validationResult = validateInput({
+  const validationResult = await validateLoginInput({
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
   });
+
   if (!validationResult.success) {
     return {
       success: false,
