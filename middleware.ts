@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const protectedRoutes = ["/regist", "/requests", "/"];
+  const protectedRoutes = ["/regist", "/requests", "/", "/manage"];
 
   if (protectedRoutes.includes(pathname)) {
     // 세션 체크
