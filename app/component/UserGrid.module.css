@@ -1,0 +1,121 @@
+.userGrid {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gridHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 1fr 1.5fr;
+  background-color: #343a40;
+  color: white;
+  font-weight: bold;
+}
+
+.headerCell {
+  padding: 12px 16px;
+  border-right: 1px solid #495057;
+  text-align: center;
+  color: white;
+}
+
+.headerCell:last-child {
+  border-right: none;
+}
+
+.gridBody {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.gridRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 1fr 1.5fr;
+  border-bottom: 1px solid #eee;
+}
+
+.gridRow:hover {
+  background-color: #f9f9f9;
+}
+
+.gridRow:last-child {
+  border-bottom: none;
+}
+
+.cell {
+  padding: 12px 16px;
+  border-right: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:last-child {
+  border-right: none;
+}
+
+.actionsCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.iconBtn:hover {
+  background-color: #d1d5db;
+  transform: scale(1.1);
+}
+
+.editBtn:hover {
+  background-color: #93c5fd;
+}
+
+.deleteBtn:hover {
+  background-color: #fca5a5;
+}
+
+.emptyState {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .gridHeader,
+  .gridRow {
+    grid-template-columns: 1.5fr 0.7fr 1.2fr 0.8fr 1fr;
+  }
+
+  .cell,
+  .headerCell {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .iconBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .actionsCell {
+    gap: 4px;
+  }
+}

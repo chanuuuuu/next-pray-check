@@ -13,14 +13,14 @@ import { useEffect } from "react";
 
 export function RegistForm({
   leaders,
-  initialData,
+  initialUserData,
 }: {
   leaders: Leader[];
-  initialData: FormDataType;
+  initialUserData: FormDataType;
 }) {
   const [state, formAction, isPending] = useActionState(actionRegist, {
     error: undefined,
-    formData: initialData,
+    formData: initialUserData,
   } as RegistState);
 
   const router = useRouter();
