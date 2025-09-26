@@ -6,7 +6,7 @@ import { useActionState } from "react";
 import {
   actionRegist,
   RegistState,
-  FormDataType,
+  UserFormType,
 } from "../action/registAction";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -14,9 +14,11 @@ import { useEffect } from "react";
 export function RegistForm({
   leaders,
   initialUserData,
+  onUpdate,
 }: {
   leaders: Leader[];
-  initialUserData: FormDataType;
+  initialUserData: UserFormType;
+  onUpdate?: () => void;
 }) {
   const [state, formAction, isPending] = useActionState(actionRegist, {
     error: undefined,
@@ -29,9 +31,13 @@ export function RegistForm({
   useEffect(() => {
     if (state.success) {
       alert("사용자가 성공적으로 등록되었습니다!");
-      router.refresh(); // 서버 컴포넌트 데이터 새로고침
+      if (onUpdate) {
+        onUpdate?.();
+      } else {
+        router.refresh(); // 서버 컴포넌트 데이터 새로고침
+      }
     }
-  }, [state.success, router]);
+  }, [state.success, router, onUpdate]);
 
   // error에 따라 focus 처리
   useEffect(() => {

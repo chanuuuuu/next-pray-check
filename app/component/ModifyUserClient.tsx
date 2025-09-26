@@ -1,8 +1,56 @@
 "use client";
 
-// 사용자에 대한 생성이나 변경을 수행하는 Client component
-export default function ModifyUserClient() {
-  // RegistForm을 사용하되, filter를 거쳐, 데이터를 전달한다.
-  // reader를 전달할 것인가? -> props drilling, 페이지 자체에서는 필요하지 않음. 계산의 코스트가 필요한 시점 이외에는 딱히 필요하지 않다는 것임.
-  return <div></div>;
+import { User, Leader } from "@/types/user.type";
+import { UserFormType } from "../action/registAction";
+import { RegistForm } from "@/app/component/RegistForm";
+import { LEVEL_OPTIONS } from "../utils/constants";
+
+interface ModifyUserClientProps {
+  users: User[];
+  initialUserData: UserFormType;
+  onUpdate?: () => void;
+}
+
+export function ModifyUserClient({
+  users,
+  initialUserData,
+  onUpdate,
+}: ModifyUserClientProps) {
+  let max = 1;
+  const filteredLeaders = users.reduce((acc, user) => {
+    if (user.level !== 2) return acc;
+    if (user.cellId >= max) max = user.cellId + 1;
+    const findLeader = acc.findIndex((l) => l.cellId === user.cellId);
+    if (findLeader > -1) {
+      acc[findLeader] = {
+        ...acc[findLeader],
+        name: acc[findLeader].name + ", " + user.name,
+      };
+    } else {
+      acc.push(user);
+    }
+    return acc;
+  }, [] as Leader[]);
+
+  filteredLeaders.push({
+    groupId: users[0]?.groupId as number,
+    cellId: max,
+    name: "신규 등록",
+    level: 2,
+  } as Leader);
+
+  if (initialUserData) {
+    initialUserData = {
+      cellId: filteredLeaders[0].cellId,
+      level: LEVEL_OPTIONS.TEAM_MEMBER.label,
+    } as UserFormType;
+  }
+
+  return (
+    <RegistForm
+      leaders={filteredLeaders}
+      initialUserData={initialUserData}
+      onUpdate={onUpdate}
+    />
+  );
 }
