@@ -1,14 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { User } from "@/types/user.type";
 import { UserGrid } from "./UserGrid";
+import { ModifyUserClient } from "./ModifyUserClient";
+import { Modal } from "./Modal";
+import { useRouter } from "next/navigation";
 
 interface ManageClientProps {
   users: User[];
 }
 
 export function ManageClient({ users }: ManageClientProps) {
-  // LeaderList까지 전달해주자.
+  const router = useRouter();
+  const [isOpen, setOpen] = useState(false);
 
   const handleEdit = (user: User) => {
     // TODO: 수정 기능 구현
@@ -25,11 +30,24 @@ export function ManageClient({ users }: ManageClientProps) {
     }
   };
 
+  const handleModify = () => {
+    router.refresh();
+    setOpen(false);
+  };
+
   return (
     <div>
       <h1>팀원 관리</h1>
       <p>현재 총 팀원 : {users.length}명</p>
+      <button onClick={() => setOpen(true)}>등록</button>
       <UserGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
+      <Modal isOpen={isOpen} onClose={() => setOpen(false)} title="팀원 등록">
+        <ModifyUserClient
+          users={users}
+          initialUserData={{}}
+          onUpdate={handleModify}
+        ></ModifyUserClient>
+      </Modal>
     </div>
   );
 }
