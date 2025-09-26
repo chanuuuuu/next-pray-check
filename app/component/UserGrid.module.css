@@ -7,7 +7,7 @@
 
 .gridHeader {
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
   background-color: #343a40;
   color: white;
   font-weight: bold;
@@ -31,7 +31,7 @@
 
 .gridRow {
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
   border-bottom: 1px solid #eee;
 }
 
@@ -100,7 +100,7 @@
 @media (max-width: 768px) {
   .gridHeader,
   .gridRow {
-    grid-template-columns: 1.5fr 0.7fr 1.2fr 0.8fr 1fr;
+    grid-template-columns: 1.5fr 0.7fr 0.8fr 0.8fr 0.8fr 1fr;
   }
 
   .cell,

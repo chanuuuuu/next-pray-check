@@ -1,5 +1,6 @@
 import { User } from "@/types/user.type";
 import { LEVEL_OPTIONS } from "@/app/utils/constants";
+import { getBirthDisplay } from "@/app/utils/clientUtils";
 import styles from "./UserGrid.module.css";
 
 interface UserGridProps {
@@ -22,8 +23,8 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
       <div className={styles.gridHeader}>
         <div className={styles.headerCell}>이름</div>
         <div className={styles.headerCell}>조</div>
-        <div className={styles.headerCell}>생년월일</div>
-        {/* 생년월일을 기수로 변경 필요 */}
+        <div className={styles.headerCell}>기수</div>
+        <div className={styles.headerCell}>생일</div>
         <div className={styles.headerCell}>권한</div>
         <div className={styles.headerCell}>관리</div>
       </div>
@@ -34,7 +35,8 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
           <div key={`${user.name}-${index}`} className={styles.gridRow}>
             <div className={styles.cell}>{user.name}</div>
             <div className={styles.cell}>{user.cellId}조</div>
-            <div className={styles.cell}>{user.birth}</div>
+            <div className={styles.cell}>{user.gisu}기</div>
+            <div className={styles.cell}>{getBirthDisplay(user.birth)}</div>
             <div className={styles.cell}>{getLevelLabel(user.level)}</div>
             <div className={`${styles.cell} ${styles.actionsCell}`}>
               <button
