@@ -4,7 +4,7 @@ import { getUserBySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { Leader } from "@/types/user.type";
 import { userService } from "@/server/services/user.services";
-import { FormDataType } from "../action/registAction";
+import { UserFormType } from "../action/registAction";
 import { LEVEL_OPTIONS } from "../utils/constants";
 
 export default async function RegistPage() {
@@ -44,7 +44,7 @@ export default async function RegistPage() {
   const initialUserData = {
     cellId: filteredLeaders[0].cellId,
     level: LEVEL_OPTIONS.TEAM_MEMBER.label,
-  } as FormDataType;
+  } as UserFormType;
 
   return (
     <article>
