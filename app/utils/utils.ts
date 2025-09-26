@@ -20,8 +20,7 @@ export async function getLevel(
   type: "label" | "value" = "label"
 ) {
   return (
-    Object.values(LEVEL_OPTIONS).find((option) => option[type] === level)?.[
-      type
-    ] || LEVEL_OPTIONS.TEAM_MEMBER[type]
+    Object.values(LEVEL_OPTIONS).find((option) => option[type] === level)
+      ?.value || LEVEL_OPTIONS.TEAM_MEMBER.value
   );
 }
