@@ -6,6 +6,7 @@ import { UserGrid } from "./UserGrid";
 import { ModifyUserClient } from "./ModifyUserClient";
 import { Modal } from "./Modal";
 import { useRouter } from "next/navigation";
+import styles from "./ManageClient.module.css";
 
 interface ManageClientProps {
   users: User[];
@@ -36,10 +37,14 @@ export function ManageClient({ users }: ManageClientProps) {
   };
 
   return (
-    <div>
-      <h1>팀원 관리</h1>
-      <p>현재 총 팀원 : {users.length}명</p>
-      <button onClick={() => setOpen(true)}>등록</button>
+    <div className={styles.container}>
+      <h1 className={styles.title}>팀원 관리</h1>
+      <div className={styles.header}>
+        <p className={styles.teamInfo}>현재 총 팀원 : {users.length}명</p>
+        <button onClick={() => setOpen(true)} className={styles.registerBtn}>
+          등록
+        </button>
+      </div>
       <UserGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
       <Modal isOpen={isOpen} onClose={() => setOpen(false)} title="팀원 등록">
         <ModifyUserClient
