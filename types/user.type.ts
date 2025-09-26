@@ -12,6 +12,7 @@ export interface UserRow {
 
 // 실제 사용되는 타입
 export interface User {
+  memberId: number; // 사용자 ID
   groupId: number; // 소속 그룹
   cellId: number; // 소속 셀
   name: string; // 이름

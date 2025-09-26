@@ -37,6 +37,7 @@ export class UserRepository {
     if (user && user.length > 0) {
       const userRow = user[0] as UserRow;
       return {
+        memberId: userRow?.member_id as number,
         groupId: userRow?.group_id as number,
         cellId: userRow?.cell_id as number,
         name: userRow?.name as string,
@@ -61,9 +62,10 @@ export class UserRepository {
 
   async getUsers(groupId: number): Promise<User[]> {
     const users =
-      await sql`SELECT * FROM users WHERE group_id = ${groupId} ORDER BY cell_id, level, user_id`;
+      await sql`SELECT * FROM users WHERE group_id = ${groupId} ORDER BY cell_id, level DESC, user_id`;
 
     return users.map((user) => ({
+      memberId: user?.member_id as number,
       groupId: user?.group_id as number,
       cellId: user?.cell_id as number,
       name: user?.name as string,
