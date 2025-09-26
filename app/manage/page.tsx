@@ -13,5 +13,7 @@ export default async function Manage() {
 
   const users = await userService.fetchUsers(user.groupId);
 
+  // delete server action을 구현하여 해당 action을 props로 전달
+
   return <ManageClient users={users} />;
 }

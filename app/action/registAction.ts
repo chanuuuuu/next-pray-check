@@ -5,7 +5,7 @@ import { User } from "@/types/user.type";
 import { validateInput } from "../utils/validation";
 import { getLevel, getGisu } from "../utils/utils";
 
-export interface FormDataType {
+export interface UserFormType {
   name?: string;
   birth?: string;
   cellId?: number;
@@ -25,8 +25,7 @@ export interface RegistState {
         regist?: string; // 등록 관련 에러
       }
     | undefined;
-  // 입력값 유지를 위한 필드 추가
-  formData?: FormDataType;
+  formData?: UserFormType;
 }
 
 export async function actionRegist(
@@ -53,7 +52,6 @@ export async function actionRegist(
         cellId: validationResult.error.cellId,
         level: validationResult.error.level,
       },
-      // 입력값 유지
       formData: {
         name: inputData.name,
         birth: inputData.birth,
@@ -95,7 +93,6 @@ export async function actionRegist(
   return {
     success: true,
     error: undefined,
-    // 성공 시에는 formData를 제거하여 form 초기화
     formData: undefined,
   };
 }
