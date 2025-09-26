@@ -41,7 +41,7 @@ export default async function RegistPage() {
     level: 2,
   } as Leader);
 
-  const initialData = {
+  const initialUserData = {
     cellId: filteredLeaders[0].cellId,
     level: LEVEL_OPTIONS.TEAM_MEMBER.label,
   } as FormDataType;
@@ -49,7 +49,7 @@ export default async function RegistPage() {
   return (
     <article>
       <h1>등록 페이지</h1>
-      <RegistForm leaders={filteredLeaders} initialData={initialData} />
+      <RegistForm leaders={filteredLeaders} initialUserData={initialUserData} />
     </article>
   );
 }

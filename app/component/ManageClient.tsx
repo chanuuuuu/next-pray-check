@@ -8,6 +8,8 @@ interface ManageClientProps {
 }
 
 export function ManageClient({ users }: ManageClientProps) {
+  // LeaderList까지 전달해주자.
+
   const handleEdit = (user: User) => {
     // TODO: 수정 기능 구현
     console.log("Edit user:", user);

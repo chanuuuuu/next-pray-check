@@ -23,6 +23,7 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
         <div className={styles.headerCell}>이름</div>
         <div className={styles.headerCell}>조</div>
         <div className={styles.headerCell}>생년월일</div>
+        {/* 생년월일을 기수로 변경 필요 */}
         <div className={styles.headerCell}>권한</div>
         <div className={styles.headerCell}>관리</div>
       </div>
