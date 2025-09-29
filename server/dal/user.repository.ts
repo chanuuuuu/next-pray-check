@@ -74,4 +74,19 @@ export class UserRepository {
       level: user?.level as number,
     }));
   }
+
+  async updateUser(user: User) {
+    const { userId, groupId, cellId, name, birth, level, gisu } = user;
+    const result = await sql`UPDATE users
+        SET 
+            group_id   = ${groupId},
+            cell_id    = ${cellId},
+            name       = ${name},
+            birth      = ${birth},
+            level      = ${level},
+            gisu       = ${gisu},
+            created_at = CURRENT_TIMESTAMP
+        WHERE user_id = ${userId};`;
+    return result;
+  }
 }

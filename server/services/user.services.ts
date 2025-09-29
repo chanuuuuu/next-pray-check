@@ -17,7 +17,7 @@ export class UserService {
     try {
       const result = await this.userRepository.createUser(user);
       if (result) return true;
-      throw new Error("User creation failed");
+      throw new Error("User create failed");
     } catch (e) {
       console.log(e);
       return false;
@@ -31,6 +31,17 @@ export class UserService {
 
   async fetchUsers(groupId: number): Promise<User[]> {
     return await this.userRepository.getUsers(groupId);
+  }
+
+  async updateUser(user: User): Promise<boolean> {
+    try {
+      const result = await this.userRepository.updateUser(user);
+      if (result) return true;
+      throw new Error("User update failed");
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 }
 
