@@ -1,6 +1,6 @@
 // 데이터베이스 컬럼명에 맞는 타입 추가
 export interface UserRow {
-  member_id: number;
+  user_id: number;
   group_id: number;
   cell_id: number;
   name: string;
@@ -12,7 +12,7 @@ export interface UserRow {
 
 // 실제 사용되는 타입
 export interface User {
-  memberId: number; // 사용자 ID
+  userId: number; // 사용자 ID
   groupId: number; // 소속 그룹
   cellId: number; // 소속 셀
   name: string; // 이름

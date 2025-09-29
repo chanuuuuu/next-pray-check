@@ -50,6 +50,7 @@ export async function getUserBySession(): Promise<User | undefined> {
   const session = await decrypt(sessonCookie || "");
   if (session) {
     return {
+      userId: Number(session.userId),
       groupId: Number(session.groupId),
       cellId: Number(session.cellId),
       name: session.name as string,

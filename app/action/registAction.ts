@@ -6,6 +6,7 @@ import { validateInput } from "../utils/validation";
 import { getLevel, getGisu } from "../utils/utils";
 
 export interface UserFormType {
+  userId?: number;
   name?: string;
   birth?: string;
   cellId?: number;
