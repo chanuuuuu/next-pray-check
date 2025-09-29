@@ -1,25 +1,29 @@
 "use client";
 
-import { useState } from "react";
 import { User } from "@/types/user.type";
 import { UserGrid } from "./UserGrid";
 import { ModifyUserClient } from "./ModifyUserClient";
 import { Modal } from "./Modal";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
+import { ManageContextProvider, useManageContext } from "./ManageContext";
 
 interface ManageClientProps {
   users: User[];
 }
 
-export function ManageClient({ users }: ManageClientProps) {
+function ManageClientInner({ users }: ManageClientProps) {
   const router = useRouter();
-  const [isOpen, setOpen] = useState(false);
+  const {
+    selectedUser,
+    handleModalOpen,
+    handleModalClose,
+    isOpen,
+    modifyType,
+  } = useManageContext();
 
   const handleEdit = (user: User) => {
-    // TODO: 수정 기능 구현
-    console.log("Edit user:", user);
-    alert(`${user.name} 사용자 수정 기능은 준비 중입니다.`);
+    handleModalOpen(user);
   };
 
   const handleDelete = (user: User) => {
@@ -33,7 +37,7 @@ export function ManageClient({ users }: ManageClientProps) {
 
   const handleModify = () => {
     router.refresh();
-    setOpen(false);
+    handleModalClose();
   };
 
   return (
@@ -41,18 +45,35 @@ export function ManageClient({ users }: ManageClientProps) {
       <h1 className={styles.title}>팀원 관리</h1>
       <div className={styles.header}>
         <p className={styles.teamInfo}>현재 총 팀원 : {users.length}명</p>
-        <button onClick={() => setOpen(true)} className={styles.registerBtn}>
+        <button
+          onClick={() => handleModalOpen()}
+          className={styles.registerBtn}
+        >
           등록
         </button>
       </div>
       <UserGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
-      <Modal isOpen={isOpen} onClose={() => setOpen(false)} title="팀원 등록">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => handleModalClose()}
+        title="팀원 등록"
+      >
         <ModifyUserClient
           users={users}
-          initialUserData={{}}
+          initialUserData={selectedUser}
           onUpdate={handleModify}
+          modifyType={modifyType}
         ></ModifyUserClient>
       </Modal>
     </div>
+  );
+}
+
+// Provider를 제공하는 외부 컴포넌트
+export function ManageClient({ users }: ManageClientProps) {
+  return (
+    <ManageContextProvider>
+      <ManageClientInner users={users} />
+    </ManageContextProvider>
   );
 }

@@ -16,3 +16,8 @@ export const LEVEL_OPTIONS = {
   LEADER: { value: 2 as const, label: "리더" as const },
   ASSISTANT: { value: 3 as const, label: "간사" as const },
 };
+
+export const USER_MODIFY_TYPES = {
+  REGIST: "regist",
+  UPDATE: "update",
+};
