@@ -4,6 +4,7 @@ import { userService } from "@/server/services/user.services";
 import { User } from "@/types/user.type";
 import { validateInput } from "../utils/validation";
 import { getLevel, getGisu } from "../utils/utils";
+import { USER_MODIFY_TYPES } from "../utils/constants";
 
 export interface UserFormType {
   userId?: number;
@@ -26,7 +27,8 @@ export interface RegistState {
         regist?: string; // 등록 관련 에러
       }
     | undefined;
-  formData?: UserFormType;
+  placeholder?: UserFormType;
+  modifyType?: string;
 }
 
 export async function actionRegist(
@@ -53,47 +55,95 @@ export async function actionRegist(
         cellId: validationResult.error.cellId,
         level: validationResult.error.level,
       },
-      formData: {
+      placeholder: {
+        ...state.placeholder,
         name: inputData.name,
         birth: inputData.birth,
         cellId: inputData.cellId,
         level: inputData.level,
       },
+      modifyType: state.modifyType,
     };
   }
 
   const level = await getLevel(validationResult.data.level);
   const gisu = await getGisu(validationResult.data.birth);
 
-  // DB 데이터 생성
-  const regist = await userService.createUser({
+  const modifyUser = {
     name: validationResult.data.name,
     birth: validationResult.data.birth,
     groupId: validationResult.data.groupId,
     cellId: validationResult.data.cellId,
     level: level,
     gisu: gisu,
-  } as User);
+    userId: state.placeholder?.userId,
+  } as User;
 
-  if (!regist) {
-    return {
-      success: false,
-      error: {
-        regist: "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
-      },
-      // 실패 시에도 입력값 유지
-      formData: {
-        name: inputData.name,
-        birth: inputData.birth,
-        cellId: inputData.cellId,
-        level: inputData.level,
-      },
-    };
+  if (state.modifyType === USER_MODIFY_TYPES.UPDATE) {
+    if (!modifyUser?.userId) {
+      return {
+        success: false,
+        error: {
+          regist: "사용자 정보변경에 실패하였습니다. 잠시후 재시도 해주세요.",
+        },
+        // 실패 시에도 입력값 유지
+        placeholder: {
+          userId: state.placeholder?.userId,
+          name: inputData.name,
+          birth: inputData.birth,
+          cellId: inputData.cellId,
+          level: inputData.level,
+        },
+        modifyType: state.modifyType,
+      };
+    }
+    const update = await userService.updateUser(modifyUser);
+
+    if (!update) {
+      return {
+        success: false,
+        error: {
+          regist: "사용자 정보변경에 실패하였습니다. 잠시후 재시도 해주세요.",
+        },
+        // 실패 시에도 입력값 유지
+        placeholder: {
+          ...state.placeholder,
+          name: inputData.name,
+          birth: inputData.birth,
+          cellId: inputData.cellId,
+          level: inputData.level,
+        },
+        modifyType: state.modifyType,
+      };
+    }
+  } else {
+    const regist = await userService.createUser(modifyUser);
+
+    if (!regist) {
+      return {
+        success: false,
+        error: {
+          regist: "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
+        },
+        // 실패 시에도 입력값 유지
+        placeholder: {
+          ...state.placeholder,
+          name: inputData.name,
+          birth: inputData.birth,
+          cellId: inputData.cellId,
+          level: inputData.level,
+        },
+        modifyType: state.modifyType,
+      };
+    }
   }
 
   return {
     success: true,
     error: undefined,
-    formData: undefined,
+    placeholder: {
+      ...state.placeholder,
+    },
+    modifyType: state.modifyType,
   };
 }

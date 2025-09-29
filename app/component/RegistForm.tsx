@@ -1,7 +1,7 @@
 // 실제 사용자를 입력하는 창
 "use client";
 import { Leader } from "@/types/user.type";
-import { LEVEL_OPTIONS } from "@/app/utils/constants";
+import { LEVEL_OPTIONS, USER_MODIFY_TYPES } from "@/app/utils/constants";
 import { useActionState } from "react";
 import {
   actionRegist,
@@ -15,14 +15,17 @@ export function RegistForm({
   leaders,
   initialUserData,
   onUpdate,
+  modifyType,
 }: {
   leaders: Leader[];
-  initialUserData: UserFormType;
+  initialUserData?: UserFormType;
   onUpdate?: () => void;
+  modifyType?: string;
 }) {
   const [state, formAction, isPending] = useActionState(actionRegist, {
     error: undefined,
-    formData: initialUserData,
+    placeholder: initialUserData,
+    modifyType,
   } as RegistState);
 
   const router = useRouter();
@@ -30,14 +33,19 @@ export function RegistForm({
   // 등록 성공 시 페이지 새로고침
   useEffect(() => {
     if (state.success) {
-      alert("사용자가 성공적으로 등록되었습니다!");
+      if (modifyType === USER_MODIFY_TYPES.UPDATE) {
+        alert("사용자 정보가 성공적으로 변경되었습니다.");
+      } else {
+        alert("사용자가 성공적으로 등록되었습니다");
+      }
+
       if (onUpdate) {
         onUpdate?.();
       } else {
         router.refresh(); // 서버 컴포넌트 데이터 새로고침
       }
     }
-  }, [state.success, router, onUpdate]);
+  }, [state.success, router, onUpdate, initialUserData, modifyType]);
 
   // error에 따라 focus 처리
   useEffect(() => {
@@ -65,7 +73,7 @@ export function RegistForm({
           placeholder="이름을 입력하세요"
           autoComplete="off"
           autoFocus
-          defaultValue={state.formData?.name || ""}
+          defaultValue={state.placeholder?.name || ""}
           key={state.success ? "name-reset" : "name-keep"}
         />
         {state.error?.name && (
@@ -79,7 +87,7 @@ export function RegistForm({
           name="birth"
           placeholder="생년월일 6자리입니다"
           autoComplete="off"
-          defaultValue={state.formData?.birth || ""}
+          defaultValue={state.placeholder?.birth || ""}
           key={state.success ? "birth-reset" : "birth-keep"}
         />
         {state.error?.birth && (
@@ -97,7 +105,7 @@ export function RegistForm({
         <select
           id="cellId"
           name="cellId"
-          defaultValue={state.formData?.cellId || ""}
+          defaultValue={state.placeholder?.cellId || leaders[0].cellId}
           key={state.success ? "cellId-reset" : "cellId-keep"}
         >
           {leaders.map((leader: Leader) => (
@@ -115,7 +123,9 @@ export function RegistForm({
         <select
           id="level"
           name="level"
-          defaultValue={state.formData?.level || ""}
+          defaultValue={
+            state.placeholder?.level || LEVEL_OPTIONS.TEAM_MEMBER.label
+          }
           key={state.success ? "level-reset" : "level-keep"}
         >
           {Object.values(LEVEL_OPTIONS).map(({ label }: { label: string }) => (
