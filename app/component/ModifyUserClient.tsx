@@ -1,56 +1,31 @@
 "use client";
 
-import { User, Leader } from "@/types/user.type";
+import { User } from "@/types/user.type";
+import { getLeaders } from "@/app/utils/clientUtils";
 import { UserFormType } from "../action/registAction";
 import { RegistForm } from "@/app/component/RegistForm";
-import { LEVEL_OPTIONS } from "../utils/constants";
 
 interface ModifyUserClientProps {
   users: User[];
-  initialUserData: UserFormType;
+  initialUserData?: UserFormType;
   onUpdate?: () => void;
+  modifyType?: string;
 }
 
 export function ModifyUserClient({
   users,
   initialUserData,
   onUpdate,
+  modifyType,
 }: ModifyUserClientProps) {
-  let max = 1;
-  const filteredLeaders = users.reduce((acc, user) => {
-    if (user.level !== 2) return acc;
-    if (user.cellId >= max) max = user.cellId + 1;
-    const findLeader = acc.findIndex((l) => l.cellId === user.cellId);
-    if (findLeader > -1) {
-      acc[findLeader] = {
-        ...acc[findLeader],
-        name: acc[findLeader].name + ", " + user.name,
-      };
-    } else {
-      acc.push(user);
-    }
-    return acc;
-  }, [] as Leader[]);
-
-  filteredLeaders.push({
-    groupId: users[0]?.groupId as number,
-    cellId: max,
-    name: "신규 등록",
-    level: 2,
-  } as Leader);
-
-  if (initialUserData) {
-    initialUserData = {
-      cellId: filteredLeaders[0].cellId,
-      level: LEVEL_OPTIONS.TEAM_MEMBER.label,
-    } as UserFormType;
-  }
+  const leaders = getLeaders(users);
 
   return (
     <RegistForm
-      leaders={filteredLeaders}
+      leaders={leaders}
       initialUserData={initialUserData}
       onUpdate={onUpdate}
+      modifyType={modifyType}
     />
   );
 }
