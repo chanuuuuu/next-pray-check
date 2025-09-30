@@ -1,7 +1,6 @@
 "use client";
 import { User } from "@/types/user.type";
-import { USER_MODIFY_TYPES } from "@/app/utils/constants";
-import { UserFormType } from "../action/registAction";
+import { UserFormType } from "@/types/modify.type";
 import { createContext, ReactNode, useState, useContext } from "react";
 
 interface ManageContextProps {
@@ -9,19 +8,16 @@ interface ManageContextProps {
   handleModalOpen: (user?: User) => void;
   handleModalClose: () => void;
   isOpen: boolean;
-  modifyType: string;
 }
 
 const ManageContext = createContext<ManageContextProps>({
   handleModalOpen: () => {},
   handleModalClose: () => {},
   isOpen: false,
-  modifyType: USER_MODIFY_TYPES.REGIST,
 });
 
 export function ManageContextProvider({ children }: { children: ReactNode }) {
   const [isOpen, setOpen] = useState(false);
-  const [modifyType, setModifyType] = useState(USER_MODIFY_TYPES.REGIST);
   const [selectedUser, setSelectedUser] = useState<UserFormType | undefined>(
     undefined
   );
@@ -37,7 +33,6 @@ export function ManageContextProvider({ children }: { children: ReactNode }) {
           groupId: user?.groupId || "",
         } as UserFormType)
       : undefined;
-    setModifyType(user ? USER_MODIFY_TYPES.UPDATE : USER_MODIFY_TYPES.REGIST);
     setSelectedUser(userFormType);
     setOpen(true);
   };
@@ -51,7 +46,6 @@ export function ManageContextProvider({ children }: { children: ReactNode }) {
         isOpen,
         handleModalOpen,
         handleModalClose,
-        modifyType,
       }}
     >
       {children}

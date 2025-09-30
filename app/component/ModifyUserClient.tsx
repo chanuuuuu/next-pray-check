@@ -2,7 +2,7 @@
 
 import { User } from "@/types/user.type";
 import { getLeaders } from "@/app/utils/clientUtils";
-import { UserFormType } from "../action/registAction";
+import { UserFormType } from "@/types/modify.type";
 import { RegistForm } from "@/app/component/RegistForm";
 
 interface ModifyUserClientProps {
@@ -16,7 +16,6 @@ export function ModifyUserClient({
   users,
   initialUserData,
   onUpdate,
-  modifyType,
 }: ModifyUserClientProps) {
   const leaders = getLeaders(users);
 
@@ -25,7 +24,6 @@ export function ModifyUserClient({
       leaders={leaders}
       initialUserData={initialUserData}
       onUpdate={onUpdate}
-      modifyType={modifyType}
     />
   );
 }
