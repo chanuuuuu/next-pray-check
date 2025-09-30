@@ -2,41 +2,32 @@
 
 import { userService } from "@/server/services/user.services";
 import { User } from "@/types/user.type";
+import { UserFormType } from "@/types/modify.type";
 import { validateInput } from "../utils/validation";
 import { getLevel, getGisu } from "../utils/utils";
-import { USER_MODIFY_TYPES } from "../utils/constants";
+import { ERROR_MESSAGES } from "@/app/utils/constants";
 
-export interface UserFormType {
-  userId?: number;
+export interface RegistError {
   name?: string;
   birth?: string;
-  cellId?: number;
+  cellId?: string;
   level?: string;
-  groupId?: number;
+  user?: string; // 중복 유저 관련 에러
+  regist?: string; // 등록 관련 에러
 }
 
 export interface RegistState {
   success: boolean;
-  error:
-    | {
-        name?: string;
-        birth?: string;
-        cellId?: string;
-        level?: string;
-        user?: string; // 중복 유저 관련 에러
-        regist?: string; // 등록 관련 에러
-      }
-    | undefined;
+  error?: RegistError;
   placeholder?: UserFormType;
-  modifyType?: string;
+  isRegist?: boolean;
 }
 
 export async function actionRegist(
   state: RegistState,
   formData: FormData
 ): Promise<RegistState> {
-  // 입력된 값들을 저장
-  const inputData = {
+  const inputData: UserFormType = {
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
     groupId: Number(formData.get("groupId")) as number,
@@ -47,23 +38,12 @@ export async function actionRegist(
   const validationResult = await validateInput(inputData);
 
   if (!validationResult.success) {
-    return {
-      success: false,
-      error: {
-        name: validationResult.error.name,
-        birth: validationResult.error.birth,
-        cellId: validationResult.error.cellId,
-        level: validationResult.error.level,
-      },
-      placeholder: {
-        ...state.placeholder,
-        name: inputData.name,
-        birth: inputData.birth,
-        cellId: inputData.cellId,
-        level: inputData.level,
-      },
-      modifyType: state.modifyType,
-    };
+    return createErrorResponse(state, inputData, {
+      name: validationResult.error.name,
+      birth: validationResult.error.birth,
+      cellId: validationResult.error.cellId,
+      level: validationResult.error.level,
+    });
   }
 
   const level = await getLevel(validationResult.data.level);
@@ -79,71 +59,56 @@ export async function actionRegist(
     userId: state.placeholder?.userId,
   } as User;
 
-  if (state.modifyType === USER_MODIFY_TYPES.UPDATE) {
-    if (!modifyUser?.userId) {
-      return {
-        success: false,
-        error: {
-          regist: "사용자 정보변경에 실패하였습니다. 잠시후 재시도 해주세요.",
-        },
-        // 실패 시에도 입력값 유지
-        placeholder: {
-          userId: state.placeholder?.userId,
-          name: inputData.name,
-          birth: inputData.birth,
-          cellId: inputData.cellId,
-          level: inputData.level,
-        },
-        modifyType: state.modifyType,
-      };
-    }
-    const update = await userService.updateUser(modifyUser);
+  const isRegist = !!state?.isRegist;
+  const errorMsg = isRegist
+    ? ERROR_MESSAGES.USER_REGISTRATION_FAILED
+    : ERROR_MESSAGES.USER_UPDATE_FAILED;
 
-    if (!update) {
-      return {
-        success: false,
-        error: {
-          regist: "사용자 정보변경에 실패하였습니다. 잠시후 재시도 해주세요.",
-        },
-        // 실패 시에도 입력값 유지
-        placeholder: {
-          ...state.placeholder,
-          name: inputData.name,
-          birth: inputData.birth,
-          cellId: inputData.cellId,
-          level: inputData.level,
-        },
-        modifyType: state.modifyType,
-      };
-    }
-  } else {
-    const regist = await userService.createUser(modifyUser);
+  try {
+    if (!isRegist && !modifyUser?.userId) throw new Error(errorMsg);
 
-    if (!regist) {
-      return {
-        success: false,
-        error: {
-          regist: "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
-        },
-        // 실패 시에도 입력값 유지
-        placeholder: {
-          ...state.placeholder,
-          name: inputData.name,
-          birth: inputData.birth,
-          cellId: inputData.cellId,
-          level: inputData.level,
-        },
-        modifyType: state.modifyType,
-      };
-    }
+    const modify = await userService.modifyUser(modifyUser, isRegist);
+
+    if (!modify) throw new Error(errorMsg);
+  } catch (e) {
+    return createErrorResponse(state, inputData, {
+      regist:
+        e instanceof Error ? e.message : ERROR_MESSAGES.USER_UPDATE_FAILED,
+    });
   }
 
+  return createSuccessResponse(state, inputData);
+}
+
+function createErrorResponse(
+  state: RegistState,
+  inputData: UserFormType,
+  error: RegistError
+): RegistState {
+  return {
+    success: false,
+    error,
+    placeholder: {
+      ...state.placeholder,
+      name: inputData.name,
+      birth: inputData.birth,
+      cellId: inputData.cellId,
+      level: inputData.level,
+    },
+    isRegist: state.isRegist,
+  };
+}
+
+function createSuccessResponse(
+  state: RegistState,
+  inputData: UserFormType
+): RegistState {
   return {
     success: true,
     error: undefined,
     placeholder: {
       ...state.placeholder,
     },
-    modifyType: state.modifyType,
+    isRegist: state.isRegist,
   };
 }

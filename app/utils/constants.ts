@@ -17,7 +17,9 @@ export const LEVEL_OPTIONS = {
   ASSISTANT: { value: 3 as const, label: "간사" as const },
 };
 
-export const USER_MODIFY_TYPES = {
-  REGIST: "regist",
-  UPDATE: "update",
-};
+export const ERROR_MESSAGES = {
+  USER_UPDATE_FAILED:
+    "사용자 정보변경에 실패하였습니다. 잠시후 재시도 해주세요.",
+  USER_REGISTRATION_FAILED:
+    "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
+} as const;
