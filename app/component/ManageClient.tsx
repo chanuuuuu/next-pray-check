@@ -7,6 +7,8 @@ import { Modal } from "./Modal";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
 import { ManageContextProvider, useManageContext } from "./ManageContext";
+import { actionDelete } from "@/app/action/deleteAction";
+import { useTransition } from "react";
 
 interface ManageClientProps {
   users: User[];
@@ -14,31 +16,35 @@ interface ManageClientProps {
 
 function ManageClientInner({ users }: ManageClientProps) {
   const router = useRouter();
-  const {
-    selectedUser,
-    handleModalOpen,
-    handleModalClose,
-    isOpen,
-    modifyType,
-  } = useManageContext();
+  const [isPending, startTransition] = useTransition();
+  const { selectedUser, handleModalOpen, handleModalClose, isOpen } =
+    useManageContext();
 
   const handleEdit = (user: User) => {
     handleModalOpen(user);
   };
 
   const handleDelete = (user: User) => {
-    // TODO: 삭제 기능 구현
     const confirmed = confirm(`${user.name} 사용자를 정말 삭제하시겠습니까?`);
     if (confirmed) {
-      console.log("Delete user:", user);
-      alert("삭제 기능은 준비 중입니다.");
+      doDelete(user);
     }
+  };
+
+  const doDelete = (user: User) => {
+    startTransition(async () => {
+      await actionDelete(user);
+      router.refresh();
+    });
   };
 
   const handleModify = () => {
     router.refresh();
     handleModalClose();
   };
+
+  const getModalTitle = () =>
+    selectedUser?.userId ? "팀원 정보 수정" : "팀원 등록";
 
   return (
     <div className={styles.container}>
@@ -56,13 +62,12 @@ function ManageClientInner({ users }: ManageClientProps) {
       <Modal
         isOpen={isOpen}
         onClose={() => handleModalClose()}
-        title="팀원 등록"
+        title={getModalTitle()}
       >
         <ModifyUserClient
           users={users}
           initialUserData={selectedUser}
           onUpdate={handleModify}
-          modifyType={modifyType}
         ></ModifyUserClient>
       </Modal>
     </div>
