@@ -7,7 +7,7 @@
 
 .gridHeader {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
   background-color: #343a40;
   color: white;
   font-weight: bold;
@@ -31,7 +31,7 @@
 
 .gridRow {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
   border-bottom: 1px solid #eee;
 }
 
@@ -97,10 +97,71 @@
   font-style: italic;
 }
 
+/* TeamGrid 스타일 */
+.cellSection {
+  margin-bottom: 2rem;
+}
+
+.cellHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.cellTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.leaderNames {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .userGrid {
+    border-color: #374151;
+  }
+
+  .gridRow {
+    border-bottom-color: #374151;
+  }
+
+  .gridRow:hover {
+    background-color: #1f2937;
+  }
+
+  .cell {
+    border-right-color: #374151;
+    color: #f9fafb;
+  }
+
+  .emptyState {
+    color: #d1d5db;
+  }
+
+  .cellTitle {
+    color: #f9fafb;
+  }
+
+  .leaderNames {
+    color: #d1d5db;
+  }
+
+  .iconBtn:hover {
+    background-color: #374151;
+  }
+}
+
 @media (max-width: 768px) {
   .gridHeader,
   .gridRow {
-    grid-template-columns: 1.5fr 0.7fr 0.8fr 0.8fr 0.8fr 1fr;
+    grid-template-columns: 1.5fr 0.7fr 0.8fr 1fr;
   }
 
   .cell,

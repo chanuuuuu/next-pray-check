@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/types/user.type";
-import { UserGrid } from "./UserGrid";
+import { TeamGrid } from "./UserGrid";
 import { ModifyUserClient } from "./ModifyUserClient";
 import { Modal } from "./Modal";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ function ManageClientInner({ users }: ManageClientProps) {
   };
 
   const handleDelete = (user: User) => {
-    const confirmed = confirm(`${user.name} 사용자를 정말 삭제하시겠습니까?`);
+    const confirmed = confirm(`${user.name}님을 정말 삭제하시겠습니까?`);
     if (confirmed) {
       doDelete(user);
     }
@@ -58,7 +58,7 @@ function ManageClientInner({ users }: ManageClientProps) {
           등록
         </button>
       </div>
-      <UserGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
+      <TeamGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
       <Modal
         isOpen={isOpen}
         onClose={() => handleModalClose()}
@@ -68,7 +68,7 @@ function ManageClientInner({ users }: ManageClientProps) {
           users={users}
           initialUserData={selectedUser}
           onUpdate={handleModify}
-        ></ModifyUserClient>
+        />
       </Modal>
     </div>
   );

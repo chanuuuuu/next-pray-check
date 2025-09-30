@@ -140,6 +140,40 @@
   box-sizing: border-box;
 }
 
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .label {
+    color: #f9fafb;
+  }
+
+  .input,
+  .select {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .input:focus,
+  .select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+
+  .input::placeholder {
+    color: #9ca3af;
+  }
+
+  .errorMessage {
+    color: #fca5a5;
+  }
+
+  .generalError {
+    background-color: #7f1d1d;
+    border-color: #dc2626;
+    color: #fca5a5;
+  }
+}
+
 /* 반응형 디자인 */
 @media (max-width: 480px) {
   .container {

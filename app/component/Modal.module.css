@@ -114,26 +114,45 @@
 
 /* 다크 모드 지원 */
 @media (prefers-color-scheme: dark) {
+  .modalOverlay {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
   .modalContent {
-    background: #1f2937;
+    background: #111827;
     color: #f9fafb;
+    border: 1px solid #374151;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
 
   .modalHeader {
     border-bottom-color: #374151;
+    background-color: #1f2937;
   }
 
   .modalTitle {
     color: #f9fafb;
+    font-weight: 600;
+  }
+
+  .modalBody {
+    background-color: #111827;
   }
 
   .closeButton {
     color: #9ca3af;
+    border: 1px solid transparent;
   }
 
   .closeButton:hover {
     background-color: #374151;
-    color: #d1d5db;
+    color: #f3f4f6;
+    border-color: #4b5563;
+  }
+
+  .closeButton:focus {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
   }
 }
 

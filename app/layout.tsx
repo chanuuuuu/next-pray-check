@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         {children}
-        <footer>
+        <footer className="app-footer">
           In their hearts humans plan their course, but the{" "}
           <strong>Lord</strong> establishes their steps.
         </footer>
