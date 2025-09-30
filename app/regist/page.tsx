@@ -1,5 +1,5 @@
 // 실제 사용자를 입력하는 창
-import { RegistForm } from "../component/RegistForm";
+import { RegistForm } from "../component/Regist/RegistForm";
 import { getUserBySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { Leader } from "@/types/user.type";

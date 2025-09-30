@@ -3,7 +3,7 @@
 import { User } from "@/types/user.type";
 import { TeamGrid } from "./UserGrid";
 import { ModifyUserClient } from "./ModifyUserClient";
-import { Modal } from "./Modal";
+import { Modal } from "@/app/component/Modal";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
 import { ManageContextProvider, useManageContext } from "./ManageContext";

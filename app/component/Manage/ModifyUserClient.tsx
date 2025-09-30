@@ -3,7 +3,7 @@
 import { User } from "@/types/user.type";
 import { getLeaders } from "@/app/utils/clientUtils";
 import { UserFormType } from "@/types/modify.type";
-import { RegistForm } from "@/app/component/RegistForm";
+import { RegistForm } from "@/app/component/Regist/RegistForm";
 
 interface ModifyUserClientProps {
   users: User[];

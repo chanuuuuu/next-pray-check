@@ -2,7 +2,7 @@
 import { userService } from "@/server/services/user.services";
 import { getUserBySession } from "@/server/session";
 import { redirect } from "next/navigation";
-import { ManageClient } from "../component/ManageClient";
+import { ManageClient } from "@/app/component/Manage/ManageClient";
 
 export default async function Manage() {
   const user = await getUserBySession();
