@@ -21,9 +21,7 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
     <div className={styles.userGrid}>
       {/* Header */}
       <div className={styles.gridHeader}>
-        <div className={styles.headerCell}>이름</div>
-        <div className={styles.headerCell}>조</div>
-        <div className={styles.headerCell}>기수</div>
+        <div className={styles.headerCell}>이름 / 기수</div>
         <div className={styles.headerCell}>생일</div>
         <div className={styles.headerCell}>권한</div>
         <div className={styles.headerCell}>관리</div>
@@ -33,9 +31,9 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
       <div className={styles.gridBody}>
         {users.map((user, index) => (
           <div key={`${user.name}-${index}`} className={styles.gridRow}>
-            <div className={styles.cell}>{user.name}</div>
-            <div className={styles.cell}>{user.cellId}조</div>
-            <div className={styles.cell}>{user.gisu}기</div>
+            <div className={styles.cell}>
+              {user.name} / {user.gisu}기
+            </div>
             <div className={styles.cell}>{getBirthDisplay(user.birth)}</div>
             <div className={styles.cell}>{getLevelLabel(user.level)}</div>
             <div className={`${styles.cell} ${styles.actionsCell}`}>
@@ -64,5 +62,55 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
         <div className={styles.emptyState}>등록된 사용자가 없습니다.</div>
       )}
     </div>
+  );
+}
+
+interface Cell {
+  cellId: number;
+  leaderName: string;
+  users: User[];
+}
+
+export function TeamGrid({ users, onEdit, onDelete }: UserGridProps) {
+  const cells = users.reduce((_cells: Cell[], user: User) => {
+    const existingCellIndex = _cells.findIndex(
+      (cell) => cell.cellId === user.cellId
+    );
+
+    const { name, level } = user;
+    if (existingCellIndex >= 0) {
+      if (level > 1) {
+        const { leaderName } = _cells[existingCellIndex];
+        _cells[existingCellIndex].leaderName = leaderName
+          ? `${leaderName},${name}`
+          : name;
+      }
+      _cells[existingCellIndex].users.push(user);
+    } else {
+      const leaderName = level > 1 ? name : "";
+      _cells.push({
+        cellId: user.cellId,
+        leaderName,
+        users: [user],
+      });
+    }
+
+    return _cells;
+  }, [] as Cell[]);
+
+  return (
+    <section>
+      {cells.map((cell) => (
+        <div key={cell.cellId} className={styles.cellSection}>
+          <div className={styles.cellHeader}>
+            <h3 className={styles.cellTitle}>{cell.cellId}조</h3>
+            {cell.leaderName && (
+              <span className={styles.leaderNames}>{cell.leaderName}</span>
+            )}
+          </div>
+          <UserGrid users={cell.users} onEdit={onEdit} onDelete={onDelete} />
+        </div>
+      ))}
+    </section>
   );
 }
