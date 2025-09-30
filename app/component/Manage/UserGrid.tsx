@@ -2,6 +2,7 @@ import { User } from "@/types/user.type";
 import { LEVEL_OPTIONS } from "@/app/utils/constants";
 import { getBirthDisplay } from "@/app/utils/clientUtils";
 import styles from "./UserGrid.module.css";
+import { getCells } from "@/app/utils/clientUtils";
 
 interface UserGridProps {
   users: User[];
@@ -65,39 +66,8 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
   );
 }
 
-interface Cell {
-  cellId: number;
-  leaderName: string;
-  users: User[];
-}
-
 export function TeamGrid({ users, onEdit, onDelete }: UserGridProps) {
-  const cells = users.reduce((_cells: Cell[], user: User) => {
-    const existingCellIndex = _cells.findIndex(
-      (cell) => cell.cellId === user.cellId
-    );
-
-    const { name, level } = user;
-    if (existingCellIndex >= 0) {
-      if (level > 1) {
-        const { leaderName } = _cells[existingCellIndex];
-        _cells[existingCellIndex].leaderName = leaderName
-          ? `${leaderName},${name}`
-          : name;
-      }
-      _cells[existingCellIndex].users.push(user);
-    } else {
-      const leaderName = level > 1 ? name : "";
-      _cells.push({
-        cellId: user.cellId,
-        leaderName,
-        users: [user],
-      });
-    }
-
-    return _cells;
-  }, [] as Cell[]);
-
+  const cells = getCells(users);
   return (
     <section>
       {cells.map((cell) => (

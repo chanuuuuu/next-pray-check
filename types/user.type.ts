@@ -29,6 +29,12 @@ export interface Leader {
   level: number; // 권한
 }
 
+export interface Cell {
+  cellId: number;
+  leaderName: string;
+  users: User[];
+}
+
 export interface UserLoginInput {
   name: string; // 이름
   birth: string; // 생년월일
