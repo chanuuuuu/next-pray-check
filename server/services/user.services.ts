@@ -13,6 +13,10 @@ export class UserService {
     return await this.userRepository.getUser(userInput);
   }
 
+  async fetchUsers(groupId: number): Promise<User[]> {
+    return await this.userRepository.getUsers(groupId);
+  }
+
   async createUser(user: User): Promise<boolean> {
     try {
       const result = await this.userRepository.createUser(user);
@@ -24,15 +28,6 @@ export class UserService {
     }
   }
 
-  // 현재 리더 인원 조회
-  async getLeaders(): Promise<Leader[]> {
-    return await this.userRepository.getLeaders();
-  }
-
-  async fetchUsers(groupId: number): Promise<User[]> {
-    return await this.userRepository.getUsers(groupId);
-  }
-
   async updateUser(user: User): Promise<boolean> {
     try {
       const result = await this.userRepository.updateUser(user);
@@ -42,6 +37,30 @@ export class UserService {
       console.log(e);
       return false;
     }
+  }
+
+  async modifyUser(user: User, isRegist: boolean): Promise<boolean> {
+    if (isRegist) {
+      return await this.createUser(user);
+    } else {
+      return await this.updateUser(user);
+    }
+  }
+
+  async deleteUser(user: User): Promise<boolean> {
+    try {
+      const result = await this.userRepository.deleteUser(user);
+      if (result) return true;
+      throw new Error("User delete failed");
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  // 현재 리더 인원 조회
+  async getLeaders(): Promise<Leader[]> {
+    return await this.userRepository.getLeaders();
   }
 }
 

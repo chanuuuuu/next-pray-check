@@ -89,4 +89,17 @@ export class UserRepository {
         WHERE user_id = ${userId};`;
     return result;
   }
+
+  async deleteUser(user: User): Promise<boolean> {
+    const { userId } = user;
+    const result = await sql`DELETE FROM users
+        WHERE user_id = ${userId}
+        RETURNING *;`;
+
+    if (result && result.length > 0) {
+      const deletedUserRow = result[0] as UserRow;
+      return (deletedUserRow.user_id as number) === userId;
+    }
+    return false;
+  }
 }
