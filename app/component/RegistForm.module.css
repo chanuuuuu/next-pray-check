@@ -1,0 +1,162 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  width: 80%;
+  padding: 0.625rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #ffffff;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.select {
+  width: 100%;
+  padding: 0.625rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 0.75rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.submitButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.hiddenSection {
+  display: none;
+}
+
+.generalError {
+  color: #ef4444;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.75rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* 모달 내부에서의 추가 스타일링 */
+.container {
+  /* 모달 내부에서 적절한 여백과 정렬 */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* 입력 필드 그룹 레이아웃 개선 */
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* 라벨과 입력 필드 간격 조정 */
+.formSection .label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* 입력 필드들의 일관된 스타일링 */
+.input,
+.select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .container {
+    gap: 1.25rem;
+  }
+
+  .input,
+  .select {
+    padding: 0.625rem;
+    font-size: 16px; /* iOS 줌 방지 */
+  }
+
+  .submitButton {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .label {
+    font-size: 0.875rem;
+  }
+}

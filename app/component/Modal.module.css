@@ -31,15 +31,18 @@
 
 /* Modal 크기 variants */
 .small {
-  max-width: 400px;
+  max-width: 320px;
+  width: 90%;
 }
 
 .medium {
-  max-width: 600px;
+  max-width: 480px;
+  width: 75%;
 }
 
 .large {
-  max-width: 800px;
+  max-width: 640px;
+  width: 80%;
 }
 
 /* Modal Header */
@@ -47,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px 16px 24px;
+  padding: 16px 20px 12px 20px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -82,9 +85,10 @@
 
 /* Modal Body */
 .modalBody {
-  padding: 20px 24px 24px 24px;
+  padding: 16px 20px 20px 20px;
   overflow-y: auto;
   flex: 1;
+  max-height: 70vh;
 }
 
 /* Animations */
@@ -140,18 +144,19 @@
   }
 
   .modalContent {
-    max-height: 95vh;
+    max-height: 90vh;
     border-radius: 8px;
   }
 
   .small,
   .medium,
   .large {
-    max-width: 100%;
+    max-width: 95%;
+    width: 95%;
   }
 
   .modalHeader {
-    padding: 16px 20px 12px 20px;
+    padding: 14px 16px 10px 16px;
   }
 
   .modalTitle {
@@ -159,7 +164,8 @@
   }
 
   .modalBody {
-    padding: 16px 20px 20px 20px;
+    padding: 12px 16px 16px 16px;
+    max-height: 75vh;
   }
 
   .closeButton {
