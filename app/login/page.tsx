@@ -1,9 +1,10 @@
 import LoginForm from "../component/Login/LoginForm";
-import styles from "../page.module.css";
+import styles from "./page.module.css";
+
 export default async function LoginPage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div className={styles.loginPage}>
+      <main className={styles.loginMain}>
         <LoginForm />
       </main>
     </div>

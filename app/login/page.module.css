@@ -1,0 +1,42 @@
+.loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.loginMain {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .loginPage {
+    background-color: #111827;
+  }
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .loginPage {
+    padding: 16px;
+    min-height: 100vh;
+  }
+
+  .loginMain {
+    max-width: 100%;
+  }
+}
+
+/* PC에서 더 작은 패딩 */
+@media (min-width: 1024px) {
+  .loginPage {
+    padding: 40px;
+  }
+}

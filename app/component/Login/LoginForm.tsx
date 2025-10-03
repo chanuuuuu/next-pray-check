@@ -4,6 +4,7 @@ import { actionLogin, UserState } from "../../action/loginAction";
 import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import styles from "./LoginForm.module.css";
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(actionLogin, {
@@ -19,38 +20,49 @@ export default function LoginForm() {
   }, [state.success, router]);
 
   return (
-    // Server Component는 server action을 전달한다.
-    <form action={formAction}>
-      <article>
-        <h1>[2청] 기도제목 한줄 나눔</h1>
-        <section>
-          <article>
-            <label htmlFor="name">이름</label>
+    <div className={styles.container}>
+      <h1 className={styles.title}>[2청] 기도제목 한줄 나눔</h1>
+      <form action={formAction} className={styles.form}>
+        <section className={styles.formSection}>
+          <div className={styles.formField}>
+            <label htmlFor="name" className={styles.label}>
+              이름
+            </label>
             <input
               id="name"
               name="name"
               placeholder="이름을 입력하세요"
               autoComplete="off"
               autoFocus
+              className={styles.input}
             />
-            {state.error?.name && <p>{state.error?.name}</p>}
-          </article>
-          <article>
-            <label htmlFor="birth">생년월일</label>
+            {state.error?.name && (
+              <p className={styles.error}>{state.error?.name}</p>
+            )}
+          </div>
+          <div className={styles.formField}>
+            <label htmlFor="birth" className={styles.label}>
+              생년월일
+            </label>
             <input
               id="birth"
               name="birth"
               placeholder="생년월일 6자리입니다"
               autoComplete="off"
+              className={styles.input}
             />
-            {state.error?.birth && <p>{state.error?.birth}</p>}
-          </article>
+            {state.error?.birth && (
+              <p className={styles.error}>{state.error?.birth}</p>
+            )}
+          </div>
         </section>
-        {state.error?.user && <p>{state.error?.user}</p>}
-        <button type="submit" disabled={isPending}>
+        {state.error?.user && (
+          <p className={styles.error}>{state.error?.user}</p>
+        )}
+        <button type="submit" disabled={isPending} className={styles.submitBtn}>
           {isPending ? "로그인 중..." : "로그인"}
         </button>
-      </article>
-    </form>
+      </form>
+    </div>
   );
 }
