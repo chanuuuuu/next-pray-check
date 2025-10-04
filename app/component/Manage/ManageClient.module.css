@@ -1,19 +1,12 @@
 .container {
-  padding: 20px;
-}
-
-.title {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
+  padding: 0 1rem;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   padding: 16px 0;
   border-bottom: 1px solid #eee;
 }
@@ -49,10 +42,6 @@
 
 /* 다크 모드 지원 */
 @media (prefers-color-scheme: dark) {
-  .title {
-    color: #f9fafb;
-  }
-
   .header {
     border-bottom-color: #374151;
   }
@@ -64,11 +53,7 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 16px;
-  }
-
-  .title {
-    font-size: 20px;
+    padding: 0 1rem;
   }
 
   .header {

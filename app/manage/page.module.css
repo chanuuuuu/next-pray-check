@@ -1,0 +1,68 @@
+.pageContainer {
+  position: relative;
+}
+
+.title {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.cellHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0 20px;
+}
+
+.cellTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.leaderNames {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: #f9fafb;
+  }
+
+  .cellTitle {
+    color: #f9fafb;
+  }
+
+  .leaderNames {
+    color: #d1d5db;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+    padding: 1rem;
+    margin-bottom: 0;
+  }
+
+  .cellHeader {
+    padding: 0 16px;
+  }
+
+  .cellTitle {
+    font-size: 1.125rem;
+  }
+
+  .leaderNames {
+    font-size: 0.875rem;
+  }
+}

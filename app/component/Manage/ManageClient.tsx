@@ -48,7 +48,6 @@ function ManageClientInner({ users }: ManageClientProps) {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>팀원 관리</h1>
       <div className={styles.header}>
         <p className={styles.teamInfo}>현재 총 팀원 : {users.length}명</p>
         <button

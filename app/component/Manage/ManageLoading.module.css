@@ -1,0 +1,206 @@
+/* 스켈레톤 로딩 스타일 */
+.container {
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 16px 0;
+  background: transparent;
+  border-bottom: 1px solid #eee;
+}
+
+.teamInfo {
+  margin: 0;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.registerBtn {
+  background: #e9ecef;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #6c757d;
+  cursor: not-allowed;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.skeletonSection {
+  margin-bottom: 2rem;
+}
+
+/* 스켈레톤 애니메이션 */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* 스켈레톤 스타일 - UserGrid와 동일한 크기와 모양 유지 */
+.skeletonUserGrid {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skeletonGridHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  background-color: #343a40;
+  color: white;
+  font-weight: bold;
+}
+
+.skeletonHeaderCell {
+  padding: 12px 16px;
+  border-right: 1px solid #495057;
+  text-align: center;
+  color: white;
+  height: 20px;
+  background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeletonHeaderCell:last-child {
+  border-right: none;
+}
+
+.skeletonGridBody {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.skeletonGridRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  border-bottom: 1px solid #eee;
+}
+
+.skeletonGridRow:last-child {
+  border-bottom: none;
+}
+
+.skeletonCell {
+  padding: 12px 16px;
+  margin: 0.75rem 1.5rem;
+  border-right: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  min-height: 0.25rem;
+  justify-content: center;
+  background: linear-gradient(
+    90deg,
+    rgba(248, 249, 250, 0.3) 25%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(248, 249, 250, 0.3) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeletonCell:last-child {
+  border-right: none;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: #111827;
+  }
+
+  .header {
+    background: transparent;
+    border-bottom-color: #374151;
+  }
+
+  .teamInfo {
+    color: #d1d5db;
+  }
+
+  .registerBtn {
+    background: #374151;
+    color: #9ca3af;
+  }
+
+  .skeletonUserGrid {
+    border-color: #374151;
+  }
+
+  .skeletonGridRow {
+    border-bottom-color: #374151;
+  }
+
+  .skeletonCell {
+    border-right-color: #374151;
+    color: #f9fafb;
+  }
+
+  .skeletonHeaderCell {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+  }
+
+  .skeletonCell {
+    background: linear-gradient(
+      90deg,
+      rgba(75, 85, 99, 0.3) 25%,
+      rgba(107, 114, 128, 0.5) 50%,
+      rgba(75, 85, 99, 0.3) 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .header {
+    padding: 12px 0;
+  }
+
+  .teamInfo {
+    font-size: 14px;
+  }
+
+  .registerBtn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .skeletonGridHeader,
+  .skeletonGridRow {
+    grid-template-columns: 1.5fr 0.7fr 0.8fr 1fr;
+  }
+
+  .skeletonCell {
+    padding: 8px 12px;
+    margin: 0.5rem 0.75rem;
+    height: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .skeletonHeaderCell {
+    height: 0.75rem;
+    margin: 0;
+  }
+}
