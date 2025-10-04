@@ -24,3 +24,24 @@ export async function getLevel(
       ?.value || LEVEL_OPTIONS.TEAM_MEMBER.value
   );
 }
+
+export function getWeekDay(day?: string) {
+  const now = day ? new Date(day) : new Date();
+  const weekDay = getWeekCount(now);
+  const year = now.getFullYear().toString().slice(2);
+  const formattedWeekDay = (weekDay < 10 ? "0" : "") + weekDay;
+
+  return parseInt(year + formattedWeekDay);
+}
+
+export function getWeekCount(now: Date) {
+  const start = new Date(now.getFullYear(), 0, 1);
+
+  let diffDate = now.getTime() - start.getTime();
+  diffDate = diffDate / (1000 * 60 * 60 * 24);
+
+  let weekDay = Math.floor(diffDate / 7) + 1;
+  if (now.getDay() < start.getDay()) weekDay += 1;
+
+  return weekDay;
+}
