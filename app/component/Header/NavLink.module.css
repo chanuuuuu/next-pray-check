@@ -1,0 +1,58 @@
+.navLink {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  color: #666;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #333;
+  background-color: #f8f9fa;
+  text-decoration: none;
+}
+
+.navLink.active {
+  color: #007bff;
+  background-color: #e7f3ff;
+  font-weight: 600;
+}
+
+.navLink.active:hover {
+  color: #0056b3;
+  background-color: #d1ecf1;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .navLink {
+    color: #d1d5db;
+  }
+
+  .navLink:hover {
+    color: #f9fafb;
+    background-color: #374151;
+  }
+
+  .navLink.active {
+    color: #60a5fa;
+    background-color: #1e3a8a;
+  }
+
+  .navLink.active:hover {
+    color: #93c5fd;
+    background-color: #1e40af;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .navLink {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}

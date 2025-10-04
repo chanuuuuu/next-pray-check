@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Header } from "@/app/component/Header/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <Header />
         {children}
         <footer className="app-footer">
           In their hearts humans plan their course, but the{" "}
