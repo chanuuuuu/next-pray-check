@@ -10,7 +10,7 @@ export class RequestService {
   }
 
   async fetchRequests(groupId: number, weekId?: number): Promise<Request[]> {
-    const queryWeekId = weekId || getWeekDay() + 2;
+    const queryWeekId = weekId || (await getWeekDay()) - 2;
     return await this.requestRepository.getRequests(groupId, queryWeekId);
   }
 }

@@ -1,4 +1,4 @@
-import { Leader, User, UserLoginInput } from "@/types/user.type";
+import { User, UserLoginInput } from "@/types/user.type";
 import { UserRepository } from "../dal/user.repository";
 
 export class UserService {
@@ -56,11 +56,6 @@ export class UserService {
       console.log(e);
       return false;
     }
-  }
-
-  // 현재 리더 인원 조회
-  async getLeaders(): Promise<Leader[]> {
-    return await this.userRepository.getLeaders();
   }
 }
 

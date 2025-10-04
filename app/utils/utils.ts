@@ -25,7 +25,7 @@ export async function getLevel(
   );
 }
 
-export function getWeekDay(day?: string) {
+export async function getWeekDay(day?: string) {
   const now = day ? new Date(day) : new Date();
   const weekDay = getWeekCount(now);
   const year = now.getFullYear().toString().slice(2);
@@ -34,7 +34,7 @@ export function getWeekDay(day?: string) {
   return parseInt(year + formattedWeekDay);
 }
 
-export function getWeekCount(now: Date) {
+function getWeekCount(now: Date) {
   const start = new Date(now.getFullYear(), 0, 1);
 
   let diffDate = now.getTime() - start.getTime();

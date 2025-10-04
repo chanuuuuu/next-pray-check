@@ -29,17 +29,17 @@ export class RequestRepository {
   // 현재 자신의 팀의 모든 기도제목 조회
   async getRequests(groupId: number, weekId: number): Promise<Request[]> {
     const requests = await sql`
-      SELECT request_id, text, week_id, user_id, group_id, name, gisu, cell_id
+      SELECT request_id, text, week_id, user_id, requests.group_id, name, gisu, cell_id
       FROM requests JOIN users USING (user_id)
-      WHERE groupId = ${groupId}
-      AND weekId >= ${weekId}
-      ORDER BY memeberId, weekId DESC, request_id DESC;
+      WHERE requests.group_id = ${groupId}
+      AND week_id >= ${weekId}
+      ORDER BY user_id, week_id DESC, request_id DESC;
     `;
 
     return requests.map((request) => ({
       requestId: request?.user_id as number,
       text: request?.text as string,
-      weekId: request?.weekId as number,
+      weekId: request?.week_id as number,
       userId: request?.user_id as number,
       groupId: request?.group_id as number,
       cellId: request?.cell_id as number,
