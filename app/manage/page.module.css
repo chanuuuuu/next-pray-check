@@ -1,15 +1,3 @@
-.pageContainer {
-  position: relative;
-}
-
-.title {
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 1rem;
-}
-
 .cellHeader {
   display: flex;
   align-items: center;

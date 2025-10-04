@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { ManageClient } from "@/app/component/Manage/ManageClient";
 import { ManageLoading } from "@/app/component/Manage/ManageLoading";
 import { Suspense } from "react";
-import styles from "./page.module.css";
 
 export default async function Manage() {
   const user = await getUserBySession();
@@ -15,8 +14,8 @@ export default async function Manage() {
   }
 
   return (
-    <section className={styles.pageContainer}>
-      <h1 className={styles.title}>팀원 관리</h1>
+    <section className="page">
+      <h1 className="title">팀원 관리</h1>
       <Suspense fallback={<ManageLoading />}>
         <ManagePageContent groupId={user.groupId} />
       </Suspense>
