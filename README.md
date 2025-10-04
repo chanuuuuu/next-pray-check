@@ -137,3 +137,7 @@ After
 삼일교회 출석부 및 기도제목 공유 웹앱 (2024년)
 
 - https://github.com/chanuuuuu/samil-pray-check
+
+### TODO
+
+- prefetch 적용
