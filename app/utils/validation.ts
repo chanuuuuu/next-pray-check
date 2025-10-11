@@ -46,5 +46,5 @@ export async function validateLoginInput(input: unknown) {
     },
   };
 }
-// 기도제목 입력 검증
+
 // 출석 입력 검증

@@ -1,5 +1,5 @@
 import { RequestRepository } from "../dal/request.repository";
-import { Request } from "@/types/request.type";
+import { ModifyRequest, Request } from "@/types/request.type";
 import { getWeekDay } from "@/app/utils/utils";
 
 export class RequestService {
@@ -12,6 +12,17 @@ export class RequestService {
   async fetchRequests(groupId: number, weekId?: number): Promise<Request[]> {
     const queryWeekId = weekId || (await getWeekDay()) - 2;
     return await this.requestRepository.getRequests(groupId, queryWeekId);
+  }
+
+  async createRequests(requests: ModifyRequest[]): Promise<boolean> {
+    try {
+      const result = await this.requestRepository.createRequests(requests);
+      if (result) return true;
+      throw new Error("Request create failed");
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   }
 }
 
