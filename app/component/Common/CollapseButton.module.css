@@ -1,0 +1,49 @@
+/* 접기/펼치기 버튼 */
+.toggleBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.toggleBtn:hover {
+  background-color: #e5e7eb;
+  color: #374151;
+  transform: scale(1.05);
+}
+
+.toggleIcon {
+  transition: transform 0.3s ease;
+}
+
+.toggleIcon.collapsed {
+  transform: rotate(-90deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .toggleBtn {
+    background-color: #1f2937;
+    color: #d1d5db;
+  }
+
+  .toggleBtn:hover {
+    background-color: #374151;
+    color: #f9fafb;
+  }
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .toggleBtn {
+    width: inherit;
+    height: inherit;
+    padding: 0.25rem;
+  }
+}
