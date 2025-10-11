@@ -10,22 +10,19 @@
 .urgentSection {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  background-color: #f9fafb;
-  border-radius: 0.375rem;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.25rem;
 }
 
 .urgentLabel {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: #374151;
-  margin: 0;
+  width: 1.25rem;
+  height: 0.9rem;
 }
 
 .checkbox {
-  width: 18px;
-  height: 18px;
+  width: 1.25rem;
+  height: 1.25rem;
   cursor: pointer;
 }
 
@@ -174,10 +171,6 @@
 
 /* 다크 모드 지원 */
 @media (prefers-color-scheme: dark) {
-  .urgentSection {
-    background-color: #374151;
-  }
-
   .urgentLabel {
     color: #f9fafb;
   }
