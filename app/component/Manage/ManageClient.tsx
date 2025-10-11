@@ -7,7 +7,7 @@ import { Modal } from "@/app/component/Modal";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
 import { ManageContextProvider, useManageContext } from "./ManageContext";
-import { actionDelete } from "@/app/action/deleteAction";
+import { actionDelete } from "@/app/action/registAction";
 import { useTransition } from "react";
 
 interface ManageClientProps {

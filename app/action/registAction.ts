@@ -112,3 +112,7 @@ function createSuccessResponse(
     isRegist: state.isRegist,
   };
 }
+
+export async function actionDelete(user: User) {
+  return await userService.deleteUser(user);
+}

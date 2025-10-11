@@ -21,7 +21,6 @@ export async function actionRequest(
   state: RequestState,
   formData: FormData
 ): Promise<RequestState> {
-  console.log(state.insertId);
   const inputData: { text: string[]; isUrgent: string } = {
     text: formData.getAll("text") as string[],
     isUrgent: formData.get("isUrgent") as string,
@@ -77,4 +76,8 @@ export async function actionRequest(
     insertId: state.insertId,
     isUrgent,
   };
+}
+
+export async function actionRequestDelete(requestId: number) {
+  return await requestService.deleteRequest(requestId);
 }
