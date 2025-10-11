@@ -16,7 +16,6 @@ export function Navigator() {
   const handleLogout = async () => {
     await actionLogout();
     router.push("/login");
-    router.refresh();
   };
 
   return (
