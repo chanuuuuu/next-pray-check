@@ -4,6 +4,7 @@ import {
   RequestState,
   RequestInput,
 } from "@/app/action/requestAction";
+import { useRouter } from "next/navigation";
 import { removeAtIndex } from "@/app/utils/clientUtils";
 import styles from "./RequestRegistForm.module.css";
 
@@ -17,6 +18,7 @@ export function RequestRegistForm({
   insertId,
   onClose,
 }: RequestRegistFormProps) {
+  const router = useRouter();
   const [state, formAction] = useActionState(actionRequest, {
     requestInputs: [{ text: "" }],
     insertId,
@@ -32,9 +34,10 @@ export function RequestRegistForm({
   useEffect(() => {
     if (state.success) {
       alert("기도제목 등록을 완료하였습니다.");
+      router.refresh();
       if (onClose) onClose();
     }
-  }, [state, onClose]);
+  }, [state, onClose, router]);
 
   function handleDelete(index: number) {
     if (inputs.length <= 1) return; // 최소 하나의 입력은 유지
@@ -62,10 +65,13 @@ export function RequestRegistForm({
   return (
     <form action={formAction} className={styles.container}>
       <div className={styles.urgentSection}>
-        <label className={styles.urgentLabel}>긴급</label>
+        <label htmlFor="isUrgent" className={styles.urgentLabel}>
+          🚨
+        </label>
         <input
           type="checkbox"
           name="isUrgent"
+          id="isUrgent"
           defaultChecked={state.isUrgent}
           className={styles.checkbox}
         />
