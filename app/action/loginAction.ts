@@ -1,7 +1,7 @@
 "use server";
 
 import { userService } from "@/server/services/user.services";
-import { createSession } from "@/server/session";
+import { createSession, deleteSession } from "@/server/session";
 import { validateLoginInput } from "../utils/validation";
 
 export interface UserState {
@@ -55,4 +55,8 @@ export async function actionLogin(
     success: true,
     error: undefined,
   };
+}
+
+export async function actionLogout() {
+  await deleteSession();
 }

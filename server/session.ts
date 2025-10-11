@@ -72,6 +72,5 @@ export async function verifySession(): Promise<User> {
 }
 
 export async function deleteSession() {
-  (await cookies()).delete(cookies.name);
-  redirect("/login");
+  (await cookies()).delete(cookie.name);
 }
