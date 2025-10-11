@@ -5,10 +5,13 @@ import { useMemo, useState } from "react";
 import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { Modal } from "../Modal";
+import styles from "./RequestClient.module.css";
+
 interface RequestClientProps {
   requests: Request[];
   userId: number;
 }
+
 export function RequestClient({ requests, userId }: RequestClientProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,15 +27,22 @@ export function RequestClient({ requests, userId }: RequestClientProps) {
   );
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>등록</button>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <button onClick={() => setIsOpen(true)} className={styles.registerBtn}>
+          등록
+        </button>
+      </div>
       <RequestGrid requests={requests} />
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="기도제목 등록"
       >
-        <RequestRegistForm insertId={insertId} />
+        <RequestRegistForm
+          insertId={insertId}
+          onClose={() => setIsOpen(false)}
+        />
       </Modal>
     </div>
   );

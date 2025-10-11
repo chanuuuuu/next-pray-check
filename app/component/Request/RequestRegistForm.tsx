@@ -5,9 +5,18 @@ import {
   RequestInput,
 } from "@/app/action/requestAction";
 import { removeAtIndex } from "@/app/utils/clientUtils";
+import styles from "./RequestRegistForm.module.css";
+
+interface RequestRegistFormProps {
+  insertId: number;
+  onClose?: () => void;
+}
 
 // 기도제목 입력 폼
-export function RequestRegistForm({ insertId }: { insertId: number }) {
+export function RequestRegistForm({
+  insertId,
+  onClose,
+}: RequestRegistFormProps) {
   const [state, formAction] = useActionState(actionRequest, {
     requestInputs: [{ text: "" }],
     insertId,
@@ -23,8 +32,9 @@ export function RequestRegistForm({ insertId }: { insertId: number }) {
   useEffect(() => {
     if (state.success) {
       alert("기도제목 등록을 완료하였습니다.");
+      if (onClose) onClose();
     }
-  }, [state]);
+  }, [state, onClose]);
 
   function handleDelete(index: number) {
     if (inputs.length <= 1) return; // 최소 하나의 입력은 유지
@@ -50,36 +60,55 @@ export function RequestRegistForm({ insertId }: { insertId: number }) {
   }
 
   return (
-    <form action={formAction}>
-      <section>
-        <label>긴급</label>
+    <form action={formAction} className={styles.container}>
+      <div className={styles.urgentSection}>
+        <label className={styles.urgentLabel}>긴급</label>
         <input
           type="checkbox"
           name="isUrgent"
           defaultChecked={state.isUrgent}
+          className={styles.checkbox}
         />
-      </section>
+      </div>
+
       {inputs.map(({ text, error }, index) => (
-        <section key={`section_${keys[index]}`}>
-          <textarea
-            style={{ width: "80%", resize: "none" }}
-            key={keys[index]}
-            placeholder="기도제목을 입력하세요"
-            autoComplete="off"
-            cols={2}
-            name="text"
-            defaultValue={text || ""}
-          />
-          <button type="button" onClick={() => handleDelete(index)}>
-            삭제
-          </button>
-          {error && <p>{error}</p>}
-        </section>
+        <div key={`section_${keys[index]}`} className={styles.inputSection}>
+          <div className={styles.textareaWrapper}>
+            <textarea
+              key={keys[index]}
+              placeholder="기도제목을 입력하세요"
+              autoComplete="off"
+              name="text"
+              defaultValue={text || ""}
+              className={styles.textarea}
+            />
+            <button
+              type="button"
+              onClick={() => handleDelete(index)}
+              className={styles.deleteBtn}
+              disabled={inputs.length <= 1}
+              title="삭제"
+            >
+              ✕
+            </button>
+          </div>
+          {error && <p className={styles.errorMessage}>{error}</p>}
+        </div>
       ))}
-      <button type="button" onClick={() => handleAppend()}>
-        추가
-      </button>
-      <button type="submit">제출</button>
+
+      <div className={styles.buttonGroup}>
+        <button
+          type="button"
+          onClick={() => handleAppend()}
+          className={styles.addBtn}
+          disabled={inputs.length >= 3}
+        >
+          추가
+        </button>
+        <button type="submit" className={styles.submitButton}>
+          등록하기
+        </button>
+      </div>
     </form>
   );
 }
