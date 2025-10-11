@@ -19,17 +19,37 @@
   margin: 0;
 }
 
+.logoutBtn {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
 /* 다크 모드 지원 */
 @media (prefers-color-scheme: dark) {
   .navigator {
     /* 다크 모드에서 추가 스타일이 필요한 경우 여기에 추가 */
+  }
+
+  .logoutBtn {
+    color: #d1d5db;
   }
 }
 
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .navigator {
-    right: 16px;
+    right: 4px;
     padding: 0.25rem 0;
+  }
+
+  .logoutBtn {
+    padding: 0.25rem 0.5rem;
   }
 }
