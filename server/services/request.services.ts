@@ -24,6 +24,17 @@ export class RequestService {
       return false;
     }
   }
+
+  async deleteRequest(requestId: number): Promise<boolean> {
+    try {
+      const result = await this.requestRepository.deleteRequest(requestId);
+      if (result) return true;
+      throw new Error("Request delete failed");
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
 }
 
 export const requestService = new RequestService();

@@ -92,4 +92,15 @@ export class RequestRepository {
 
     return result;
   }
+
+  // request_id를 기반으로 기도제목 삭제
+  async deleteRequest(requestId: number) {
+    const result = await sql`
+      DELETE FROM requests
+      WHERE request_id = ${requestId}
+      RETURNING request_id;
+    `;
+
+    return result.length > 0 ? result[0] : null;
+  }
 }

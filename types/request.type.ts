@@ -34,3 +34,11 @@ export interface ModifyRequest {
   weekId: number;
   isUrgent?: boolean;
 }
+
+export interface RequestGroups {
+  userId: number;
+  name: string;
+  gisu: number;
+  cellId: number;
+  requests: Request[];
+}
