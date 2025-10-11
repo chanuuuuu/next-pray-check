@@ -86,10 +86,6 @@
   background-color: #93c5fd;
 }
 
-.deleteBtn:hover {
-  background-color: #fca5a5;
-}
-
 .emptyState {
   padding: 40px;
   text-align: center;

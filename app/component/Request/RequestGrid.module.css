@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   margin: 0 1rem;
-  gap: 1.5rem;
 }
 
 /* 사용자별 말풍선 컨테이너 */
@@ -95,7 +94,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.25rem;
   transition: all 0.2s ease;
   position: relative;
 }
@@ -129,15 +128,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
   color: #6b7280;
 }
 
 .deleteBtn:hover {
   background-color: #fef2f2;
-  color: #dc2626;
-  transform: scale(1.1);
 }
 
 /* 빈 상태 */
@@ -197,12 +192,11 @@
   }
 
   .deleteBtn {
-    color: #d1d5db;
+    background: transparent;
   }
 
   .deleteBtn:hover {
-    background-color: #7f1d1d;
-    color: #fca5a5;
+    background-color: #374151;
   }
 
   .emptyState {
@@ -216,11 +210,10 @@
 @media (max-width: 768px) {
   .requestGrid {
     margin: 0;
-    gap: 1rem;
   }
 
   .userBubble {
-    padding: 0.75rem;
+    padding: 0.25rem 0.75rem;
   }
 
   .userHeader {
@@ -236,7 +229,7 @@
   }
 
   .requestItem {
-    padding: 0.1rem 0.5rem;
+    padding: 0.25rem 0.5rem;
   }
 
   .requestText {
@@ -244,10 +237,13 @@
     margin-right: 0.5rem;
   }
 
-  .toggleBtn,
+  .toggleBtn {
+    width: inherit;
+    height: inherit;
+    padding: 0.25rem;
+  }
+
   .deleteBtn {
-    width: 28px;
-    height: 28px;
     padding: 0.25rem;
   }
 }

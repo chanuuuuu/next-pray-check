@@ -10,7 +10,6 @@ interface RequestClientProps {
   userId: number;
 }
 export function RequestClient({ requests, userId }: RequestClientProps) {
-  //이제 여기서 userId 별로 분리하여 저장한다.
   const [isOpen, setIsOpen] = useState(false);
 
   const insertId = useMemo(
