@@ -61,3 +61,7 @@ export function getCells(users: User[]): Cell[] {
     return _cells;
   }, [] as Cell[]);
 }
+
+export function removeAtIndex<T>(array: T[], index: number): T[] {
+  return array.filter((_, i) => i !== index);
+}
