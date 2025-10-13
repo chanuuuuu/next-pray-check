@@ -27,15 +27,11 @@ function ManageClientInner({ users }: ManageClientProps) {
   const handleDelete = (user: User) => {
     const confirmed = confirm(`${user.name}님을 정말 삭제하시겠습니까?`);
     if (confirmed) {
-      doDelete(user);
+      startTransition(async () => {
+        await actionDelete(user);
+        router.refresh();
+      });
     }
-  };
-
-  const doDelete = (user: User) => {
-    startTransition(async () => {
-      await actionDelete(user);
-      router.refresh();
-    });
   };
 
   const handleModify = () => {

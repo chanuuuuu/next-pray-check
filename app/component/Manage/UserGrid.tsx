@@ -3,6 +3,7 @@ import { LEVEL_OPTIONS } from "@/app/utils/constants";
 import { getBirthDisplay } from "@/app/utils/clientUtils";
 import styles from "./UserGrid.module.css";
 import { getCells } from "@/app/utils/clientUtils";
+import { memo, useEffect } from "react";
 
 interface UserGridProps {
   users: User[];
@@ -66,7 +67,15 @@ export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
   );
 }
 
-export function TeamGrid({ users, onEdit, onDelete }: UserGridProps) {
+export const TeamGrid = memo(function TeamGrid({
+  users,
+  onEdit,
+  onDelete,
+}: UserGridProps) {
+  useEffect(() => {
+    // 테스트용
+    console.log(users);
+  });
   const cells = getCells(users);
   return (
     <section>
@@ -83,4 +92,4 @@ export function TeamGrid({ users, onEdit, onDelete }: UserGridProps) {
       ))}
     </section>
   );
-}
+});

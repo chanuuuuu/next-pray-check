@@ -1,16 +1,23 @@
 "use client";
 import { User } from "@/types/user.type";
 import { UserFormType } from "@/types/modify.type";
-import { createContext, ReactNode, useState, useContext } from "react";
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 
-interface ManageContextProps {
+interface ManageContextType {
   selectedUser?: UserFormType;
   handleModalOpen: (user?: User) => void;
   handleModalClose: () => void;
   isOpen: boolean;
 }
 
-const ManageContext = createContext<ManageContextProps>({
+const ManageContext = createContext<ManageContextType>({
   handleModalOpen: () => {},
   handleModalClose: () => {},
   isOpen: false,
@@ -22,7 +29,7 @@ export function ManageContextProvider({ children }: { children: ReactNode }) {
     undefined
   );
 
-  const handleModalOpen = (user?: User) => {
+  const handleModalOpen = useCallback((user?: User) => {
     const userFormType = user
       ? ({
           userId: user?.userId,
@@ -35,21 +42,24 @@ export function ManageContextProvider({ children }: { children: ReactNode }) {
       : undefined;
     setSelectedUser(userFormType);
     setOpen(true);
-  };
+  }, []);
 
-  const handleModalClose = () => setOpen(false);
+  const handleModalClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      selectedUser,
+      isOpen,
+      handleModalOpen,
+      handleModalClose,
+    }),
+    [selectedUser, isOpen]
+  );
 
   return (
-    <ManageContext.Provider
-      value={{
-        selectedUser,
-        isOpen,
-        handleModalOpen,
-        handleModalClose,
-      }}
-    >
-      {children}
-    </ManageContext.Provider>
+    <ManageContext.Provider value={value}>{children}</ManageContext.Provider>
   );
 }
 
