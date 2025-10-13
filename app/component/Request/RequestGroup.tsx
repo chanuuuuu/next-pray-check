@@ -1,16 +1,16 @@
 import { Request, RequestGroups } from "@/types/request.type";
 import { CollapseButton } from "@/app/component/Common/CollapseButton";
-import { actionRequestDelete } from "@/app/action/requestAction";
-import { useRouter } from "next/navigation";
 import styles from "./RequestGrid.module.css";
+import { memo } from "react";
+import { useRequestContext } from "./RequestContext";
 
 interface RequestGroupProps {
   group: RequestGroups;
   isCollapsed: boolean;
-  handleCollapse: () => void;
+  handleCollapse: (userId: number) => void;
 }
 
-export function RequestGroup({
+export const RequestGroup = memo(function RequestGroup({
   group,
   isCollapsed,
   handleCollapse,
@@ -24,7 +24,7 @@ export function RequestGroup({
         </div>
         <CollapseButton
           isCollapsed={isCollapsed}
-          handleCollapse={handleCollapse}
+          handleCollapse={() => handleCollapse(group.userId)}
         />
       </div>
       <article
@@ -38,17 +38,12 @@ export function RequestGroup({
       </article>
     </div>
   );
-}
+});
 
 export function RequestGridItem({ request }: { request: Request }) {
-  const router = useRouter();
+  const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
 
-  const handleDeleteRequest = async (requestId: number) => {
-    if (confirm("해당 기도제목을 삭제하시겠습니까?")) {
-      await actionRequestDelete(requestId);
-      router.refresh();
-    }
-  };
+  const isMyRequest = isMyRequestGroup(request.userId);
 
   return (
     <div className={styles.requestItem}>
@@ -60,13 +55,15 @@ export function RequestGridItem({ request }: { request: Request }) {
       >
         ☆
       </button>
-      <button
-        className={styles.deleteBtn}
-        onClick={() => handleDeleteRequest(request.requestId)}
-        title="삭제"
-      >
-        🗑️
-      </button>
+      {isMyRequest && (
+        <button
+          className={styles.deleteBtn}
+          onClick={() => handleDeleteRequest(request.requestId)}
+          title="삭제"
+        >
+          🗑️
+        </button>
+      )}
     </div>
   );
 }

@@ -1,19 +1,36 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, memo, useCallback, useState } from "react";
 import { Request, RequestGroups } from "@/types/request.type";
 import styles from "./RequestGrid.module.css";
 import { RequestGroup } from "@/app/component/Request/RequestGroup";
+import { useRequestContext } from "./RequestContext";
 
 interface RequestGridProps {
   requests: Request[];
 }
 
-export function RequestGrid({ requests }: RequestGridProps) {
+export const RequestGrid = memo(function RequestGrid({
+  requests,
+}: RequestGridProps) {
   const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(
     new Set()
   );
+  const { deletedRequests } = useRequestContext();
+
+  const handleCollapse = useCallback((userId: number) => {
+    setCollapsedGroups((prev: Set<number>) => {
+      const newSet = new Set(prev);
+      if (newSet.has(userId)) {
+        newSet.delete(userId);
+      } else {
+        newSet.add(userId);
+      }
+      return newSet;
+    });
+  }, []);
 
   const requestGroups = useMemo(() => {
     return requests.reduce((arr, request) => {
+      if (deletedRequests.has(request.requestId)) return arr;
       const group = arr.find((group) => group.userId === request.userId);
       if (!group) {
         arr.push({
@@ -28,19 +45,7 @@ export function RequestGrid({ requests }: RequestGridProps) {
       }
       return arr;
     }, [] as RequestGroups[]);
-  }, [requests]);
-
-  const toggleGroup = (userId: number) => {
-    setCollapsedGroups((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(userId)) {
-        newSet.delete(userId);
-      } else {
-        newSet.add(userId);
-      }
-      return newSet;
-    });
-  };
+  }, [requests, deletedRequests]);
 
   if (requestGroups.length === 0) {
     return (
@@ -52,17 +57,14 @@ export function RequestGrid({ requests }: RequestGridProps) {
 
   return (
     <div className={styles.requestGrid}>
-      {requestGroups.map((group) => {
-        const isCollapsed = collapsedGroups.has(group.userId);
-        return (
-          <RequestGroup
-            key={group.name}
-            group={group}
-            isCollapsed={isCollapsed}
-            handleCollapse={() => toggleGroup(group.userId)}
-          />
-        );
-      })}
+      {requestGroups.map((group) => (
+        <RequestGroup
+          key={group.userId}
+          group={group}
+          isCollapsed={collapsedGroups.has(group.userId)}
+          handleCollapse={handleCollapse}
+        />
+      ))}
     </div>
   );
-}
+});
