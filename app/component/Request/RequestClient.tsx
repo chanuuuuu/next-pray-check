@@ -6,13 +6,14 @@ import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { Modal } from "../Modal";
 import styles from "./RequestClient.module.css";
+import { RequestContextProvider } from "./RequestContext";
 
 interface RequestClientProps {
   requests: Request[];
   userId: number;
 }
 
-export function RequestClient({ requests, userId }: RequestClientProps) {
+export function RequestClientInner({ requests, userId }: RequestClientProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const insertId = useMemo(
@@ -45,5 +46,14 @@ export function RequestClient({ requests, userId }: RequestClientProps) {
         />
       </Modal>
     </div>
+  );
+}
+
+// Provider를 제공하는 외부 컴포넌트
+export function RequestClient({ requests, userId }: RequestClientProps) {
+  return (
+    <RequestContextProvider userId={userId}>
+      <RequestClientInner requests={requests} userId={userId} />
+    </RequestContextProvider>
   );
 }
