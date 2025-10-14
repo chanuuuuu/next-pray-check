@@ -213,15 +213,16 @@
   }
 
   .userBubble {
-    padding: 0.25rem 0;
+    padding: 0.125rem 0;
   }
 
   .userHeader {
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem;
+    margin-bottom: 0.25rem;
   }
 
   .userName {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .userGisu {
@@ -233,7 +234,7 @@
   }
 
   .requestText {
-    font-size: 0.8125rem;
+    font-size: 0.825rem;
     margin-right: 0.5rem;
   }
 

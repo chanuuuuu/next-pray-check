@@ -29,7 +29,7 @@ export function RequestRegistForm({
     <form action={formAction} className={styles.container}>
       <div className={styles.urgentSection} style={{ display: "none" }}>
         <label htmlFor="isUrgent" className={styles.urgentLabel}>
-          🚨
+          🚨 긴급
         </label>
         <input
           type="checkbox"
