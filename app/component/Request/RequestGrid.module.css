@@ -118,6 +118,52 @@
   margin-right: 0.75rem;
 }
 
+/* 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+/* 즐겨찾기 버튼 */
+.favoriteBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 1rem;
+  padding: 0.125rem;
+  line-height: 1;
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.favoriteBtn::before {
+  content: "☆";
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.favoriteBtn.favorited::before {
+  content: "★";
+  color: #fbbf24;
+}
+
+.favoriteBtn:hover {
+  transform: scale(1.15);
+}
+
+.favoriteBtn:hover::before {
+  color: #fbbf24;
+}
+
 /* 삭제 버튼 */
 .deleteBtn {
   border: none;
@@ -129,10 +175,9 @@
   align-items: center;
   justify-content: center;
   color: #6b7280;
-}
-
-.deleteBtn:hover {
-  background-color: #fef2f2;
+  font-size: 1rem;
+  padding: 0.125rem;
+  line-height: 1;
 }
 
 /* 빈 상태 */
@@ -191,12 +236,21 @@
     color: #f9fafb;
   }
 
-  .deleteBtn {
-    background: transparent;
+  .favoriteBtn::before {
+    color: #9ca3af;
   }
 
-  .deleteBtn:hover {
-    background-color: #374151;
+  .favoriteBtn.favorited::before {
+    color: #fbbf24;
+  }
+
+  .favoriteBtn:hover::before {
+    color: #fbbf24;
+  }
+
+  .deleteBtn {
+    background: transparent;
+    color: #9ca3af;
   }
 
   .emptyState {
@@ -235,7 +289,7 @@
 
   .requestText {
     font-size: 0.825rem;
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   .toggleBtn {
@@ -244,7 +298,22 @@
     padding: 0.25rem;
   }
 
+  .buttonGroup {
+    gap: 0.125rem;
+  }
+
+  .favoriteBtn {
+    width: 1.3rem;
+    height: 1.3rem;
+    padding: 0.1rem;
+  }
+
+  .favoriteBtn::before {
+    font-size: 0.85rem;
+  }
+
   .deleteBtn {
-    padding: 0.25rem;
+    font-size: 0.85rem;
+    padding: 0.1rem;
   }
 }

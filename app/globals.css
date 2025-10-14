@@ -241,6 +241,34 @@ button:-moz-focusring,
 }
 
 /**
+ * Remove tap highlight on mobile devices
+ */
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/**
+ * Remove focus outline for mouse users (keep for keyboard users)
+ */
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/**
  * Correct the padding in Firefox.
  */
 
@@ -426,7 +454,7 @@ template {
 @media (max-width: 768px) {
   .title {
     font-size: 20px;
-    padding: 1rem;
+    padding: 0.75rem 1rem 1.5rem 1rem;
     margin-bottom: 0;
   }
 
