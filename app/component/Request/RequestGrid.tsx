@@ -6,10 +6,14 @@ import { useRequestContext } from "./RequestContext";
 
 interface RequestGridProps {
   requests: Request[];
+  toggleFavoriteRequest: (requestId: number) => void;
+  getIsFavoriteRequest: (requestId: number) => boolean;
 }
 
 export const RequestGrid = memo(function RequestGrid({
   requests,
+  toggleFavoriteRequest,
+  getIsFavoriteRequest,
 }: RequestGridProps) {
   const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(
     new Set()
@@ -63,6 +67,8 @@ export const RequestGrid = memo(function RequestGrid({
           group={group}
           isCollapsed={collapsedGroups.has(group.userId)}
           handleCollapse={handleCollapse}
+          toggleFavoriteRequest={toggleFavoriteRequest}
+          getIsFavoriteRequest={getIsFavoriteRequest}
         />
       ))}
     </div>

@@ -8,12 +8,16 @@ interface RequestGroupProps {
   group: RequestGroups;
   isCollapsed: boolean;
   handleCollapse: (userId: number) => void;
+  toggleFavoriteRequest: (requestId: number) => void;
+  getIsFavoriteRequest: (requestId: number) => boolean;
 }
 
 export const RequestGroup = memo(function RequestGroup({
   group,
   isCollapsed,
   handleCollapse,
+  toggleFavoriteRequest,
+  getIsFavoriteRequest,
 }: RequestGroupProps) {
   return (
     <div key={group.userId} className={styles.userBubble}>
@@ -33,37 +37,52 @@ export const RequestGroup = memo(function RequestGroup({
         }`}
       >
         {group.requests.map((request) => (
-          <RequestGridItem key={request.requestId} request={request} />
+          <RequestGridItem
+            key={request.requestId}
+            request={request}
+            toggleFavoriteRequest={toggleFavoriteRequest}
+            getIsFavoriteRequest={getIsFavoriteRequest}
+          />
         ))}
       </article>
     </div>
   );
 });
 
-export function RequestGridItem({ request }: { request: Request }) {
+export function RequestGridItem({
+  request,
+  toggleFavoriteRequest,
+  getIsFavoriteRequest,
+}: {
+  request: Request;
+  toggleFavoriteRequest: (requestId: number) => void;
+  getIsFavoriteRequest: (requestId: number) => boolean;
+}) {
   const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
-
   const isMyRequest = isMyRequestGroup(request.userId);
-
+  const isFavoriteRequest = getIsFavoriteRequest(request.requestId);
   return (
     <div className={styles.requestItem}>
       <span className={styles.requestText}>{request.text}</span>
-      <button
-        className={styles.deleteBtn}
-        style={{ display: "none" }} // 현재 비활성화
-        title="즐겨찾기"
-      >
-        ☆
-      </button>
-      {isMyRequest && (
+      <div className={styles.buttonGroup}>
         <button
-          className={styles.deleteBtn}
-          onClick={() => handleDeleteRequest(request.requestId)}
-          title="삭제"
-        >
-          🗑️
-        </button>
-      )}
+          className={`${styles.favoriteBtn} ${
+            isFavoriteRequest ? styles.favorited : ""
+          }`}
+          title={isFavoriteRequest ? "즐겨찾기 해제" : "즐겨찾기"}
+          onClick={() => toggleFavoriteRequest(request.requestId)}
+          aria-pressed={isFavoriteRequest}
+        />
+        {isMyRequest && (
+          <button
+            className={styles.deleteBtn}
+            onClick={() => handleDeleteRequest(request.requestId)}
+            title="삭제"
+          >
+            ✕
+          </button>
+        )}
+      </div>
     </div>
   );
 }

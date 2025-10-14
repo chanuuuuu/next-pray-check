@@ -23,3 +23,9 @@ export const ERROR_MESSAGES = {
   USER_REGISTRATION_FAILED:
     "사용자 등록에 실패하였습니다. 잠시후 재시도 해주세요.",
 } as const;
+
+export const REQUEST_GROUP_OPTIONS = {
+  TEAM: { value: 1 as const, label: "팀별" as const },
+  CELL: { value: 2 as const, label: "조별" as const },
+  FAVORITE: { value: 3 as const, label: "즐겨찾기" as const },
+};
