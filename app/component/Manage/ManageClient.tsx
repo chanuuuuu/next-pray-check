@@ -6,33 +6,32 @@ import { ModifyUserClient } from "./ModifyUserClient";
 import { Modal } from "@/app/component/Modal";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
-import { ManageContextProvider, useManageContext } from "./ManageContext";
+import { useManageModal } from "@/app/hooks/useManageModal";
 import { actionDelete } from "@/app/action/registAction";
-import { useTransition } from "react";
+import { useTransition, useCallback } from "react";
 
 interface ManageClientProps {
   users: User[];
 }
 
-function ManageClientInner({ users }: ManageClientProps) {
+export function ManageClient({ users }: ManageClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { selectedUser, handleModalOpen, handleModalClose, isOpen } =
-    useManageContext();
+    useManageModal();
 
-  const handleEdit = (user: User) => {
-    handleModalOpen(user);
-  };
-
-  const handleDelete = (user: User) => {
-    const confirmed = confirm(`${user.name}님을 정말 삭제하시겠습니까?`);
-    if (confirmed) {
-      startTransition(async () => {
-        await actionDelete(user);
-        router.refresh();
-      });
-    }
-  };
+  const handleDelete = useCallback(
+    (user: User) => {
+      const confirmed = confirm(`${user.name}님을 정말 삭제하시겠습니까?`);
+      if (confirmed) {
+        startTransition(async () => {
+          await actionDelete(user);
+          router.refresh();
+        });
+      }
+    },
+    [router]
+  );
 
   const handleModify = () => {
     router.refresh();
@@ -53,7 +52,11 @@ function ManageClientInner({ users }: ManageClientProps) {
           등록
         </button>
       </div>
-      <TeamGrid users={users} onEdit={handleEdit} onDelete={handleDelete} />
+      <TeamGrid
+        users={users}
+        onEdit={handleModalOpen}
+        onDelete={handleDelete}
+      />
       <Modal
         isOpen={isOpen}
         onClose={() => handleModalClose()}
@@ -66,14 +69,5 @@ function ManageClientInner({ users }: ManageClientProps) {
         />
       </Modal>
     </div>
-  );
-}
-
-// Provider를 제공하는 외부 컴포넌트
-export function ManageClient({ users }: ManageClientProps) {
-  return (
-    <ManageContextProvider>
-      <ManageClientInner users={users} />
-    </ManageContextProvider>
   );
 }

@@ -3,7 +3,7 @@ import { LEVEL_OPTIONS } from "@/app/utils/constants";
 import { getBirthDisplay } from "@/app/utils/clientUtils";
 import styles from "./UserGrid.module.css";
 import { getCells } from "@/app/utils/clientUtils";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 
 interface UserGridProps {
   users: User[];
@@ -72,10 +72,6 @@ export const TeamGrid = memo(function TeamGrid({
   onEdit,
   onDelete,
 }: UserGridProps) {
-  useEffect(() => {
-    // 테스트용
-    console.log(users);
-  });
   const cells = getCells(users);
   return (
     <section>
