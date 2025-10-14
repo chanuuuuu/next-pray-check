@@ -35,6 +35,41 @@ export class RequestService {
       return false;
     }
   }
+
+  async fetchFavoriteRequests(userId: number): Promise<number[]> {
+    const queryWeekId = (await getWeekDay()) - 2;
+    return await this.requestRepository.getFavoriteRequests(
+      userId,
+      queryWeekId
+    );
+  }
+
+  async addFavoriteRequest(
+    userId: number,
+    requestId: number
+  ): Promise<boolean> {
+    try {
+      return await this.requestRepository.addFavoriteRequest(userId, requestId);
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  async deleteFavoriteRequest(
+    userId: number,
+    requestId: number
+  ): Promise<boolean> {
+    try {
+      return await this.requestRepository.deleteFavoriteRequest(
+        userId,
+        requestId
+      );
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
 }
 
 export const requestService = new RequestService();

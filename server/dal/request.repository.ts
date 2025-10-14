@@ -29,6 +29,14 @@ export class RequestRepository {
           is_solved    BOOLEAN NOT NULL DEFAULT FALSE,
           updated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
+
+        CREATE TABLE IF NOT EXISTS request_favorites (
+          user_id     INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+          request_id  INT NOT NULL REFERENCES requests(request_id) ON DELETE CASCADE,
+          week_id     INT NOT NULL,  -- ← 추가 (좋아요 시점의 request의 week_id 스냅샷)
+          created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (user_id, request_id)
+        );
     `;
     return prayerTable;
   }
@@ -94,13 +102,55 @@ export class RequestRepository {
   }
 
   // request_id를 기반으로 기도제목 삭제
-  async deleteRequest(requestId: number) {
+  async deleteRequest(requestId: number): Promise<boolean> {
     const result = await sql`
       DELETE FROM requests
       WHERE request_id = ${requestId}
       RETURNING request_id;
     `;
 
-    return result.length > 0 ? result[0] : null;
+    return result.length > 0 ? !!result[0] : false;
+  }
+
+  async getFavoriteRequests(userId: number, weekId: number): Promise<number[]> {
+    const favorites = await sql`
+      SELECT *
+      FROM request_favorites
+      WHERE user_id = ${userId}
+        AND week_id >= ${weekId}
+    `;
+
+    return favorites.map((favorite) => favorite?.request_id as number);
+  }
+
+  async deleteFavoriteRequest(
+    userId: number,
+    requestId: number
+  ): Promise<boolean> {
+    console.log("deleteFavoriteRequest", userId, requestId);
+    const result = await sql`
+      DELETE FROM request_favorites
+      WHERE user_id = ${userId}
+        AND request_id = ${requestId}
+      RETURNING request_id;
+    `;
+
+    return result.length > 0 ? !!result[0] : false;
+  }
+
+  async addFavoriteRequest(
+    userId: number,
+    requestId: number
+  ): Promise<boolean> {
+    const result = await sql`
+      INSERT INTO request_favorites (user_id, request_id, week_id)
+      SELECT ${userId}, r.request_id, r.week_id
+      FROM requests r
+      WHERE r.request_id = ${requestId}
+      ON CONFLICT (user_id, request_id) DO NOTHING
+      RETURNING request_id;
+    `;
+
+    return result.length > 0 ? !!result[0] : false;
   }
 }
