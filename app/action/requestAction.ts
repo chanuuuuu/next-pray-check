@@ -81,3 +81,17 @@ export async function actionRequest(
 export async function actionRequestDelete(requestId: number) {
   return await requestService.deleteRequest(requestId);
 }
+
+export async function actionAddFavoriteRequest(
+  requestId: number,
+  userId: number
+) {
+  return await requestService.addFavoriteRequest(userId, requestId);
+}
+
+export async function actionDeleteFavoriteRequest(
+  requestId: number,
+  userId: number
+) {
+  return await requestService.deleteFavoriteRequest(userId, requestId);
+}

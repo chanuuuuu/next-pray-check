@@ -1,20 +1,37 @@
 "use client";
 
 import { Request } from "@/types/request.type";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { Modal } from "../Modal";
 import styles from "./RequestClient.module.css";
 import { RequestContextProvider } from "./RequestContext";
+import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
+import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
 
 interface RequestClientProps {
   requests: Request[];
   userId: number;
+  cellId: number;
+  initialFavoriteRequests: number[];
 }
 
-export function RequestClientInner({ requests, userId }: RequestClientProps) {
+export function RequestClientInner({
+  requests,
+  initialFavoriteRequests,
+  userId,
+  cellId,
+}: RequestClientProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { favoriteRequests, toggleFavoriteRequest, getIsFavoriteRequest } =
+    useFavoriteRequest({
+      userId,
+      initialFavoriteRequests,
+    });
+  const [selectedRequestType, setSelectedRequestType] = useState<number>(
+    REQUEST_GROUP_OPTIONS.TEAM.value
+  );
 
   const insertId = useMemo(
     () =>
@@ -27,14 +44,46 @@ export function RequestClientInner({ requests, userId }: RequestClientProps) {
     [requests, userId]
   );
 
+  const conditionalRequests = useMemo(() => {
+    switch (selectedRequestType) {
+      case REQUEST_GROUP_OPTIONS.TEAM.value:
+        return requests;
+      case REQUEST_GROUP_OPTIONS.CELL.value:
+        return requests.filter((request) => request.cellId === cellId);
+      case REQUEST_GROUP_OPTIONS.FAVORITE.value:
+        return requests.filter((request) =>
+          favoriteRequests.includes(request.requestId)
+        );
+    }
+    return requests;
+  }, [requests, selectedRequestType, cellId, favoriteRequests]);
+
+  function handleRequestTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedRequestType(Number(e.target.value));
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
+        <select
+          defaultValue={REQUEST_GROUP_OPTIONS.TEAM.value}
+          onChange={handleRequestTypeChange}
+        >
+          {Object.values(REQUEST_GROUP_OPTIONS).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
         <button onClick={() => setIsOpen(true)} className={styles.registerBtn}>
           등록
         </button>
       </div>
-      <RequestGrid requests={requests} />
+      <RequestGrid
+        requests={conditionalRequests}
+        toggleFavoriteRequest={toggleFavoriteRequest}
+        getIsFavoriteRequest={getIsFavoriteRequest}
+      />
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -50,10 +99,20 @@ export function RequestClientInner({ requests, userId }: RequestClientProps) {
 }
 
 // Provider를 제공하는 외부 컴포넌트
-export function RequestClient({ requests, userId }: RequestClientProps) {
+export function RequestClient({
+  requests,
+  initialFavoriteRequests,
+  userId,
+  cellId,
+}: RequestClientProps) {
   return (
     <RequestContextProvider userId={userId}>
-      <RequestClientInner requests={requests} userId={userId} />
+      <RequestClientInner
+        requests={requests}
+        initialFavoriteRequests={initialFavoriteRequests}
+        userId={userId}
+        cellId={cellId}
+      />
     </RequestContextProvider>
   );
 }
