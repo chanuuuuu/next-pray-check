@@ -5,15 +5,17 @@ import { CollapseButton } from "./CollapseButton";
 
 export interface UserCardProps {
   user: Pick<User, "userId" | "name" | "gisu">;
-  isCollapsed: boolean;
-  handleCollapse: (userId: number) => void;
+  isCollapsed?: boolean;
+  handleCollapse?: (userId: number) => void;
+  disableCollapseButton?: boolean;
 }
 
 export function UserCard({
   user,
-  isCollapsed,
-  handleCollapse,
+  isCollapsed = false,
+  handleCollapse = () => {},
   children,
+  disableCollapseButton = true,
 }: PropsWithChildren<UserCardProps>) {
   return (
     <div key={user.userId} className={styles.userBubble}>
@@ -22,10 +24,12 @@ export function UserCard({
           <h4 className={styles.userName}>{user.name}</h4>
           <span className={styles.userGisu}>{user.gisu}기</span>
         </div>
-        <CollapseButton
-          isCollapsed={isCollapsed}
-          handleCollapse={() => handleCollapse(user.userId)}
-        />
+        {!disableCollapseButton && (
+          <CollapseButton
+            isCollapsed={isCollapsed}
+            handleCollapse={() => handleCollapse(user.userId)}
+          />
+        )}
       </div>
       <article
         className={`${styles.requestsList} ${
