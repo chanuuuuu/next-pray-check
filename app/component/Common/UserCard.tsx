@@ -15,7 +15,7 @@ export function UserCard({
   isCollapsed = false,
   handleCollapse = () => {},
   children,
-  disableCollapseButton = true,
+  disableCollapseButton = false,
 }: PropsWithChildren<UserCardProps>) {
   return (
     <div key={user.userId} className={styles.userBubble}>
