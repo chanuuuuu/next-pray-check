@@ -1,10 +1,12 @@
 .loginPage {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: #f8f9fa;
+  padding: 20px;
 }
 
 .loginMain {
@@ -13,6 +15,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 
 /* 다크 모드 지원 */
@@ -25,8 +28,8 @@
 /* 모바일 최적화 */
 @media (max-width: 768px) {
   .loginPage {
-    padding: 16px;
-    min-height: 100vh;
+    height: calc(100vh - 60px);
+    padding: 16px 16px 0;
   }
 
   .loginMain {

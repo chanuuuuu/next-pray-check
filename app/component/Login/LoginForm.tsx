@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.css";
+import ShinyText from "../Common/ReactBits/ShinyText";
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(actionLogin, {
@@ -21,12 +22,12 @@ export default function LoginForm() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>[2청] 기도제목 한줄 나눔</h1>
+      <h1 className={styles.title}>[2청] 기도제목 나눔</h1>
       <form action={formAction} className={styles.form}>
         <section className={styles.formSection}>
           <div className={styles.formField}>
             <label htmlFor="name" className={styles.label}>
-              이름
+              <ShinyText speed={4} text="이름" />
             </label>
             <input
               id="name"
@@ -42,7 +43,7 @@ export default function LoginForm() {
           </div>
           <div className={styles.formField}>
             <label htmlFor="birth" className={styles.label}>
-              생년월일
+              <ShinyText speed={4} text="생년월일" />
             </label>
             <input
               id="birth"
@@ -60,7 +61,7 @@ export default function LoginForm() {
           <p className={styles.error}>{state.error?.user}</p>
         )}
         <button type="submit" disabled={isPending} className={styles.submitBtn}>
-          {isPending ? "로그인 중..." : "로그인"}
+          <ShinyText speed={2} text={isPending ? "로그인 중..." : "로그인"} />
         </button>
       </form>
     </div>
