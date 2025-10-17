@@ -37,7 +37,7 @@ export const RequestGroup = memo(function RequestGroup({
         }`}
       >
         {group.requests.map((request) => (
-          <RequestGridItem
+          <RequestItem
             key={request.requestId}
             request={request}
             toggleFavoriteRequest={toggleFavoriteRequest}
@@ -49,7 +49,7 @@ export const RequestGroup = memo(function RequestGroup({
   );
 });
 
-export function RequestGridItem({
+function RequestItem({
   request,
   toggleFavoriteRequest,
   getIsFavoriteRequest,
