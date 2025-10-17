@@ -22,17 +22,20 @@ export interface User {
 }
 
 // 인원 등록시에 조편성을 위한 리더 타입
-export interface Leader {
+export type Leader = CellMember;
+
+export interface CellMember {
   groupId: number; // 소속 그룹
   cellId: number; // 소속 셀
   name: string; // 이름
   level: number; // 권한
 }
 
-export interface Cell {
+// Generic Cell 타입
+export interface Cell<T extends CellMember> {
   cellId: number;
   leaderName: string;
-  users: User[];
+  users: T[];
 }
 
 export interface UserLoginInput {

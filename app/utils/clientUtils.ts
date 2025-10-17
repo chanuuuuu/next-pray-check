@@ -1,4 +1,4 @@
-import { User, Leader, Cell } from "@/types/user.type";
+import { User, Leader, Cell, CellMember } from "@/types/user.type";
 
 export function getBirthDisplay(birth: string): string {
   if (!birth || birth.length < 6) return "";
@@ -34,8 +34,8 @@ export function getLeaders(users: User[]): Leader[] {
   return filteredLeaders;
 }
 
-export function getCells(users: User[]): Cell[] {
-  return users.reduce((_cells: Cell[], user: User) => {
+export function getCells<T extends CellMember>(users: T[]): Cell<T>[] {
+  return users.reduce((_cells: Cell<T>[], user: T) => {
     const existingCellIndex = _cells.findIndex(
       (cell) => cell.cellId === user.cellId
     );
@@ -59,7 +59,7 @@ export function getCells(users: User[]): Cell[] {
     }
 
     return _cells;
-  }, [] as Cell[]);
+  }, [] as Cell<T>[]);
 }
 
 export function removeAtIndex<T>(array: T[], index: number): T[] {
