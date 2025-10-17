@@ -9,6 +9,7 @@ import styles from "./RequestClient.module.css";
 import { RequestContextProvider } from "./RequestContext";
 import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
 import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
+import { CustomSelect } from "@/app/component/Common/CustomSelect";
 
 interface RequestClientProps {
   requests: Request[];
@@ -58,23 +59,22 @@ export function RequestClientInner({
     return requests;
   }, [requests, selectedRequestType, cellId, favoriteRequests]);
 
-  function handleRequestTypeChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedRequestType(Number(e.target.value));
+  function handleRequestTypeChange(value: number) {
+    setSelectedRequestType(value);
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <select
-          defaultValue={REQUEST_GROUP_OPTIONS.TEAM.value}
+        <CustomSelect
+          options={Object.values(REQUEST_GROUP_OPTIONS).map((option) => ({
+            value: option.value,
+            label: option.label,
+          }))}
+          value={selectedRequestType}
           onChange={handleRequestTypeChange}
-        >
-          {Object.values(REQUEST_GROUP_OPTIONS).map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        />
+
         <button onClick={() => setIsOpen(true)} className={styles.registerBtn}>
           등록
         </button>
