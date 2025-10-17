@@ -127,7 +127,6 @@ export class RequestRepository {
     userId: number,
     requestId: number
   ): Promise<boolean> {
-    console.log("deleteFavoriteRequest", userId, requestId);
     const result = await sql`
       DELETE FROM request_favorites
       WHERE user_id = ${userId}
