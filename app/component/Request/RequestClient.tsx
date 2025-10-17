@@ -1,7 +1,7 @@
 "use client";
 
 import { Request } from "@/types/request.type";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { Modal } from "../Modal";

@@ -1,4 +1,4 @@
-import { UserRow } from "./user.type";
+import { User, UserRow } from "./user.type";
 
 export interface RequestBase {
   request_id: number;
@@ -35,7 +35,7 @@ export interface ModifyRequest {
   isUrgent?: boolean;
 }
 
-export interface RequestGroups {
+export interface RequestGroup {
   userId: number;
   name: string;
   gisu: number;

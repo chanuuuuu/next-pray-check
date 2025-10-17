@@ -5,90 +5,6 @@
   margin: 0 1rem;
 }
 
-/* 사용자별 말풍선 컨테이너 */
-.userBubble {
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-/* 사용자 헤더 */
-.userHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.userName {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.userGisu {
-  font-size: 0.875rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-/* 접기/펼치기 버튼 */
-.toggleBtn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.toggleBtn:hover {
-  background-color: #e5e7eb;
-  color: #374151;
-  transform: scale(1.05);
-}
-
-.toggleIcon {
-  transition: transform 0.3s ease;
-}
-
-.toggleIcon.collapsed {
-  transform: rotate(-90deg);
-}
-
-/* 요청 목록 */
-.requestsList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  max-height: 300px;
-  overflow-y: auto;
-  transition: all 0.3s ease;
-  margin-left: 0.5rem;
-  padding-left: 0.5rem;
-}
-
-.requestsList.collapsed {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-}
-
 /* 요청 아이템 */
 .requestItem {
   display: flex;
@@ -197,37 +113,6 @@
     background-color: #111827;
   }
 
-  .userBubble::before {
-    border-right-color: #1f2937;
-  }
-
-  .userBubble::after {
-    border-right-color: #374151;
-  }
-
-  .userHeader {
-    background: #1f2937;
-    border-color: #374151;
-  }
-
-  .userName {
-    color: #f9fafb;
-  }
-
-  .userGisu {
-    color: #d1d5db;
-  }
-
-  .toggleBtn {
-    background-color: #1f2937;
-    color: #d1d5db;
-  }
-
-  .toggleBtn:hover {
-    background-color: #374151;
-    color: #f9fafb;
-  }
-
   .requestItem::before {
     color: #d1d5db;
   }
@@ -266,23 +151,6 @@
     margin: 0;
   }
 
-  .userBubble {
-    padding: 0.125rem 0;
-  }
-
-  .userHeader {
-    padding: 0.3rem 1rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .userName {
-    font-size: 0.9rem;
-  }
-
-  .userGisu {
-    font-size: 0.8125rem;
-  }
-
   .requestItem {
     padding: 0.25rem 0.5rem;
   }
@@ -290,12 +158,6 @@
   .requestText {
     font-size: 0.825rem;
     margin-right: 0.25rem;
-  }
-
-  .toggleBtn {
-    width: inherit;
-    height: inherit;
-    padding: 0.25rem;
   }
 
   .buttonGroup {

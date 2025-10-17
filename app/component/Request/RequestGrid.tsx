@@ -1,7 +1,7 @@
 import React, { useMemo, memo, useCallback, useState } from "react";
-import { Request, RequestGroups } from "@/types/request.type";
+import { Request, RequestGroup } from "@/types/request.type";
 import styles from "./RequestGrid.module.css";
-import { RequestGroup } from "@/app/component/Request/RequestGroup";
+import { RequestCard } from "@/app/component/Request/RequestCard";
 import { useRequestContext } from "./RequestContext";
 
 interface RequestGridProps {
@@ -48,7 +48,7 @@ export const RequestGrid = memo(function RequestGrid({
         group.requests.push(request);
       }
       return arr;
-    }, [] as RequestGroups[]);
+    }, [] as RequestGroup[]);
   }, [requests, deletedRequests]);
 
   if (requestGroups.length === 0) {
@@ -62,7 +62,7 @@ export const RequestGrid = memo(function RequestGrid({
   return (
     <div className={styles.requestGrid}>
       {requestGroups.map((group) => (
-        <RequestGroup
+        <RequestCard
           key={group.userId}
           group={group}
           isCollapsed={collapsedGroups.has(group.userId)}
