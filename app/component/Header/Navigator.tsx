@@ -11,6 +11,7 @@ export function Navigator() {
   const links: LinkType[] = [
     { href: "/manage", name: "팀원 관리" },
     { href: "/requests", name: "기도제목" },
+    { href: "/attendance", name: "출석등록" },
   ];
 
   const handleLogout = async () => {
