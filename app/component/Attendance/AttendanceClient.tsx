@@ -4,8 +4,7 @@ import { Attendance } from "@/types/attendance.type";
 import { useMemo } from "react";
 import { getCells } from "@/app/utils/clientUtils";
 import { useState } from "react";
-import { UserCard } from "@/app/component/Common/UserCard";
-import { AttendanceForm } from "./AttendanceForm";
+import { AttendanceCard } from "./AttendanceCard";
 import { useRef, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { actionAttendance } from "@/app/action/attendanceAction";
@@ -94,9 +93,7 @@ export default function AttendanceClient({
       </div>
       <form ref={formRef} className={styles.formContainer}>
         {selectedCellUsers.map((user) => (
-          <UserCard key={user.userId} user={user} disableCollapseButton={true}>
-            <AttendanceForm attendance={user} />
-          </UserCard>
+          <AttendanceCard key={user.userId} attendance={user} />
         ))}
       </form>
     </div>
