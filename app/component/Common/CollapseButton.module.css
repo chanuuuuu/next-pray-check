@@ -29,12 +29,10 @@
 
 @media (prefers-color-scheme: dark) {
   .toggleBtn {
-    background-color: #1f2937;
     color: #d1d5db;
   }
 
   .toggleBtn:hover {
-    background-color: #374151;
     color: #f9fafb;
   }
 }

@@ -2,7 +2,7 @@ import styles from "./CollapseButton.module.css";
 
 interface CollapseButtonProps {
   isCollapsed: boolean;
-  handleCollapse: () => void;
+  handleCollapse: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function CollapseButton({

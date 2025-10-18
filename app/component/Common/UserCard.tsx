@@ -19,7 +19,10 @@ export function UserCard({
 }: PropsWithChildren<UserCardProps>) {
   return (
     <div key={user.userId} className={styles.userBubble}>
-      <div className={styles.userHeader}>
+      <div
+        className={styles.userHeader}
+        onClick={() => !disableCollapseButton && handleCollapse(user.userId)}
+      >
         <div className={styles.userInfo}>
           <h4 className={styles.userName}>{user.name}</h4>
           <span className={styles.userGisu}>{user.gisu}기</span>
@@ -27,7 +30,10 @@ export function UserCard({
         {!disableCollapseButton && (
           <CollapseButton
             isCollapsed={isCollapsed}
-            handleCollapse={() => handleCollapse(user.userId)}
+            handleCollapse={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.stopPropagation(); // 이벤트 전파 중단
+              handleCollapse(user.userId);
+            }}
           />
         )}
       </div>
