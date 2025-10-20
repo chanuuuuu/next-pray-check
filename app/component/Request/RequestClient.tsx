@@ -110,7 +110,7 @@ export function RequestClient({
     <RequestContextProvider userId={userId}>
       <FadeContent
         blur={false}
-        duration={1500}
+        duration={1000}
         easing="ease-out"
         initialOpacity={0.1}
       >

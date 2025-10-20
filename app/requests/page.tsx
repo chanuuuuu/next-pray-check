@@ -5,8 +5,7 @@ import { verifySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { RequestClient } from "../component/Request/RequestClient";
 import { Suspense } from "react";
-import RequestLoading from "../component/Request/RequestLoading";
-import "./page.css";
+import RequestLoading from "@/app/component/Request/RequestLoading";
 
 export default async function Requests() {
   const user = await verifySession();

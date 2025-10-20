@@ -1,0 +1,72 @@
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 4%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.1) 46%
+  );
+  background-size: 1000px 100%;
+}
+
+.loadingCard {
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loadingCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.loadingUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loadingName {
+  width: 80px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.loadingGisu {
+  width: 40px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.loadingContent {
+  height: 60px;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+}
+
+.content40 {
+  height: 40px;
+}
+
+.content80 {
+  height: 80px;
+}
+
+@media (max-width: 768px) {
+  .loadingCard {
+    padding: 0.5rem;
+  }
+}

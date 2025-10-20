@@ -1,20 +1,7 @@
 "use client";
-import { LightRayWrapper } from "../Common/ReactBits/ReactBitsWrapper";
+import { LightRayWrapper } from "@/app/component/Common/ReactBits/ReactBitsWrapper";
+import { UserCardLoading } from "@/app/component/Common/UserCardLoading";
 import "./RequestLoading.css";
-
-function LoadingCard() {
-  return (
-    <div className="loadingCard">
-      <div className="loadingCardHeader">
-        <div className="loadingUserInfo">
-          <div className="loadingName shimmer" />
-          <div className="loadingGisu shimmer" />
-        </div>
-      </div>
-      <div className="loadingContent shimmer" />
-    </div>
-  );
-}
 
 export default function RequestLoading() {
   return (
@@ -27,7 +14,7 @@ export default function RequestLoading() {
             <div className="loadingButton shimmer" />
           </div>
           {[1, 2, 3, 4].map((i) => (
-            <LoadingCard key={i} />
+            <UserCardLoading key={i} />
           ))}
         </div>
       </LightRayWrapper>

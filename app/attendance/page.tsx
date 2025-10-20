@@ -3,6 +3,8 @@ import { verifySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { attendanceService } from "@/server/services/attendance.service";
 import AttendanceClient from "@/app/component/Attendance/AttendanceClient";
+import { Suspense } from "react";
+import { AttendanceLoading } from "@/app/component/Attendance/AttendanceLoading";
 
 export default async function Attendance() {
   const user = await verifySession();
@@ -11,12 +13,25 @@ export default async function Attendance() {
     redirect("/login");
   }
 
-  const attendances = await attendanceService.getAttendances(user.groupId);
+  return (
+    <Suspense fallback={<AttendanceLoading />}>
+      <AttendanceContent groupId={user.groupId} cellId={user.cellId} />
+    </Suspense>
+  );
+}
 
+async function AttendanceContent({
+  groupId,
+  cellId,
+}: {
+  groupId: number;
+  cellId: number;
+}) {
+  const attendances = await attendanceService.getAttendances(groupId);
   return (
     <section className="page">
       <h1 className="title">출석부</h1>
-      <AttendanceClient attendances={attendances} cellId={user.cellId} />
+      <AttendanceClient attendances={attendances} cellId={cellId} />
     </section>
   );
 }
