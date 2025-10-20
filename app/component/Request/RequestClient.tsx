@@ -11,6 +11,7 @@ import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
 import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
 import { CustomSelect } from "@/app/component/Common/CustomSelect";
 import { LightRayWrapper } from "../Common/ReactBits/ReactBitsWrapper";
+import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
 
 interface RequestClientProps {
   requests: Request[];
@@ -75,7 +76,6 @@ export function RequestClientInner({
           value={selectedRequestType}
           onChange={handleRequestTypeChange}
         />
-
         <button onClick={() => setIsOpen(true)} className={styles.registerBtn}>
           등록
         </button>
@@ -108,14 +108,21 @@ export function RequestClient({
 }: RequestClientProps) {
   return (
     <RequestContextProvider userId={userId}>
-      <LightRayWrapper>
-        <RequestClientInner
-          requests={requests}
-          initialFavoriteRequests={initialFavoriteRequests}
-          userId={userId}
-          cellId={cellId}
-        />
-      </LightRayWrapper>
+      <FadeContent
+        blur={false}
+        duration={1500}
+        easing="ease-out"
+        initialOpacity={0.1}
+      >
+        <LightRayWrapper>
+          <RequestClientInner
+            requests={requests}
+            initialFavoriteRequests={initialFavoriteRequests}
+            userId={userId}
+            cellId={cellId}
+          />
+        </LightRayWrapper>
+      </FadeContent>
     </RequestContextProvider>
   );
 }

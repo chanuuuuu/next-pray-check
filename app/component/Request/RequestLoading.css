@@ -1,0 +1,129 @@
+.loading-container {
+  padding: 0 1rem;
+  background-color: transparent;
+  height: calc(100vh - 64px);
+}
+
+.loading-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1) 4%,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0.1) 46%
+  );
+  background-size: 1000px 100%;
+}
+
+.loadingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.loadingSelect {
+  width: 150px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.loadingButton {
+  width: 80px;
+  height: 38px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.loadingCard {
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loadingCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.loadingUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loadingName {
+  width: 80px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.loadingGisu {
+  width: 40px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.loadingContent {
+  height: 60px;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .loading-container {
+    padding: 0 0.7rem;
+  }
+
+  .loadingHeader {
+    padding: 0 0;
+    gap: 0.5rem;
+  }
+
+  .loadingHeader {
+    padding: 0;
+    gap: 0.5rem;
+  }
+
+  .loadingSelect {
+    padding: 6px 0;
+    font-size: 0.75rem;
+    width: 100px;
+    height: 1rem;
+  }
+
+  .loadingButton {
+    padding: 8px 16px;
+    font-size: 13px;
+    width: 22px;
+    height: 1rem;
+  }
+
+  .loadingCard {
+    padding: 0.5rem;
+  }
+}

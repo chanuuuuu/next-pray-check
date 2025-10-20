@@ -1,0 +1,8 @@
+.page {
+  position: relative;
+  height: calc(100vh - 64px); /* 헤더 높이 제외 */
+}
+
+.title {
+  margin-top: 0;
+}

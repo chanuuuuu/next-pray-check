@@ -78,3 +78,21 @@
     padding: 0.2rem 0.5rem;
   }
 }
+
+/* hover가 지원되는 디바이스에서만 hover 효과 적용 */
+@media (hover: hover) {
+  .userBubble:hover {
+    transform: translateY(-2px);
+    background: rgba(26, 31, 54, 0.5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* 터치 디바이스를 위한 active 상태 스타일 */
+@media (hover: none) {
+  .userBubble:active {
+    background: rgba(26, 31, 54, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}

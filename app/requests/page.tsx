@@ -4,6 +4,9 @@ import { requestService } from "@/server/services/request.services";
 import { verifySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { RequestClient } from "../component/Request/RequestClient";
+import { Suspense } from "react";
+import RequestLoading from "../component/Request/RequestLoading";
+import "./page.css";
 
 export default async function Requests() {
   const user = await verifySession();
@@ -13,14 +16,16 @@ export default async function Requests() {
   }
 
   return (
-    <section className="page">
-      <h1 className="title">기도제목</h1>
-      <RequestPageContent
-        groupId={user.groupId}
-        userId={user.userId}
-        cellId={user.cellId}
-      />
-    </section>
+    <Suspense fallback={<RequestLoading />}>
+      <section className="page">
+        <h1 className="title">기도제목</h1>
+        <RequestPageContent
+          groupId={user.groupId}
+          userId={user.userId}
+          cellId={user.cellId}
+        />
+      </section>
+    </Suspense>
   );
 }
 
@@ -36,6 +41,7 @@ async function RequestPageContent({
   const [requests, favoriteRequests] = await Promise.all([
     requestService.fetchRequests(groupId),
     requestService.fetchFavoriteRequests(userId),
+    new Promise((resolve) => setTimeout(resolve, 2000)),
   ]);
 
   return (

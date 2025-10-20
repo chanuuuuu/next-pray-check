@@ -3,6 +3,7 @@ import { Request, RequestGroup } from "@/types/request.type";
 import styles from "./RequestGrid.module.css";
 import { RequestCard } from "@/app/component/Request/RequestCard";
 import { useRequestContext } from "./RequestContext";
+import FadeContent from "../Common/ReactBits/FadeContent";
 
 interface RequestGridProps {
   requests: Request[];
@@ -62,14 +63,21 @@ export const RequestGrid = memo(function RequestGrid({
   return (
     <div className={styles.requestGrid}>
       {requestGroups.map((group) => (
-        <RequestCard
+        <FadeContent
           key={group.userId}
-          group={group}
-          isCollapsed={collapsedGroups.has(group.userId)}
-          handleCollapse={handleCollapse}
-          toggleFavoriteRequest={toggleFavoriteRequest}
-          getIsFavoriteRequest={getIsFavoriteRequest}
-        />
+          blur={false}
+          duration={1000}
+          easing="ease-out"
+          initialOpacity={0.1}
+        >
+          <RequestCard
+            group={group}
+            isCollapsed={collapsedGroups.has(group.userId)}
+            handleCollapse={handleCollapse}
+            toggleFavoriteRequest={toggleFavoriteRequest}
+            getIsFavoriteRequest={getIsFavoriteRequest}
+          />
+        </FadeContent>
       ))}
     </div>
   );
