@@ -109,10 +109,6 @@
 
 /* 다크 모드 지원 */
 @media (prefers-color-scheme: dark) {
-  .requestGrid {
-    background-color: #111827;
-  }
-
   .requestItem::before {
     color: #d1d5db;
   }

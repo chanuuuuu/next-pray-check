@@ -10,6 +10,7 @@ import { RequestContextProvider } from "./RequestContext";
 import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
 import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
 import { CustomSelect } from "@/app/component/Common/CustomSelect";
+import { LightRayWrapper } from "../Common/ReactBits/ReactBitsWrapper";
 
 interface RequestClientProps {
   requests: Request[];
@@ -107,12 +108,14 @@ export function RequestClient({
 }: RequestClientProps) {
   return (
     <RequestContextProvider userId={userId}>
-      <RequestClientInner
-        requests={requests}
-        initialFavoriteRequests={initialFavoriteRequests}
-        userId={userId}
-        cellId={cellId}
-      />
+      <LightRayWrapper>
+        <RequestClientInner
+          requests={requests}
+          initialFavoriteRequests={initialFavoriteRequests}
+          userId={userId}
+          cellId={cellId}
+        />
+      </LightRayWrapper>
     </RequestContextProvider>
   );
 }
