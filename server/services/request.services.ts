@@ -50,7 +50,7 @@ export class RequestService {
         return this.requestRepository.getFavoriteRequests(userId, queryWeekId);
       },
       ["favoriteRequests", userId.toString(), queryWeekId.toString()],
-      { tags: ["requests"] }
+      { tags: ["favoriteRequests"] }
     )();
   }
 

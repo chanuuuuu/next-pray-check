@@ -71,6 +71,7 @@ export async function actionRequest(
     const result = await requestService.createRequests(modifyRequests);
     if (result) {
       revalidateTag("requests");
+      revalidateTag("favoriteRequests");
     }
   }
 
