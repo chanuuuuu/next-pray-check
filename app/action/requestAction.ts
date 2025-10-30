@@ -4,6 +4,7 @@ import { getUserBySession } from "@/server/session";
 import { getWeekDay } from "../utils/utils";
 import { ModifyRequest } from "@/types/request.type";
 import { requestService } from "@/server/services/request.services";
+import { revalidateTag } from "next/cache";
 
 export interface RequestInput {
   error?: string;
@@ -67,7 +68,10 @@ export async function actionRequest(
         } as ModifyRequest)
     );
 
-    await requestService.createRequests(modifyRequests);
+    const result = await requestService.createRequests(modifyRequests);
+    if (result) {
+      revalidateTag("requests");
+    }
   }
 
   return {

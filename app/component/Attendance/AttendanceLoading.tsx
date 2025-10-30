@@ -1,12 +1,8 @@
 "use client";
-import { useEffect } from "react";
 import { UserCardLoading } from "@/app/component/Common/UserCardLoading";
 import "./AttendanceLoading.css";
 
 export function AttendanceLoading() {
-  useEffect(() => {
-    console.log("AttendanceLoading");
-  });
   return (
     <section className="page">
       <h1 className="title">출석부</h1>

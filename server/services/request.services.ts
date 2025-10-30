@@ -1,6 +1,7 @@
 import { RequestRepository } from "../dal/request.repository";
 import { ModifyRequest, Request } from "@/types/request.type";
 import { getWeekDay } from "@/app/utils/utils";
+import { unstable_cache } from "next/cache";
 
 export class RequestService {
   private requestRepository: RequestRepository;
@@ -11,7 +12,13 @@ export class RequestService {
 
   async fetchRequests(groupId: number, weekId?: number): Promise<Request[]> {
     const queryWeekId = weekId || (await getWeekDay()) - 2;
-    return await this.requestRepository.getRequests(groupId, queryWeekId);
+    return unstable_cache(
+      async (): Promise<Request[]> => {
+        return this.requestRepository.getRequests(groupId, queryWeekId);
+      },
+      ["requests", groupId.toString(), queryWeekId.toString()],
+      { tags: ["requests"] }
+    )();
   }
 
   async createRequests(requests: ModifyRequest[]): Promise<boolean> {
@@ -38,10 +45,13 @@ export class RequestService {
 
   async fetchFavoriteRequests(userId: number): Promise<number[]> {
     const queryWeekId = (await getWeekDay()) - 2;
-    return await this.requestRepository.getFavoriteRequests(
-      userId,
-      queryWeekId
-    );
+    return unstable_cache(
+      async (): Promise<number[]> => {
+        return this.requestRepository.getFavoriteRequests(userId, queryWeekId);
+      },
+      ["favoriteRequests", userId.toString(), queryWeekId.toString()],
+      { tags: ["requests"] }
+    )();
   }
 
   async addFavoriteRequest(

@@ -40,7 +40,6 @@ async function RequestPageContent({
   const [requests, favoriteRequests] = await Promise.all([
     requestService.fetchRequests(groupId),
     requestService.fetchFavoriteRequests(userId),
-    new Promise((resolve) => setTimeout(resolve, 2000)),
   ]);
 
   return (
