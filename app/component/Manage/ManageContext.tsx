@@ -55,7 +55,7 @@ export function ManageContextProvider({ children }: { children: ReactNode }) {
       handleModalOpen,
       handleModalClose,
     }),
-    [selectedUser, isOpen]
+    [selectedUser, isOpen, handleModalOpen, handleModalClose]
   );
 
   return (

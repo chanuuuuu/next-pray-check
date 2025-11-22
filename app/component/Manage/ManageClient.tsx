@@ -22,6 +22,7 @@ export function ManageClient({ users }: ManageClientProps) {
 
   const handleDelete = useCallback(
     (user: User) => {
+      if (isPending) return;
       const confirmed = confirm(`${user.name}님을 정말 삭제하시겠습니까?`);
       if (confirmed) {
         startTransition(async () => {
@@ -30,10 +31,11 @@ export function ManageClient({ users }: ManageClientProps) {
         });
       }
     },
-    [router]
+    [router, isPending]
   );
 
   const handleModify = () => {
+    if (isPending) return;
     router.refresh();
     handleModalClose();
   };

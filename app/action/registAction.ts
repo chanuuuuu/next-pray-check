@@ -77,7 +77,7 @@ export async function actionRegist(
     });
   }
 
-  return createSuccessResponse(state, inputData);
+  return createSuccessResponse(state);
 }
 
 function createErrorResponse(
@@ -99,10 +99,7 @@ function createErrorResponse(
   };
 }
 
-function createSuccessResponse(
-  state: RegistState,
-  inputData: UserFormType
-): RegistState {
+function createSuccessResponse(state: RegistState): RegistState {
   return {
     success: true,
     error: undefined,
