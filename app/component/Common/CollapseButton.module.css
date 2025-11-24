@@ -11,11 +11,12 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  color: #d1d5db;
 }
 
 .toggleBtn:hover {
-  background-color: #e5e7eb;
-  color: #374151;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f9fafb;
   transform: scale(1.05);
 }
 
@@ -25,16 +26,6 @@
 
 .toggleIcon.collapsed {
   transform: rotate(-90deg);
-}
-
-@media (prefers-color-scheme: dark) {
-  .toggleBtn {
-    color: #d1d5db;
-  }
-
-  .toggleBtn:hover {
-    color: #f9fafb;
-  }
 }
 
 /* 모바일 반응형 */

@@ -7,15 +7,15 @@
 .title {
   width: 100%;
   margin-bottom: 20px;
-  color: #333;
+  color: #f9fafb;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
 }
 
 .form {
-  background: white;
-  border: 1px solid #ddd;
+  background: transparent;
+  border: 2px solid #374151;
   border-radius: 8px;
   padding: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@
 .label {
   display: block;
   margin-bottom: 6px;
-  color: #333;
+  color: #f9fafb;
   font-size: 14px;
   font-weight: 500;
 }
@@ -44,25 +44,27 @@
 .input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #4b5563;
   border-radius: 6px;
   font-size: 14px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
+  background-color: #374151;
+  color: #f9fafb;
 }
 
 .input:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .input::placeholder {
-  color: #999;
+  color: #9ca3af;
 }
 
 .error {
-  color: #dc3545;
+  color: #f87171;
   font-size: 12px;
   margin-top: 4px;
   margin-bottom: 0;
@@ -97,41 +99,6 @@
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-}
-
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  .title {
-    color: #f9fafb;
-  }
-
-  .form {
-    background: transparent;
-    border: 2px solid #374151;
-  }
-
-  .label {
-    color: #f9fafb;
-  }
-
-  .input {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
-  }
-
-  .input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-
-  .input::placeholder {
-    color: #9ca3af;
-  }
-
-  .error {
-    color: #f87171;
-  }
 }
 
 /* PC에서 적절한 크기로 조정 */

@@ -1,7 +1,7 @@
 .loading-container {
   padding: 0 1rem;
   background-color: transparent;
-  height: calc(100vh - 64px);
+  height: 100vh;
 }
 
 .loading-text-container {

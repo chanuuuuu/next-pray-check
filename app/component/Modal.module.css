@@ -17,10 +17,11 @@
 
 /* Modal Content */
 .modalContent {
-  background: white;
+  background: #111827;
+  color: #f9fafb;
+  border: 1px solid #374151;
   border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   max-height: 90vh;
   width: 100%;
   display: flex;
@@ -51,7 +52,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px 12px 20px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #374151;
+  background-color: #1f2937;
   flex-shrink: 0;
 }
 
@@ -59,15 +61,15 @@
   margin: 0;
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: #f9fafb;
 }
 
 .closeButton {
   background: none;
-  border: none;
+  border: 1px solid transparent;
   font-size: 20px;
   cursor: pointer;
-  color: #6b7280;
+  color: #9ca3af;
   padding: 4px;
   border-radius: 4px;
   transition: all 0.2s;
@@ -79,8 +81,9 @@
 }
 
 .closeButton:hover {
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: #374151;
+  color: #f3f4f6;
+  border-color: #4b5563;
 }
 
 /* Modal Body */
@@ -89,6 +92,7 @@
   overflow-y: auto;
   flex: 1;
   max-height: 70vh;
+  background-color: #111827;
 }
 
 /* Animations */
@@ -112,48 +116,13 @@
   }
 }
 
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  .modalOverlay {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
-  .modalContent {
-    background: #111827;
-    color: #f9fafb;
-    border: 1px solid #374151;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  }
-
-  .modalHeader {
-    border-bottom-color: #374151;
-    background-color: #1f2937;
-  }
-
-  .modalTitle {
-    color: #f9fafb;
-    font-weight: 600;
-  }
-
-  .modalBody {
-    background-color: #111827;
-  }
-
-  .closeButton {
-    color: #9ca3af;
-    border: 1px solid transparent;
-  }
-
-  .closeButton:hover {
-    background-color: #374151;
-    color: #f3f4f6;
-    border-color: #4b5563;
-  }
-
-  .closeButton:focus {
-    outline: 2px solid #60a5fa;
-    outline-offset: 2px;
-  }
+.closeButton:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
 }
 
 /* 반응형 디자인 */

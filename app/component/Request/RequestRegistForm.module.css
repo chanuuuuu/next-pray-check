@@ -43,20 +43,21 @@
   min-height: 80px;
   padding: 0.75rem;
   padding-right: 2.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid #4b5563;
   border-radius: 0.375rem;
   font-size: 0.875rem;
   font-family: inherit;
   resize: vertical;
   transition: all 0.2s ease-in-out;
-  background-color: #ffffff;
+  background-color: #374151;
+  color: #f9fafb;
   box-sizing: border-box;
 }
 
 .textarea:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
 }
 
 .textarea::placeholder {
@@ -84,8 +85,8 @@
 }
 
 .deleteBtn:hover {
-  background-color: #fee2e2;
-  color: #ef4444;
+  background-color: #7f1d1d;
+  color: #fca5a5;
 }
 
 .deleteBtn:disabled {
@@ -99,7 +100,7 @@
 }
 
 .errorMessage {
-  color: #ef4444;
+  color: #fca5a5;
   font-size: 0.75rem;
   margin-top: 0.25rem;
   font-weight: 500;
@@ -115,9 +116,9 @@
 .addBtn {
   width: 100%;
   padding: 0.75rem;
-  background-color: #f3f4f6;
-  color: #374151;
-  border: 1px solid #d1d5db;
+  background-color: #374151;
+  color: #f9fafb;
+  border: 1px solid #4b5563;
   border-radius: 0.375rem;
   font-size: 0.875rem;
   font-weight: 600;
@@ -130,8 +131,8 @@
 }
 
 .addBtn:hover:not(:disabled) {
-  background-color: #e5e7eb;
-  border-color: #9ca3af;
+  background-color: #4b5563;
+  border-color: #6b7280;
 }
 
 .addBtn:disabled {
@@ -169,50 +170,8 @@
   transform: translateY(0);
 }
 
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  .urgentLabel {
-    color: #f9fafb;
-  }
-
-  .textarea {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
-  }
-
-  .textarea:focus {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
-  }
-
-  .textarea::placeholder {
-    color: #9ca3af;
-  }
-
-  .deleteBtn {
-    color: #9ca3af;
-  }
-
-  .deleteBtn:hover {
-    background-color: #7f1d1d;
-    color: #fca5a5;
-  }
-
-  .errorMessage {
-    color: #fca5a5;
-  }
-
-  .addBtn {
-    background-color: #374151;
-    color: #f9fafb;
-    border-color: #4b5563;
-  }
-
-  .addBtn:hover:not(:disabled) {
-    background-color: #4b5563;
-    border-color: #6b7280;
-  }
+.urgentLabel {
+  color: #f9fafb;
 }
 
 /* 반응형 디자인 */

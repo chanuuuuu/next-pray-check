@@ -9,10 +9,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #4b5563;
   border-radius: 6px;
-  background-color: white;
-  color: #374151;
+  background-color: #343a40;
+  color: #f9fafb;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -21,13 +21,13 @@
 }
 
 .selectTrigger:hover {
-  border-color: #9ca3af;
-  background-color: #f9fafb;
+  border-color: #6b7280;
+  background-color: #4b5563;
 }
 
 .selectTrigger.open {
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
 }
 
 .disabled .selectTrigger {
@@ -52,10 +52,10 @@
   right: 0;
   max-height: 300px;
   overflow-y: auto;
-  background: white;
-  border: 1px solid #d1d5db;
+  background: #343a40;
+  border: 1px solid #4b5563;
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   list-style: none;
   margin: 0;
   padding: 4px 0;
@@ -77,57 +77,19 @@
 .option {
   padding: 8px 12px;
   font-size: 14px;
-  color: #374151;
+  color: #f9fafb;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .option:hover {
-  background-color: #f3f4f6;
+  background-color: #4b5563;
 }
 
 .option.selected {
-  background-color: #e3f2fd;
-  color: #1565c0;
+  background-color: #1e3a5f;
+  color: #90caf9;
   font-weight: 500;
-}
-
-/* 다크 모드 */
-@media (prefers-color-scheme: dark) {
-  .selectTrigger {
-    background-color: #343a40;
-    border-color: #4b5563;
-    color: #f9fafb;
-  }
-
-  .selectTrigger:hover {
-    background-color: #4b5563;
-    border-color: #6b7280;
-  }
-
-  .selectTrigger.open {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
-  }
-
-  .optionsList {
-    background-color: #343a40;
-    border-color: #4b5563;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-
-  .option {
-    color: #f9fafb;
-  }
-
-  .option:hover {
-    background-color: #4b5563;
-  }
-
-  .option.selected {
-    background-color: #1e3a5f;
-    color: #90caf9;
-  }
 }
 
 /* 모바일 반응형 */

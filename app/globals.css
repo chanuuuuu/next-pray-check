@@ -11,13 +11,8 @@
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
-}
-
-/* 다크 모드 배경 설정 */
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: #111827;
-  }
+  background-color: #111827;
+  overflow: hidden; /* 필요시 */
 }
 
 /* Sections
@@ -29,15 +24,9 @@ html {
 
 body {
   margin: 0;
-  padding-bottom: 60px; /* footer 높이만큼 여백 추가 */
-}
-
-/* 다크 모드 body 배경 설정 */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #111827;
-    color: #f9fafb;
-  }
+  padding: 0;
+  background-color: #111827;
+  color: #f9fafb;
 }
 
 /**
@@ -399,7 +388,7 @@ template {
 
 /* Custom Footer Styles */
 .app-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -410,16 +399,16 @@ template {
 
   /* 폰트 사이즈 축소 */
   margin: 0;
-  color: #555;
+  color: #e5e7eb;
   font-size: 14px;
   font-weight: 500;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .app-footer strong {
-  color: #222;
+  color: #ffffff;
   font-weight: 700;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 /* page*/
@@ -430,27 +419,10 @@ template {
 
 .title {
   margin-bottom: 10px;
-  color: #333;
+  color: #f9fafb;
   font-size: 24px;
   font-weight: bold;
   padding: 1rem;
-}
-
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  .title {
-    color: #f9fafb;
-  }
-  .app-footer {
-    background-color: transparent;
-    color: #e5e7eb;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-  }
-
-  .app-footer strong {
-    color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-  }
 }
 
 /* 모바일 반응형 */
@@ -469,7 +441,7 @@ template {
   }
 
   .page {
-    height: calc(100vh - 64px); /* 헤더 높이 제외 */
+    height: 100vh; /* 헤더 높이 제외 */
   }
 }
 
@@ -491,4 +463,40 @@ template {
     rgba(255, 255, 255, 0.1) 46%
   );
   background-size: 1000px 100%;
+}
+
+button {
+  border: none; /* 모든 button의 기본 border 제거 */
+  background: transparent;
+}
+
+button:focus {
+  outline: none;
+  border: none;
+}
+
+/* 모바일에서 input focus 효과 제거 */
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 모바일에서만 적용 */
+@media (max-width: 768px) {
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+  }
 }

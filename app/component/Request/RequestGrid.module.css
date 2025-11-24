@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   margin: 0 1rem;
+  padding-top: 0.1rem;
+  max-height: calc(100vh - 150px); /* 헤더, 타이틀, 필터 영역 제외 */
+  overflow-y: auto;
 }
 
 /* 요청 아이템 */
@@ -18,17 +21,17 @@
 .requestItem::before {
   content: "•";
   position: absolute;
-  left: -0.5rem;
-  color: #6b7280;
-  font-size: 1rem;
+  left: -0.4rem;
+  color: #d1d5db;
+  font-size: 1.25rem;
   font-weight: bold;
   line-height: 1;
 }
 
 .requestText {
   flex: 1;
-  font-size: 0.875rem;
-  color: #374151;
+  font-size: 1.25rem;
+  color: #f9fafb;
   line-height: 1.5;
   word-break: break-word;
   margin-right: 0.75rem;
@@ -52,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 1rem;
   padding: 0.125rem;
   line-height: 1;
@@ -65,6 +68,7 @@
   content: "☆";
   font-size: 1rem;
   transition: all 0.2s ease;
+  color: #9ca3af;
 }
 
 .favoriteBtn.favorited::before {
@@ -90,7 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b7280;
+  color: #9ca3af;
   font-size: 1rem;
   padding: 0.125rem;
   line-height: 1;
@@ -100,45 +104,11 @@
 .emptyState {
   padding: 2rem;
   text-align: center;
-  color: #6b7280;
+  color: #d1d5db;
   font-style: italic;
-  background: white;
+  background: #1f2937;
   border-radius: 8px;
-  border: 1px dashed #d1d5db;
-}
-
-/* 다크 모드 지원 */
-@media (prefers-color-scheme: dark) {
-  .requestItem::before {
-    color: #d1d5db;
-  }
-
-  .requestText {
-    color: #f9fafb;
-  }
-
-  .favoriteBtn::before {
-    color: #9ca3af;
-  }
-
-  .favoriteBtn.favorited::before {
-    color: #fbbf24;
-  }
-
-  .favoriteBtn:hover::before {
-    color: #fbbf24;
-  }
-
-  .deleteBtn {
-    background: transparent;
-    color: #9ca3af;
-  }
-
-  .emptyState {
-    background: #1f2937;
-    border-color: #374151;
-    color: #d1d5db;
-  }
+  border: 1px dashed #374151;
 }
 
 /* 모바일 반응형 */
@@ -148,12 +118,11 @@
   }
 
   .requestItem {
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0rem 0.25rem 0.5rem;
   }
 
   .requestText {
-    font-size: 0.825rem;
-    margin-right: 0.25rem;
+    font-size: 0.9rem;
   }
 
   .buttonGroup {

@@ -14,7 +14,7 @@
 .checkboxGroup label {
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: #f9fafb;
   cursor: pointer;
   user-select: none;
 }
@@ -23,23 +23,12 @@
   width: 18px;
   height: 18px;
   cursor: pointer;
-  accent-color: #007bff;
+  accent-color: #60a5fa;
 }
 
 .checkboxGroup input[type="checkbox"]:disabled {
   cursor: not-allowed;
   opacity: 0.5;
-}
-
-/* 다크 모드 */
-@media (prefers-color-scheme: dark) {
-  .checkboxGroup label {
-    color: #f9fafb;
-  }
-
-  .checkboxGroup input[type="checkbox"] {
-    accent-color: #60a5fa;
-  }
 }
 
 /* 모바일 반응형 */
