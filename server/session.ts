@@ -66,7 +66,7 @@ export async function getUserBySession(): Promise<User | undefined> {
 export async function verifySession(): Promise<User> {
   const user = await getUserBySession();
 
-  if (!user) redirect("/");
+  if (!user) redirect("/login");
 
   return user;
 }
