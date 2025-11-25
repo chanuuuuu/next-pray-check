@@ -5,7 +5,6 @@ import "./AttendanceLoading.css";
 export function AttendanceLoading() {
   return (
     <section className="page">
-      <h1 className="title">출석부</h1>
       <div className="loading-container">
         <div className="loadingHeader ">
           <div className="loadingSelect shimmer" />

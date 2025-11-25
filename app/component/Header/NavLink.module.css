@@ -11,20 +11,15 @@
 }
 
 .navLink.active {
-  color: #60a5fa;
-  background-color: #1e3a8a;
   font-weight: 600;
+  font-size: 1.25rem;
+  opacity: 1;
 }
-
-.navLink.active:hover {
-  color: #93c5fd;
-  background-color: #1e40af;
-}
-
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .navLink {
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 1rem;
+    opacity: 0.5;
   }
 }

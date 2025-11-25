@@ -15,7 +15,6 @@ export default async function Manage() {
 
   return (
     <section className="page">
-      <h1 className="title">팀원 관리</h1>
       <Suspense fallback={<ManageLoading />}>
         <ManagePageContent groupId={user.groupId} />
       </Suspense>

@@ -3,10 +3,11 @@
 import { NavLink, LinkType } from "./NavLink";
 import styles from "./Navigator.module.css";
 import { actionLogout } from "@/app/action/loginAction";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export function Navigator() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const links: LinkType[] = [
     { href: "/manage", name: "팀원 관리" },
@@ -15,9 +16,15 @@ export function Navigator() {
   ];
 
   const handleLogout = async () => {
-    await actionLogout();
+    actionLogout();
     router.push("/login");
   };
+
+  // 노출여부는 현재 페이지가 '/login'이 아닐 때만 노출
+  const isLoginPage = pathname === "/login";
+  if (isLoginPage) {
+    return null;
+  }
 
   return (
     <nav className={styles.navigator}>
@@ -31,7 +38,7 @@ export function Navigator() {
         })}
       </ul>
       <button type="button" className={styles.logoutBtn} onClick={handleLogout}>
-        ⏻
+        ➜]
       </button>
     </nav>
   );

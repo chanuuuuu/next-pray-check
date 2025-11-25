@@ -6,7 +6,6 @@ import "./RequestLoading.css";
 export default function RequestLoading() {
   return (
     <section className="page">
-      <h1 className="title">기도제목</h1>
       <LightRayWrapper>
         <div className="loading-container">
           <div className="loadingHeader ">

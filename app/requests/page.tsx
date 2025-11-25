@@ -17,7 +17,6 @@ export default async function Requests() {
   return (
     <Suspense fallback={<RequestLoading />}>
       <section className="page">
-        <h1 className="title">기도제목</h1>
         <RequestPageContent
           groupId={user.groupId}
           userId={user.userId}

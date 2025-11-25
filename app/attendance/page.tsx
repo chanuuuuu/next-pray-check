@@ -30,7 +30,6 @@ async function AttendanceContent({
   const attendances = await attendanceService.getAttendances(groupId);
   return (
     <section className="page">
-      <h1 className="title">출석부</h1>
       <AttendanceClient attendances={attendances} cellId={cellId} />
     </section>
   );
