@@ -128,7 +128,7 @@
 
   .input {
     padding: 8px 10px;
-    font-size: 13px;
+    font-size: 16px; /* 13px → 16px로 변경 (iOS 확대 방지) */
   }
 
   .submitBtn {
