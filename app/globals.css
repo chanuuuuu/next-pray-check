@@ -1,5 +1,21 @@
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+@font-face {
+  font-family: "c24ps";
+  src: url("/fonts/Cafe24PROSlim-Regular.woff2") format("woff2"),
+    url("/fonts/Cafe24PROSlim-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: "c24ps";
+  src: url("/fonts/Cafe24PROSlim-Bold.woff2") format("woff2"),
+    url("/fonts/Cafe24PROSlim-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* Document
    ========================================================================== */
 
@@ -27,6 +43,7 @@ body {
   padding: 0;
   background-color: #111827;
   color: #f9fafb;
+  font-family: "c24ps", sans-serif;
 }
 
 /**
@@ -388,6 +405,7 @@ template {
 
 /* Custom Footer Styles */
 .app-footer {
+  font-family: sans-serif;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -395,6 +413,7 @@ template {
   padding: 10px 20px;
   background-color: transparent;
   text-align: center;
+  opacity: 0.7;
   z-index: 100;
 
   /* 폰트 사이즈 축소 */
