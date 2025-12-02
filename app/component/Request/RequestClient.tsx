@@ -12,12 +12,14 @@ import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
 import { CustomSelect } from "@/app/component/Common/CustomSelect";
 import { LightRayWrapper } from "../Common/ReactBits/ReactBitsWrapper";
 import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
+import { useRouter } from "next/navigation";
 
 interface RequestClientProps {
   requests: Request[];
   userId: number;
   cellId: number;
   initialFavoriteRequests: number[];
+  handleRefresh?: () => void;
 }
 
 export function RequestClientInner({
@@ -25,6 +27,7 @@ export function RequestClientInner({
   initialFavoriteRequests,
   userId,
   cellId,
+  handleRefresh,
 }: RequestClientProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { favoriteRequests, toggleFavoriteRequest, getIsFavoriteRequest } =
@@ -76,9 +79,17 @@ export function RequestClientInner({
           value={selectedRequestType}
           onChange={handleRequestTypeChange}
         />
-        <button onClick={() => setIsOpen(true)} className={styles.registerBtn}>
-          등록
-        </button>
+        <div style={{ display: "flex", gap: "0.2rem" }}>
+          <button
+            onClick={() => setIsOpen(true)}
+            className={styles.registerBtn}
+          >
+            등록
+          </button>
+          <button onClick={handleRefresh} className={styles.refreshBtn}>
+            새로고침
+          </button>
+        </div>
       </div>
       <RequestGrid
         requests={conditionalRequests}
@@ -106,9 +117,18 @@ export function RequestClient({
   userId,
   cellId,
 }: RequestClientProps) {
+  const [updateCount, setUpdateCount] = useState(1);
+  const router = useRouter();
+
+  function handleRefresh() {
+    setUpdateCount((prev) => prev + 1);
+    router.refresh();
+  }
+
   return (
     <RequestContextProvider userId={userId}>
       <FadeContent
+        key={updateCount}
         blur={false}
         duration={1000}
         easing="ease-out"
@@ -120,6 +140,7 @@ export function RequestClient({
             initialFavoriteRequests={initialFavoriteRequests}
             userId={userId}
             cellId={cellId}
+            handleRefresh={handleRefresh}
           />
         </LightRayWrapper>
       </FadeContent>
