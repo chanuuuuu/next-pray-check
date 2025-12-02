@@ -22,7 +22,7 @@ export default function LoginForm() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>2청 기도실</h1>
+      <h1 className={styles.title}>🖐팀 기도 나눔💕</h1>
       <form action={formAction} className={styles.form}>
         <section className={styles.formSection}>
           <div className={styles.formField}>
