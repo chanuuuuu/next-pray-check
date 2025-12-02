@@ -15,6 +15,7 @@ import styles from "./NavLink.module.css";
 export interface LinkType {
   href: string;
   name: string;
+  level: number;
 }
 
 export function NavLink({ href, name }: LinkType) {

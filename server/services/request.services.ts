@@ -17,7 +17,7 @@ export class RequestService {
         return this.requestRepository.getRequests(groupId, queryWeekId);
       },
       ["requests", groupId.toString(), queryWeekId.toString()],
-      { tags: ["requests"] }
+      { tags: ["requests"], revalidate: 5 * 60 }
     )();
   }
 
@@ -50,7 +50,7 @@ export class RequestService {
         return this.requestRepository.getFavoriteRequests(userId, queryWeekId);
       },
       ["favoriteRequests", userId.toString(), queryWeekId.toString()],
-      { tags: ["favoriteRequests"] }
+      { tags: ["favoriteRequests"], revalidate: 5 * 60 }
     )();
   }
 

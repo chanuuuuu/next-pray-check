@@ -42,7 +42,7 @@ export function getCells<T extends CellMember>(users: T[]): Cell<T>[] {
 
     const { name, level } = user;
     if (existingCellIndex >= 0) {
-      if (level > 1) {
+      if (level === 2) {
         const { leaderName } = _cells[existingCellIndex];
         _cells[existingCellIndex].leaderName = leaderName
           ? `${leaderName},${name}`
@@ -50,7 +50,7 @@ export function getCells<T extends CellMember>(users: T[]): Cell<T>[] {
       }
       _cells[existingCellIndex].users.push(user);
     } else {
-      const leaderName = level > 1 ? name : "";
+      const leaderName = level === 2 ? name : "";
       _cells.push({
         cellId: user.cellId,
         leaderName,

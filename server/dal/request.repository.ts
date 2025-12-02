@@ -60,7 +60,7 @@ export class RequestRepository {
       WHERE u.group_id = ${groupId}
         AND r.week_id >= ${weekId}
         AND s.is_solved = FALSE
-      ORDER BY r.user_id, r.week_id DESC, r.request_id DESC, r.insert_id DESC;`;
+      ORDER BY r.insert_id DESC, r.user_id, r.week_id DESC, r.request_id DESC;`;
 
     return requests.map((request) => ({
       requestId: request?.request_id as number,

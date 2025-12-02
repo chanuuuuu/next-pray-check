@@ -4,15 +4,16 @@ import { NavLink, LinkType } from "./NavLink";
 import styles from "./Navigator.module.css";
 import { actionLogout } from "@/app/action/loginAction";
 import { useRouter, usePathname } from "next/navigation";
+import { User } from "@/types/user.type";
 
-export function Navigator() {
+export function Navigator({ user }: { user: User }) {
   const router = useRouter();
   const pathname = usePathname();
 
   const links: LinkType[] = [
-    { href: "/manage", name: "팀원 관리" },
-    { href: "/requests", name: "기도제목" },
-    { href: "/attendance", name: "출석등록" },
+    { href: "/requests", name: "기도제목🙏", level: 1 },
+    { href: "/attendance", name: "출석등록🔖", level: 2 },
+    { href: "/manage", name: "팀원 관리👥", level: 3 },
   ];
 
   const handleLogout = async () => {
@@ -26,16 +27,22 @@ export function Navigator() {
     return null;
   }
 
+  // 권한에 따라 링크 미노출
+
   return (
     <nav className={styles.navigator}>
       <ul className={styles.navList}>
-        {links.map((link) => {
-          return (
-            <li key={link.name} className={styles.navItem}>
-              <NavLink href={link.href} name={link.name} />
-            </li>
-          );
-        })}
+        {user &&
+          links.map((link) => {
+            if (user && link.level > user.level) {
+              return null;
+            }
+            return (
+              <li key={link.name} className={styles.navItem}>
+                <NavLink href={link.href} name={link.name} level={link.level} />
+              </li>
+            );
+          })}
       </ul>
       <button type="button" className={styles.logoutBtn} onClick={handleLogout}>
         ➜]
