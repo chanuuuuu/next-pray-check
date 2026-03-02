@@ -19,7 +19,7 @@ color: cyan
 | 프레임워크 | Next.js 15 (App Router) |
 | 언어 | TypeScript (strict) |
 | 스타일링 | CSS Modules (`.module.css`) + `globals.css` CSS 변수 + Tailwind CSS v4 |
-| UI 컴포넌트 | shadcn/ui (Button, Dialog, Input, Textarea, Select) |
+| UI 컴포넌트 | shadcn/ui (Button, Dialog, Input, Textarea, Select) — 컴포넌트 구현 시 https://ui.shadcn.com/docs/components 우선 탐색 |
 | DB | Neon PostgreSQL (서버리스) |
 | 인증 | jose JWT (세션 쿠키) |
 | 검증 | Zod (서버 사이드 전용) |
@@ -279,7 +279,10 @@ import styles from "./Component.module.css";
 
 ## 작업 프로세스
 
-1. **컴포넌트 분리 전략 설계**: 서버/클라이언트 경계를 먼저 결정합니다.
+> **컴포넌트 구현 전**: https://ui.shadcn.com/docs/components 를 **반드시** 먼저 탐색합니다.
+> 필요한 기능·레이아웃에 맞는 shadcn/ui 컴포넌트가 있으면 우선 활용하고, 없을 때만 직접 구현합니다.
+
+1. **shadcn/ui 컴포넌트 탐색**: https://ui.shadcn.com/docs/components 에서 사용 가능한 컴포넌트 확인 후 적용 여부 결정.
 2. **타입 정의**: `types/` 폴더에 관련 타입을 먼저 작성합니다.
 3. **Repository 구현**: DB 쿼리 + `unstable_cache` 적용.
 4. **Service 구현**: 비즈니스 로직을 Repository 위에 구성합니다.
