@@ -35,7 +35,7 @@ export function RequestContextProvider({
   const router = useRouter();
 
   const [deletedRequests, setDeletedRequests] = useState<Set<number>>(
-    new Set()
+    new Set(),
   );
 
   const handleDeleteRequest = useCallback(
@@ -54,14 +54,14 @@ export function RequestContextProvider({
         }
       }
     },
-    [router]
+    [router],
   );
 
   const isMyRequestGroup = useCallback(
     (groupUserId: number) => {
       return groupUserId === userId;
     },
-    [userId]
+    [userId],
   );
 
   // ✅ useMemo로 value 객체 메모이제이션
@@ -71,7 +71,7 @@ export function RequestContextProvider({
       handleDeleteRequest,
       isMyRequestGroup,
     }),
-    [deletedRequests, handleDeleteRequest, isMyRequestGroup]
+    [deletedRequests, handleDeleteRequest, isMyRequestGroup],
   );
 
   return (
@@ -84,7 +84,7 @@ export function useRequestContext() {
   const context = useContext(RequestContext);
   if (!context) {
     throw new Error(
-      "useRequestContext는 RequestContextProvider 내부에서만 사용할 수 있습니다."
+      "useRequestContext는 RequestContextProvider 내부에서만 사용할 수 있습니다.",
     );
   }
   return context;

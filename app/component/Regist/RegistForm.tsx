@@ -8,6 +8,8 @@ import { actionRegist, RegistState } from "@/app/action/registAction";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import styles from "./RegistForm.module.css";
+import { Button } from "@/app/component/ui/button";
+import { Input } from "@/app/component/ui/input";
 
 export function RegistForm({
   leaders,
@@ -66,15 +68,15 @@ export function RegistForm({
         <label htmlFor="name" className={styles.label}>
           이름
         </label>
-        <input
+        <Input
           id="name"
           name="name"
-          className={styles.input}
           placeholder="이름을 입력하세요"
           autoComplete="off"
           autoFocus
           defaultValue={state.placeholder?.name || ""}
           key={state.success ? "name-reset" : "name-keep"}
+          className={styles.input}
         />
         {state.error?.name && (
           <p className={styles.errorMessage}>{state.error?.name}</p>
@@ -85,14 +87,14 @@ export function RegistForm({
         <label htmlFor="birth" className={styles.label}>
           생년월일
         </label>
-        <input
+        <Input
           id="birth"
           name="birth"
-          className={styles.input}
           placeholder="생년월일 6자리입니다"
           autoComplete="off"
           defaultValue={state.placeholder?.birth || ""}
           key={state.success ? "birth-reset" : "birth-keep"}
+          className={styles.input}
         />
         {state.error?.birth && (
           <p className={styles.errorMessage}>{state.error?.birth}</p>
@@ -163,13 +165,14 @@ export function RegistForm({
         <div className={styles.generalError}>{state.error?.regist}</div>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isPending}
-        className={styles.submitButton}
+        variant="default"
+        className="w-full mt-3"
       >
         {isPending ? "적용 중..." : "적용"}
-      </button>
+      </Button>
     </form>
   );
 }

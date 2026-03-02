@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./RequestRegistForm.module.css";
 import useRequestForm from "@/app/hooks/useRequestForm";
+import { Button } from "@/app/component/ui/button";
+import { Textarea } from "@/app/component/ui/textarea";
 
-interface RequestRegistFormProps {
+type RequestRegistFormProps = {
   insertId: number;
   onClose?: () => void;
-}
+};
 
 // 기도제목 입력 폼
 export function RequestRegistForm({
@@ -29,7 +31,7 @@ export function RequestRegistForm({
     <form action={formAction} className={styles.container}>
       <div className={styles.urgentSection} style={{ display: "none" }}>
         <label htmlFor="isUrgent" className={styles.urgentLabel}>
-          🚨 긴급
+          긴급
         </label>
         <input
           type="checkbox"
@@ -43,7 +45,7 @@ export function RequestRegistForm({
       {inputs.map(({ text, error }, index) => (
         <div key={`section_${keys[index]}`} className={styles.inputSection}>
           <div className={styles.textareaWrapper}>
-            <textarea
+            <Textarea
               key={keys[index]}
               placeholder="기도제목을 입력하세요"
               autoComplete="off"
@@ -51,32 +53,35 @@ export function RequestRegistForm({
               defaultValue={text || ""}
               className={styles.textarea}
             />
-            <button
+            <Button
               type="button"
               onClick={() => handleDelete(index)}
-              className={styles.deleteBtn}
+              variant="ghost"
+              size="icon"
               disabled={inputs.length <= 1}
               title="삭제"
+              className={styles.deleteBtn}
             >
               ✕
-            </button>
+            </Button>
           </div>
           {error && <p className={styles.errorMessage}>{error}</p>}
         </div>
       ))}
 
       <div className={styles.buttonGroup}>
-        <button
+        <Button
           type="button"
           onClick={() => handleAppend()}
-          className={styles.addBtn}
+          variant="outline"
           disabled={inputs.length >= 3}
+          className="w-full"
         >
           추가
-        </button>
-        <button type="submit" className={styles.submitButton}>
+        </Button>
+        <Button type="submit" variant="default" className="w-full">
           등록하기
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -4,15 +4,16 @@ import { User } from "@/types/user.type";
 import { TeamGrid } from "./UserGrid";
 import { ModifyUserClient } from "./ModifyUserClient";
 import { Modal } from "@/app/component/Modal";
+import { Button } from "@/app/component/ui/button";
 import { useRouter } from "next/navigation";
 import styles from "./ManageClient.module.css";
 import { useManageModal } from "@/app/hooks/useManageModal";
 import { actionDelete } from "@/app/action/registAction";
 import { useTransition, useCallback } from "react";
 
-interface ManageClientProps {
+type ManageClientProps = {
   users: User[];
-}
+};
 
 export function ManageClient({ users }: ManageClientProps) {
   const router = useRouter();
@@ -47,12 +48,15 @@ export function ManageClient({ users }: ManageClientProps) {
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.teamInfo}>현재 총 팀원 : {users.length}명</p>
-        <button
+        <Button
           onClick={() => handleModalOpen()}
-          className={styles.registerBtn}
+          variant="default"
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+          aria-controls="manage-modal"
         >
           등록
-        </button>
+        </Button>
       </div>
       <TeamGrid
         users={users}

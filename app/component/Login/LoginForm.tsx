@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.css";
 import ShinyText from "../Common/ReactBits/ShinyText";
+import { Button } from "@/app/component/ui/button";
+import { Input } from "@/app/component/ui/input";
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(actionLogin, {
@@ -22,14 +24,14 @@ export default function LoginForm() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>🖐팀 기도 나눔💕</h1>
+      <h1 className={styles.title}>팀 기도 나눔</h1>
       <form action={formAction} className={styles.form}>
         <section className={styles.formSection}>
           <div className={styles.formField}>
             <label htmlFor="name" className={styles.label}>
               <ShinyText speed={4} text="이름" />
             </label>
-            <input
+            <Input
               id="name"
               name="name"
               placeholder="이름을 입력하세요"
@@ -45,7 +47,7 @@ export default function LoginForm() {
             <label htmlFor="birth" className={styles.label}>
               <ShinyText speed={4} text="생년월일" />
             </label>
-            <input
+            <Input
               id="birth"
               name="birth"
               placeholder="생년월일 6자리입니다"
@@ -60,9 +62,14 @@ export default function LoginForm() {
         {state.error?.user && (
           <p className={styles.error}>{state.error?.user}</p>
         )}
-        <button type="submit" disabled={isPending} className={styles.submitBtn}>
+        <Button
+          type="submit"
+          disabled={isPending}
+          variant="default"
+          className={styles.submitBtn}
+        >
           <ShinyText speed={2} text={isPending ? "로그인 중..." : "로그인"} />
-        </button>
+        </Button>
       </form>
     </div>
   );

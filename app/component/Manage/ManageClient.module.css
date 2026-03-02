@@ -18,28 +18,6 @@
   font-weight: 500;
 }
 
-.registerBtn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.registerBtn:hover {
-  background-color: #0056b3;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
-
-.registerBtn:active {
-  transform: translateY(0);
-}
-
 @media (max-width: 768px) {
   .container {
     padding: 3.6rem 0.7rem 0;
@@ -53,8 +31,4 @@
     font-size: 14px;
   }
 
-  .registerBtn {
-    padding: 8px 16px;
-    font-size: 13px;
-  }
 }

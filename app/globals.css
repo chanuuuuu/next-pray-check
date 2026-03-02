@@ -1,3 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #111827;
+  --foreground: #f9fafb;
+  --card: #1f2937;
+  --card-foreground: #f9fafb;
+  --border: #374151;
+  --input: #374151;
+  --ring: #60a5fa;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1f2937;
+  --secondary-foreground: #f9fafb;
+  --muted: #374151;
+  --muted-foreground: #9ca3af;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --popover: #1f2937;
+  --popover-foreground: #f9fafb;
+}
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 @font-face {
   font-family: "c24ps";
