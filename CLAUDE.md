@@ -151,3 +151,7 @@ npm run test:coverage # 커버리지 리포트
 | 권한 레벨       | `level: 1` 일반 / `level: 2` 리더                                 |
 | 폰트            | Cafe24 PROSlim (`c24ps` 클래스)                                   |
 | 라우트          | `/` 홈 · `/login` · `/attendance` · `/requests` · `/manage`       |
+
+## Task Master AI Instructions
+**Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
+@./.taskmaster/CLAUDE.md
