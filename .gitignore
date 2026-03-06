@@ -65,7 +65,12 @@ node_modules/
 # tasks.json
 # tasks/ 
 
-.claude
+.claude/commands/tm
+.claude/settings.json
+.claude/settings.local.json
+
 .cursor
 .github
-.taskmaster/templates
+
+.taskmaster/*
+.playwright-mcp

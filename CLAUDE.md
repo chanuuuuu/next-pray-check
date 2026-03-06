@@ -1,6 +1,6 @@
 # 한줄 기도제목 나눔 — 프로젝트 컨텍스트
 
-Next.js 기반 소규모 그룹 기도제목 공유 앱. 한국어 전용, 다크 테마 전용.
+Next.js 기반 소규모 그룹 기도제목 공유 앱. 한국어 전용, 라이트 테마 (Glass Morphism).
 
 ---
 
@@ -130,7 +130,6 @@ npm run test:coverage # 커버리지 리포트
 
 모든 에이전트에 적용됩니다.
 
-- **Tailwind CSS 사용 금지** — 스타일은 CSS Modules + globals.css 변수만 사용
 - **`interface` 사용 금지** — 타입은 `type`으로만 정의
 - **클라이언트 사이드 fetch 금지** — 데이터 페칭은 Server Component 또는 Server Action으로만
 - **Zod를 클라이언트에서 사용 금지** — `"use server"` 파일에서만 검증
@@ -153,5 +152,6 @@ npm run test:coverage # 커버리지 리포트
 | 라우트          | `/` 홈 · `/login` · `/attendance` · `/requests` · `/manage`       |
 
 ## Task Master AI Instructions
+
 **Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
 @./.taskmaster/CLAUDE.md
