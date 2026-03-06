@@ -1,10 +1,10 @@
 "use client";
 import LoginForm from "./LoginForm";
-import { LightRayWrapper } from "../Common/ReactBits/ReactBitsWrapper";
+import styles from "./LoginClient.module.css";
 export default function LoginClient() {
   return (
-    <LightRayWrapper>
+    <div className={`bg-app-gradient ${styles.wrapper}`}>
       <LoginForm />
-    </LightRayWrapper>
+    </div>
   );
 }

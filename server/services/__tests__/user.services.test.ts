@@ -12,7 +12,11 @@ describe("UserService", () => {
       getUser: jest.fn(),
       createUser: jest.fn(),
       initUserTable: jest.fn(),
-    } as jest.Mocked<UserRepository>;
+      getLeaders: jest.fn(),
+      getUsers: jest.fn(),
+      updateUser: jest.fn(),
+      deleteUser: jest.fn(),
+    } as unknown as jest.Mocked<UserRepository>;
 
     // UserService에 모킹된 repository 주입
     userService = new UserService(mockUserRepository);
@@ -29,6 +33,7 @@ describe("UserService", () => {
     };
 
     const mockUser: User = {
+      userId: 1,
       groupId: 1,
       cellId: 2,
       name: "홍길동",
@@ -79,6 +84,7 @@ describe("UserService", () => {
 
   describe("createUser", () => {
     const mockUser: User = {
+      userId: 2,
       groupId: 1,
       cellId: 2,
       name: "김철수",
@@ -87,40 +93,43 @@ describe("UserService", () => {
       level: 2,
     };
 
-    it("사용자 생성이 성공하면 정상적으로 완료되어야 한다", async () => {
+    it("사용자 생성이 성공하면 true를 반환해야 한다", async () => {
       // Given
       const mockResult = [{ insertId: 1, affectedRows: 1 }];
-      mockUserRepository.createUser.mockResolvedValue(mockResult);
+      mockUserRepository.createUser.mockResolvedValue(mockResult as any);
 
       // When
-      await userService.createUser(mockUser);
+      const result = await userService.createUser(mockUser);
 
       // Then
+      expect(result).toBe(true);
       expect(mockUserRepository.createUser).toHaveBeenCalledWith(mockUser);
       expect(mockUserRepository.createUser).toHaveBeenCalledTimes(1);
     });
 
-    it("사용자 생성이 실패하면 에러를 던져야 한다", async () => {
+    it("repository가 null을 반환하면 false를 반환해야 한다", async () => {
       // Given
-      mockUserRepository.createUser.mockResolvedValue(null);
+      mockUserRepository.createUser.mockResolvedValue(null as any);
 
-      // When & Then
-      await expect(userService.createUser(mockUser)).rejects.toThrow(
-        "User creation failed"
-      );
+      // When
+      const result = await userService.createUser(mockUser);
+
+      // Then
+      expect(result).toBe(false);
       expect(mockUserRepository.createUser).toHaveBeenCalledWith(mockUser);
       expect(mockUserRepository.createUser).toHaveBeenCalledTimes(1);
     });
 
-    it("repository에서 에러가 발생하면 에러를 전파해야 한다", async () => {
+    it("repository에서 에러가 발생하면 false를 반환해야 한다", async () => {
       // Given
       const error = new Error("Database constraint violation");
       mockUserRepository.createUser.mockRejectedValue(error);
 
-      // When & Then
-      await expect(userService.createUser(mockUser)).rejects.toThrow(
-        "Database constraint violation"
-      );
+      // When
+      const result = await userService.createUser(mockUser);
+
+      // Then
+      expect(result).toBe(false);
       expect(mockUserRepository.createUser).toHaveBeenCalledWith(mockUser);
       expect(mockUserRepository.createUser).toHaveBeenCalledTimes(1);
     });
@@ -131,6 +140,7 @@ describe("UserService", () => {
       // Given
       const userInput: UserLoginInput = { name: "이영희", birth: "970825" };
       const user: User = {
+        userId: 3,
         groupId: 3,
         cellId: 1,
         name: "이영희",
@@ -142,7 +152,7 @@ describe("UserService", () => {
       mockUserRepository.getUser.mockResolvedValue(undefined);
       mockUserRepository.createUser.mockResolvedValue([
         { insertId: 1, affectedRows: 1 },
-      ]);
+      ] as any);
       mockUserRepository.getUser
         .mockResolvedValueOnce(undefined)
         .mockResolvedValueOnce(user);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header } from "@/app/component/Header/Header";
+import { AppShell } from "@/app/component/Common/AppShell";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,16 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className="dark">
-      <body>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-        <Header />
-        {children}
-        <footer className="app-footer">
-          In their hearts humans plan their course, but the{" "}
-          <strong>Lord</strong> establishes their steps.
-        </footer>
+    <html lang="ko">
+      <body style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
+        <main style={{ flex: 1, overflow: "hidden", paddingBottom: "5rem" }}>
+          {children}
+        </main>
+        <AppShell />
       </body>
     </html>
   );

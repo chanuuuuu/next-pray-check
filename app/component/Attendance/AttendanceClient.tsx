@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { actionAttendance } from "@/app/action/attendanceAction";
 import styles from "./AttendanceClient.module.css";
 import { CustomSelect } from "@/app/component/Common/CustomSelect";
-import { LightRayWrapper } from "@/app/component/Common/ReactBits/ReactBitsWrapper";
 import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
 
 export default function AttendanceClient({
@@ -83,30 +82,28 @@ export default function AttendanceClient({
       easing="ease-out"
       initialOpacity={0.1}
     >
-      <LightRayWrapper>
-        <div className={styles.container}>
-          <div className={styles.header}>
-            <CustomSelect
-              options={selectOptions}
-              value={selectedCellId}
-              onChange={setSelectedCellId}
-              disabled={isPending}
-            />
-            <button
-              onClick={handleRegist}
-              disabled={isPending}
-              className={styles.registerBtn}
-            >
-              출석 등록
-            </button>
-          </div>
-          <form ref={formRef} className={styles.formContainer}>
-            {selectedCellUsers.map((user) => (
-              <AttendanceCard key={user.userId} attendance={user} />
-            ))}
-          </form>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <CustomSelect
+            options={selectOptions}
+            value={selectedCellId}
+            onChange={setSelectedCellId}
+            disabled={isPending}
+          />
+          <button
+            onClick={handleRegist}
+            disabled={isPending}
+            className={styles.registerBtn}
+          >
+            출석 등록
+          </button>
         </div>
-      </LightRayWrapper>
+        <form ref={formRef} className={styles.formContainer}>
+          {selectedCellUsers.map((user) => (
+            <AttendanceCard key={user.userId} attendance={user} />
+          ))}
+        </form>
+      </div>
     </FadeContent>
   );
 }

@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 280px);
+}
+
+.stackWrapper {
+  position: relative;
+  width: 90%;
+  max-width: 90vw;
+  aspect-ratio: 1 / 1.2;
+}
+
+.empty {
+  padding: 5rem 0;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  border-radius: 1rem;
+  border: 1px dashed hsl(var(--border));
+  width: 100%;
+}

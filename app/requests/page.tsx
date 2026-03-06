@@ -15,15 +15,15 @@ export default async function Requests() {
   }
 
   return (
-    <Suspense fallback={<RequestLoading />}>
-      <section className="page">
+    <div className="h-full overflow-hidden">
+      <Suspense fallback={<RequestLoading />}>
         <RequestPageContent
           groupId={user.groupId}
           userId={user.userId}
           cellId={user.cellId}
         />
-      </section>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }
 

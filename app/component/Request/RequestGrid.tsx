@@ -1,84 +1,38 @@
-import React, { useMemo, memo, useCallback, useState } from "react";
-import { Request, RequestGroup } from "@/types/request.type";
-import styles from "./RequestGrid.module.css";
-import { RequestCard } from "@/app/component/Request/RequestCard";
-import { useRequestContext } from "./RequestContext";
-import FadeContent from "../Common/ReactBits/FadeContent";
+"use client";
 
-interface RequestGridProps {
+import { memo } from "react";
+import { Request } from "@/types/request.type";
+import { RequestListView } from "./RequestListView";
+import { RequestStackView } from "./RequestStackView";
+
+type RequestGridProps = {
   requests: Request[];
   toggleFavoriteRequest: (requestId: number) => void;
   getIsFavoriteRequest: (requestId: number) => boolean;
-}
+  isStackView: boolean;
+};
 
 export const RequestGrid = memo(function RequestGrid({
   requests,
   toggleFavoriteRequest,
   getIsFavoriteRequest,
+  isStackView,
 }: RequestGridProps) {
-  const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(
-    new Set()
-  );
-  const { deletedRequests } = useRequestContext();
-
-  const handleCollapse = useCallback((userId: number) => {
-    setCollapsedGroups((prev: Set<number>) => {
-      const newSet = new Set(prev);
-      if (newSet.has(userId)) {
-        newSet.delete(userId);
-      } else {
-        newSet.add(userId);
-      }
-      return newSet;
-    });
-  }, []);
-
-  const requestGroups = useMemo(() => {
-    return requests.reduce((arr, request) => {
-      if (deletedRequests.has(request.requestId)) return arr;
-      const group = arr.find((group) => group.userId === request.userId);
-      if (!group) {
-        arr.push({
-          userId: request.userId,
-          name: request.name,
-          gisu: request.gisu,
-          cellId: request.cellId,
-          requests: [request],
-        });
-      } else {
-        group.requests.push(request);
-      }
-      return arr;
-    }, [] as RequestGroup[]);
-  }, [requests, deletedRequests]);
-
-  if (requestGroups.length === 0) {
+  if (isStackView) {
     return (
-      <div className={styles.requestGrid}>
-        <div className={styles.emptyState}>등록된 기도제목이 없습니다.</div>
-      </div>
+      <RequestStackView
+        requests={requests}
+        toggleFavoriteRequest={toggleFavoriteRequest}
+        getIsFavoriteRequest={getIsFavoriteRequest}
+      />
     );
   }
 
   return (
-    <div className={styles.requestGrid}>
-      {requestGroups.map((group) => (
-        <FadeContent
-          key={group.userId}
-          blur={false}
-          duration={1000}
-          easing="ease-out"
-          initialOpacity={0.1}
-        >
-          <RequestCard
-            group={group}
-            isCollapsed={collapsedGroups.has(group.userId)}
-            handleCollapse={handleCollapse}
-            toggleFavoriteRequest={toggleFavoriteRequest}
-            getIsFavoriteRequest={getIsFavoriteRequest}
-          />
-        </FadeContent>
-      ))}
-    </div>
+    <RequestListView
+      requests={requests}
+      toggleFavoriteRequest={toggleFavoriteRequest}
+      getIsFavoriteRequest={getIsFavoriteRequest}
+    />
   );
 });

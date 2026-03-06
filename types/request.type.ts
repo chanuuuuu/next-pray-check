@@ -1,6 +1,6 @@
-import { User, UserRow } from "./user.type";
+import { UserRow } from "./user.type";
 
-export interface RequestBase {
+export type RequestBase = {
   request_id: number;
   text: string;
   week_id: number;
@@ -8,13 +8,13 @@ export interface RequestBase {
   user_id: number;
   is_urgent: boolean;
   is_solved: boolean;
-}
+};
 
 export type RequestUserFields = Pick<UserRow, "name" | "gisu" | "cell_id">;
 
 export type RequestRow = RequestBase & RequestUserFields;
 
-export interface Request {
+export type Request = {
   requestId: number;
   text: string;
   weekId: number;
@@ -25,20 +25,20 @@ export interface Request {
   gisu: number;
   isUrgent: boolean;
   isSolved: boolean;
-}
+};
 
-export interface ModifyRequest {
+export type ModifyRequest = {
   userId: number;
   text: string;
   insertId: number;
   weekId: number;
   isUrgent?: boolean;
-}
+};
 
-export interface RequestGroup {
+export type RequestGroup = {
   userId: number;
   name: string;
   gisu: number;
   cellId: number;
   requests: Request[];
-}
+};
