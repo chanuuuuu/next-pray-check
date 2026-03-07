@@ -7,21 +7,21 @@ import { validateInput } from "../utils/validation";
 import { getLevel, getGisu } from "../utils/utils";
 import { ERROR_MESSAGES } from "@/app/utils/constants";
 
-export interface RegistError {
+export type RegistError = {
   name?: string;
   birth?: string;
   cellId?: string;
   level?: string;
   user?: string; // 중복 유저 관련 에러
   regist?: string; // 등록 관련 에러
-}
+};
 
-export interface RegistState {
+export type RegistState = {
   success: boolean;
   error?: RegistError;
   placeholder?: UserFormType;
   isRegist?: boolean;
-}
+};
 
 export async function actionRegist(
   state: RegistState,
