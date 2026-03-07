@@ -14,11 +14,9 @@ export default async function Manage() {
   }
 
   return (
-    <section className="page">
-      <Suspense fallback={<ManageLoading />}>
-        <ManagePageContent groupId={user.groupId} />
-      </Suspense>
-    </section>
+    <Suspense fallback={<ManageLoading />}>
+      <ManagePageContent groupId={user.groupId} />
+    </Suspense>
   );
 }
 

@@ -1,84 +1,35 @@
-import styles from "./ManageLoading.module.css";
-import gridStyles from "./UserGrid.module.css";
+import { SkeletonPulse } from "@/app/component/Common/SkeletonPulse";
 
 export function ManageLoading() {
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <p className={styles.teamInfo}>현재 총 팀원 :</p>
-        <button className={styles.registerBtn} disabled>
-          등록
-        </button>
+    <div className="min-h-screen bg-app-gradient pb-24">
+      {/* 헤더 스켈레톤 */}
+      <div className="glass-strong sticky top-0 z-40 px-5 pt-12 pb-3 flex items-center justify-between">
+        <SkeletonPulse className="h-5 w-24 rounded-lg" />
+        <SkeletonPulse className="w-8 h-8 rounded-xl" />
       </div>
 
-      {/* 첫 번째 셀 섹션 */}
-      <div className={styles.skeletonSection}>
-        <div className={gridStyles.cellHeader}>
-          <h3 className={gridStyles.cellTitle}>1조</h3>
-        </div>
-        <div className={styles.skeletonUserGrid}>
-          <div className={styles.skeletonGridHeader}>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-          </div>
-          <div className={styles.skeletonGridBody}>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-            </div>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-            </div>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
+      {/* 조별 카드 스켈레톤 */}
+      <div className="px-5 pt-4 space-y-5">
+        {[1, 2, 3].map((cell) => (
+          <div key={cell}>
+            <SkeletonPulse className="h-3 w-16 rounded-md mb-2" />
+            <div className="glass rounded-2xl overflow-hidden divide-y divide-border/30">
+              {[1, 2, 3].map((row) => (
+                <div key={row} className="flex items-center px-4 py-3">
+                  <div className="flex-1 space-y-1.5">
+                    <SkeletonPulse className="h-4 w-20 rounded-md" />
+                    <SkeletonPulse className="h-3 w-28 rounded-md" />
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <SkeletonPulse className="w-8 h-8 rounded-lg" />
+                    <SkeletonPulse className="w-8 h-8 rounded-lg" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* 두 번째 셀 섹션 */}
-      <div className={styles.skeletonSection}>
-        <div className={gridStyles.cellHeader}>
-          <h3 className={gridStyles.cellTitle}>2조</h3>
-        </div>
-        <div className={styles.skeletonUserGrid}>
-          <div className={styles.skeletonGridHeader}>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-            <div className={styles.skeletonHeaderCell}></div>
-          </div>
-          <div className={styles.skeletonGridBody}>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-            </div>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-            </div>
-            <div className={styles.skeletonGridRow}>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-              <div className={styles.skeletonCell}></div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

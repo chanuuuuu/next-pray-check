@@ -1,89 +1,81 @@
 import { User } from "@/types/user.type";
 import { LEVEL_OPTIONS } from "@/app/utils/constants";
 import { getBirthDisplay } from "@/app/utils/clientUtils";
-import styles from "./UserGrid.module.css";
 import { getCells } from "@/app/utils/clientUtils";
 import { memo } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 
-interface UserGridProps {
+type UserGridProps = {
   users: User[];
   onEdit?: (user: User) => void;
   onDelete?: (user: User) => void;
+};
+
+function getLevelLabel(level: number): string {
+  const levelOption = Object.values(LEVEL_OPTIONS).find((option) => option.value === level);
+  return levelOption ? levelOption.label : "";
 }
 
-export function UserGrid({ users, onEdit, onDelete }: UserGridProps) {
-  const getLevelLabel = (level: number): string => {
-    const levelOption = Object.values(LEVEL_OPTIONS).find(
-      (option) => option.value === level
-    );
-    return levelOption ? levelOption.label : "알 수 없음";
-  };
-
-  return (
-    <div className={styles.userGrid}>
-      {/* Header */}
-      <div className={styles.gridHeader}>
-        <div className={styles.headerCell}>이름 / 기수</div>
-        <div className={styles.headerCell}>생일</div>
-        <div className={styles.headerCell}>권한</div>
-        <div className={styles.headerCell}>관리</div>
-      </div>
-
-      {/* Body */}
-      <div className={styles.gridBody}>
-        {users.map((user, index) => (
-          <div key={`${user.name}-${index}`} className={styles.gridRow}>
-            <div className={styles.cell}>
-              {user.name} / {user.gisu}기
-            </div>
-            <div className={styles.cell}>{getBirthDisplay(user.birth)}</div>
-            <div className={styles.cell}>{getLevelLabel(user.level)}</div>
-            <div className={`${styles.cell} ${styles.actionsCell}`}>
-              <button
-                className={`${styles.iconBtn} ${styles.editBtn}`}
-                onClick={() => onEdit?.(user)}
-                type="button"
-                title="수정"
-              >
-                ✏️
-              </button>
-              <button
-                className={`${styles.iconBtn} ${styles.deleteBtn}`}
-                onClick={() => onDelete?.(user)}
-                type="button"
-                title="삭제"
-              >
-                🗑️
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {users.length === 0 && (
-        <div className={styles.emptyState}>등록된 사용자가 없습니다.</div>
-      )}
-    </div>
-  );
-}
-
-export const TeamGrid = memo(function TeamGrid({
-  users,
-  onEdit,
-  onDelete,
-}: UserGridProps) {
+export const TeamGrid = memo(function TeamGrid({ users, onEdit, onDelete }: UserGridProps) {
   const cells = getCells(users);
+
   return (
-    <section>
+    <section className="space-y-5">
       {cells.map((cell) => (
-        <div key={cell.cellId} className={styles.cellSection}>
-          <div className={styles.cellHeader}>
-            <h3 className={styles.cellTitle}>{cell.cellId}조</h3>
-            {cell.leaderName && (
-              <span className={styles.leaderNames}>{cell.leaderName}</span>
+        <div key={cell.cellId}>
+          <h2 className="text-xs font-semibold text-muted-foreground mb-2 px-1">
+            {cell.cellId}조{cell.leaderName ? ` (${cell.leaderName})` : ""}{" "}
+            <span className="font-normal">{cell.users.length}명</span>
+          </h2>
+          <div className="glass rounded-2xl overflow-hidden divide-y divide-border/30">
+            {cell.users.map((user) => {
+              const levelLabel = getLevelLabel(user.level);
+              return (
+                <div key={user.userId} className="flex items-center px-4 py-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-foreground">{user.name}</span>
+                      {user.level >= 2 && (
+                        <span
+                          className="text-[10px] px-1.5 py-0.5 rounded-full"
+                          style={{
+                            background: "hsl(var(--primary) / 0.1)",
+                            color: "hsl(var(--primary))",
+                          }}
+                        >
+                          {levelLabel}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                      {getBirthDisplay(user.birth)} · {user.gisu}기
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => onEdit?.(user)}
+                      type="button"
+                      className="p-2 text-muted-foreground"
+                    >
+                      <Pencil className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => onDelete?.(user)}
+                      type="button"
+                      className="p-2 text-muted-foreground"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+            {cell.users.length === 0 && (
+              <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+                등록된 팀원이 없습니다.
+              </div>
             )}
           </div>
-          <UserGrid users={cell.users} onEdit={onEdit} onDelete={onDelete} />
         </div>
       ))}
     </section>
