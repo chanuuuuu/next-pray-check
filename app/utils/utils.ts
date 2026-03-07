@@ -25,7 +25,7 @@ export async function getLevel(
   );
 }
 
-export async function getWeekDay(day?: string) {
+export async function getWeekDay(day?: string): Promise<number> {
   const now = day ? new Date(day) : new Date();
   const weekDay = getWeekCount(now);
   const year = now.getFullYear().toString().slice(2);

@@ -1,4 +1,4 @@
-export interface Attendance {
+export type Attendance = {
   attendanceId: number;
   userId: number;
   groupId: number;
@@ -10,4 +10,4 @@ export interface Attendance {
   worship?: boolean;
   community?: boolean;
   hasAttendance: boolean;
-}
+};

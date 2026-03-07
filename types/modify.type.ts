@@ -1,8 +1,8 @@
-export interface UserFormType {
+export type UserFormType = {
   userId?: number;
   name?: string;
   birth?: string;
   cellId?: number;
   level?: string;
   groupId?: number;
-}
+};

@@ -26,7 +26,7 @@ export function getLeaders(users: User[]): Leader[] {
   }, [] as Leader[]);
 
   filteredLeaders.push({
-    groupId: users[0]?.groupId as number,
+    groupId: users[0]?.groupId ?? 1,
     cellId: max,
     name: "신규 등록",
     level: 2,
