@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { AppShell } from "@/app/component/Common/AppShell";
 import "./globals.css";
+
+const pretendard = localFont({
+  src: "../public/fonts/web/variable/woff2/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  display: "swap",
+  weight: "45 920",
+});
 
 export const metadata: Metadata = {
   title: "한줄 기도제목 나눔",
@@ -13,9 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={pretendard.variable}>
       <body style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
-        <main style={{ flex: 1, overflow: "hidden", paddingBottom: "5rem" }}>
+        <main style={{ flex: 1, overflow: "hidden", paddingBottom: "var(--nav-height)" }}>
           {children}
         </main>
         <AppShell />

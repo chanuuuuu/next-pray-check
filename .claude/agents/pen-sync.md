@@ -31,7 +31,7 @@ tools: mcp__pencil__get_editor_state, mcp__pencil__open_document, mcp__pencil__b
 | 회색 버튼 | `#6b7280` |
 | 필터 드롭다운 배경 | `#1e2433` |
 | 필터 드롭다운 radius | `8` |
-| 폰트 패밀리 | Cafe24 PROSlim (c24ps) |
+| 폰트 패밀리 | Pretendard Variable (--font-pretendard) |
 
 ### 페이지 ↔ 프레임 ID 매핑
 
@@ -180,7 +180,7 @@ get_screenshot()  ← 결과 확인
 ### 디자인 일관성
 
 - 모든 색상은 위 디자인 토큰 기준으로 적용
-- 폰트는 Cafe24 PROSlim (`c24ps`) 사용
+- 폰트는 Pretendard Variable 사용
 - 다크 테마만 지원 (라이트 테마 변형 없음)
 - border는 `#ffffff1a` (opacity 10%)
 

@@ -25,7 +25,7 @@ color: cyan
 | 검증 | Zod (서버 사이드 전용) |
 | 캐싱 | `unstable_cache` + `revalidateTag` |
 | 폼 상태 | `useActionState` (React 19) |
-| 폰트 | Cafe24 PROSlim (`c24ps`) |
+| 폰트 | Pretendard Variable (`--font-pretendard`) |
 
 > **절대 사용하지 않는 것**: Prisma, NextAuth, 클라이언트 사이드 fetch 패턴
 

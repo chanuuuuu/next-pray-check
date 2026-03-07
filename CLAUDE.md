@@ -148,7 +148,7 @@ npm run test:coverage # 커버리지 리포트
 | DB 연결         | `import { sql } from "@/db/neon"`                                 |
 | 세션 검증       | `verifySession()` (리다이렉트) / `getUserBySession()` (null 반환) |
 | 권한 레벨       | `level: 1` 일반 / `level: 2` 리더                                 |
-| 폰트            | Cafe24 PROSlim (`c24ps` 클래스)                                   |
+| 폰트            | Pretendard Variable (`--font-pretendard`)                                   |
 | 라우트          | `/` 홈 · `/login` · `/attendance` · `/requests` · `/manage`       |
 
 ## Task Master AI Instructions
