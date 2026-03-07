@@ -65,6 +65,9 @@
   --bg-gradient-from: 215 60% 92%;
   --bg-gradient-via: 230 50% 94%;
   --bg-gradient-to: 200 40% 95%;
+
+  /* 레이아웃 */
+  --nav-height: 5rem;
 }
 
 .glass {
@@ -98,24 +101,27 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-@font-face {
-  font-family: "c24ps";
-  src: url("/fonts/Cafe24PROSlim-Regular.woff2") format("woff2"),
-    url("/fonts/Cafe24PROSlim-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+.form-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: none;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--secondary) / 0.5);
+  outline: none;
+  transition: box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
-@font-face {
-  font-family: "c24ps";
-  src: url("/fonts/Cafe24PROSlim-Bold.woff2") format("woff2"),
-    url("/fonts/Cafe24PROSlim-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+.form-input::placeholder {
+  color: hsl(var(--muted-foreground) / 0.5);
 }
+
+.form-input:focus {
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.3);
+}
+
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
 
@@ -143,7 +149,7 @@ body {
   padding: 0;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: "c24ps", sans-serif;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 /**
@@ -159,9 +165,11 @@ main {
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+@layer base {
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+  }
 }
 
 /* Grouping content
@@ -577,20 +585,22 @@ template {
   animation: shimmer 2s infinite linear;
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.1) 4%,
-    rgba(255, 255, 255, 0.2) 25%,
-    rgba(255, 255, 255, 0.1) 46%
+    hsl(var(--secondary)) 4%,
+    hsl(var(--muted)) 25%,
+    hsl(var(--secondary)) 46%
   );
   background-size: 1000px 100%;
 }
 
-button {
-  background: transparent;
-}
+@layer base {
+  button {
+    background: transparent;
+  }
 
-button:focus {
-  outline: none;
-  border: none;
+  button:focus {
+    outline: none;
+    border: none;
+  }
 }
 
 /* 모바일에서 input focus 효과 제거 */

@@ -6,15 +6,15 @@ import {
   useTransform,
   type PanInfo,
 } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Stack.css";
 
-interface CardRotateProps {
+type CardRotateProps = {
   children: React.ReactNode;
   onSendToBack: () => void;
   sensitivity: number;
   disableDrag?: boolean;
-}
+};
 
 function CardRotate({
   children,
@@ -65,7 +65,7 @@ function CardRotate({
   );
 }
 
-interface StackProps {
+type StackProps = {
   randomRotation?: boolean;
   sensitivity?: number;
   sendToBackOnClick?: boolean;
@@ -76,7 +76,7 @@ interface StackProps {
   pauseOnHover?: boolean;
   mobileClickOnly?: boolean;
   mobileBreakpoint?: number;
-}
+};
 
 export default function Stack({
   randomRotation = false,
@@ -92,6 +92,20 @@ export default function Stack({
 }: StackProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const rotationMapRef = useRef<Map<number, number>>(new Map());
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const getStableRotation = (id: number): number => {
+    if (!isClient) return 0;
+    if (!rotationMapRef.current.has(id)) {
+      rotationMapRef.current.set(id, Math.random() * 10 - 9);
+    }
+    return rotationMapRef.current.get(id)!;
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -158,9 +172,19 @@ export default function Stack({
   });
 
   useEffect(() => {
-    if (cards.length) {
-      setStack(cards.map((content, index) => ({ id: index + 1, content })));
-    }
+    if (!cards.length) return;
+    setStack((prev) => {
+      if (prev.length !== cards.length) {
+        return cards.map((content, index) => ({ id: index + 1, content }));
+      }
+      const contentMap = new Map(
+        cards.map((content, index) => [index + 1, content]),
+      );
+      return prev.map((card) => ({
+        ...card,
+        content: contentMap.get(card.id) ?? card.content,
+      }));
+    });
   }, [cards]);
 
   const sendToBack = (id: number) => {
@@ -191,7 +215,7 @@ export default function Stack({
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {stack.map((card, index) => {
-        const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+        const randomRotate = randomRotation ? getStableRotation(card.id) : 0;
         return (
           <CardRotate
             key={card.id}
@@ -201,7 +225,16 @@ export default function Stack({
           >
             <motion.div
               className="card"
-              onClick={() => shouldEnableClick && sendToBack(card.id)}
+              onClick={(e) => {
+                if (!shouldEnableClick) return;
+                if (
+                  (e.target as HTMLElement).closest(
+                    'button, a, input, select, textarea, [role="button"]',
+                  )
+                )
+                  return;
+                sendToBack(card.id);
+              }}
               animate={{
                 rotateZ: (stack.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - stack.length * 0.06,
