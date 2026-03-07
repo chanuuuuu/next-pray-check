@@ -3,36 +3,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100dvh;
+  padding: 1.5rem;
   box-sizing: border-box;
-  background-color: #111827;
-  padding: 20px;
 }
 
-.loginMain {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 1;
-}
-
-/* 모바일 최적화 */
 @media (max-width: 768px) {
   .loginPage {
-    height: calc(100vh - 60px);
-    padding: 16px 16px 0;
-  }
-
-  .loginMain {
-    max-width: 100%;
-  }
-}
-
-/* PC에서 더 작은 패딩 */
-@media (min-width: 1024px) {
-  .loginPage {
-    padding: 40px;
+    padding: 1rem;
   }
 }

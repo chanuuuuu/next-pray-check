@@ -3,71 +3,106 @@
   max-width: 24rem;
 }
 
-.title {
-  width: 100%;
-  margin-bottom: 1.5rem;
-  color: hsl(var(--foreground));
-  font-size: 1.5rem;
-  font-weight: bold;
+/* 로고 영역 */
+.logoArea {
   text-align: center;
+  margin-bottom: 2.5rem;
 }
 
+.logoIcon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.5rem;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoEmoji {
+  font-size: 1.5rem;
+}
+
+.appTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+  margin: 0;
+}
+
+/* 폼 */
 .form {
   border-radius: 1.5rem;
   padding: 1.5rem;
-}
-
-.formSection {
-  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .formField {
-  margin-bottom: 1rem;
-}
-
-.formField:last-child {
-  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
 }
 
 .label {
   display: block;
-  margin-bottom: 0.375rem;
-  color: hsl(var(--muted-foreground));
   font-size: 0.75rem;
   font-weight: 500;
+  color: hsl(var(--muted-foreground));
 }
 
 .input {
-  width: 100%;
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--foreground));
-  border-color: hsl(var(--border));
-  border-radius: 0.75rem;
-}
-
-.input::placeholder {
-  color: hsl(var(--muted-foreground) / 0.5);
+  composes: form-input from global;
+  padding: 0.75rem 1rem;
 }
 
 .error {
   color: hsl(var(--destructive));
   font-size: 0.75rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .submitBtn {
   width: 100%;
-  margin-top: 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
-  border-radius: 0.75rem;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 하단 안내 */
+.footer {
+  text-align: center;
+  font-size: 0.6875rem;
+  color: hsl(var(--muted-foreground) / 0.6);
+  margin-top: 1.5rem;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
   .input {
     font-size: 1rem; /* iOS 확대 방지 */
   }
+
   .form {
     padding: 1.25rem;
   }
