@@ -18,6 +18,7 @@ export default async function Attendance() {
       <AttendanceContent groupId={user.groupId} cellId={user.cellId} />
     </Suspense>
   );
+
 }
 
 async function AttendanceContent({
@@ -28,9 +29,5 @@ async function AttendanceContent({
   cellId: number;
 }) {
   const attendances = await attendanceService.getAttendances(groupId);
-  return (
-    <section className="page">
-      <AttendanceClient attendances={attendances} cellId={cellId} />
-    </section>
-  );
+  return <AttendanceClient attendances={attendances} myCellId={cellId} />;
 }
