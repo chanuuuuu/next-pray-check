@@ -27,7 +27,7 @@ export function RequestRegistForm({
     }
   }, [state, onClose, router]);
 
-  const canAddMore = inputs.length < 3 && insertId + inputs.length < 3;
+  const canAddMore = inputs.length < 3;
 
   return (
     <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
@@ -102,7 +102,7 @@ export function RequestRegistForm({
             cursor: "pointer",
           }}
         >
-          + 기도제목 추가 ({inputs.length}/{Math.min(3 - insertId, 3)})
+          + 기도제목 추가 ({inputs.length}/3)
         </button>
       )}
 

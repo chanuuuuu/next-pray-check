@@ -6,16 +6,29 @@ import { ModifyRequest } from "@/types/request.type";
 import { requestService } from "@/server/services/request.services";
 import { revalidateTag } from "next/cache";
 
-export interface RequestInput {
+export type RequestInput = {
   error?: string;
   text: string;
-}
+};
 
-export interface RequestState {
+export type RequestState = {
   success: boolean;
   requestInputs: RequestInput[];
   isUrgent: boolean;
   insertId: number;
+};
+
+function validateRequestTexts(texts: string[]): {
+  inputs: RequestInput[];
+  hasError: boolean;
+} {
+  let hasError = false;
+  const inputs = texts.map((text) => {
+    if (text.length > 0) return { text: text.trim(), error: undefined };
+    hasError = true;
+    return { text: text.trim(), error: "최소 1자 이상 입력해주세요." };
+  });
+  return { inputs, hasError };
 }
 
 export async function actionRequest(
@@ -27,24 +40,12 @@ export async function actionRequest(
     isUrgent: formData.get("isUrgent") as string,
   };
 
-  let isError = false;
-
   const isUrgent = !!inputData?.isUrgent;
-  const nextRequestInputs = inputData.text?.map((request) => {
-    if (request.length > 0)
-      return {
-        text: request.trim(),
-        error: undefined,
-      };
+  const { inputs: nextRequestInputs, hasError } = validateRequestTexts(
+    inputData.text
+  );
 
-    isError = true;
-    return {
-      text: request.trim(),
-      error: "최소 1자 이상 입력해주세요.",
-    };
-  });
-
-  if (!isError) {
+  if (!hasError) {
     const user = await getUserBySession();
     if (!user) {
       return {
@@ -76,7 +77,7 @@ export async function actionRequest(
   }
 
   return {
-    success: !isError,
+    success: !hasError,
     requestInputs: nextRequestInputs,
     insertId: state.insertId,
     isUrgent,

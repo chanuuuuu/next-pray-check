@@ -41,7 +41,7 @@ export default function useRequestForm(insertId: number) {
     setTimeout(() => {
       const newInput = document.querySelectorAll(`textarea[name="text"]`);
       if (newInput) {
-        (newInput[newInput.length - 1] as HTMLInputElement).focus();
+        (newInput[newInput.length - 1] as HTMLTextAreaElement).focus();
       }
     });
   }

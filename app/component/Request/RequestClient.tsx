@@ -1,12 +1,13 @@
 "use client";
 
 import { Request } from "@/types/request.type";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState } from "react";
 import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { RequestContextProvider } from "./RequestContext";
 import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
 import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
+import { useRequestFilter } from "@/app/hooks/useRequestFilter";
 import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Layers, List } from "lucide-react";
@@ -34,9 +35,8 @@ function RequestClientInner({
       initialFavoriteRequests,
     });
 
-  const [selectedRequestType, setSelectedRequestType] = useState<number>(
-    REQUEST_GROUP_OPTIONS.TEAM.value,
-  );
+  const { selectedRequestType, conditionalRequests, handleRequestTypeChange } =
+    useRequestFilter(requests, cellId, favoriteRequests);
 
   const insertId = useMemo(
     () =>
@@ -49,24 +49,6 @@ function RequestClientInner({
     [requests, userId],
   );
 
-  const conditionalRequests = useMemo(() => {
-    switch (selectedRequestType) {
-      case REQUEST_GROUP_OPTIONS.TEAM.value:
-        return requests;
-      case REQUEST_GROUP_OPTIONS.CELL.value:
-        return requests.filter((request) => request.cellId === cellId);
-      case REQUEST_GROUP_OPTIONS.FAVORITE.value:
-        return requests.filter((request) =>
-          favoriteRequests.includes(request.requestId),
-        );
-    }
-    return requests;
-  }, [requests, selectedRequestType, cellId, favoriteRequests]);
-
-  const handleRequestTypeChange = useCallback((value: number) => {
-    setSelectedRequestType(value);
-  }, []);
-
   const filterOptions = [
     { key: REQUEST_GROUP_OPTIONS.TEAM.value, label: "전체" },
     { key: REQUEST_GROUP_OPTIONS.CELL.value, label: "우리 조" },
@@ -78,7 +60,7 @@ function RequestClientInner({
       {/* Header */}
       <div className={`glass-strong ${styles.header}`}>
         <div className={styles.headerRow}>
-          <h1 className={`c24ps ${styles.title}`}>기도제목</h1>
+          <h1 className={styles.title}>기도제목</h1>
           <div className={`glass ${styles.viewToggle}`}>
             <button
               onClick={() => setIsStackView(true)}

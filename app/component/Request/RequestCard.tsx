@@ -22,7 +22,9 @@ export function StackCard({
   toggleFavoriteRequest,
   getIsFavoriteRequest,
 }: CardInnerProps) {
-  const isFav = group.requests.some((r) => getIsFavoriteRequest(r.requestId));
+  const isFav =
+    !!group.requests[0] &&
+    getIsFavoriteRequest(group.requests[0].requestId);
 
   return (
     <div
@@ -38,18 +40,29 @@ export function StackCard({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-baseline gap-2">
           <h3
-            style={{ fontWeight: 600, color: "hsl(var(--foreground))", fontSize: "1rem" }}
+            style={{
+              fontWeight: 600,
+              color: "hsl(var(--foreground))",
+              fontSize: "1rem",
+            }}
           >
             {group.name}
           </h3>
-          <span style={{ fontSize: "0.75rem", color: "hsl(var(--muted-foreground))" }}>
+          <span
+            style={{
+              fontSize: "0.75rem",
+              color: "hsl(var(--muted-foreground))",
+            }}
+          >
             {group.cellId}조 · {group.gisu}기
           </span>
         </div>
         <button
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
-            if (group.requests[0]) toggleFavoriteRequest(group.requests[0].requestId);
+            if (group.requests[0])
+              toggleFavoriteRequest(group.requests[0].requestId);
           }}
           className="w-8 h-8 rounded-full flex items-center justify-center active:scale-90 transition-transform"
           style={{ background: isFav ? "hsl(0 72% 55% / 0.1)" : "transparent" }}
@@ -68,6 +81,7 @@ export function StackCard({
             request={request}
             toggleFavoriteRequest={toggleFavoriteRequest}
             getIsFavoriteRequest={getIsFavoriteRequest}
+            hideDelete
           />
         ))}
       </div>
@@ -80,19 +94,26 @@ export function ListCard({
   toggleFavoriteRequest,
   getIsFavoriteRequest,
 }: CardInnerProps) {
-  const isFav = group.requests.some((r) => getIsFavoriteRequest(r.requestId));
+  const isFav =
+    !!group.requests[0] &&
+    getIsFavoriteRequest(group.requests[0].requestId);
 
   return (
     <div className="glass rounded-2xl p-4">
       {/* 카드 헤더 */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-foreground">{group.name}</span>
-          <span className="text-[10px] text-muted-foreground">{group.cellId}조</span>
+          <span className="text-xs font-semibold text-foreground">
+            {group.name}
+          </span>
+          <span className="text-[10px] text-muted-foreground">
+            {group.cellId}조
+          </span>
         </div>
         <button
           onClick={() => {
-            if (group.requests[0]) toggleFavoriteRequest(group.requests[0].requestId);
+            if (group.requests[0])
+              toggleFavoriteRequest(group.requests[0].requestId);
           }}
           className="w-7 h-7 rounded-lg flex items-center justify-center active:scale-90 transition-transform"
           style={{ background: isFav ? "hsl(0 72% 55% / 0.1)" : "transparent" }}
@@ -106,10 +127,7 @@ export function ListCard({
       {/* 기도제목 리스트 */}
       <div className="space-y-1.5">
         {group.requests.map((request) => (
-          <RequestItemList
-            key={request.requestId}
-            request={request}
-          />
+          <RequestItemList key={request.requestId} request={request} />
         ))}
       </div>
     </div>
@@ -118,18 +136,22 @@ export function ListCard({
 
 function RequestItem({
   request,
+  hideDelete = false,
 }: {
   request: Request;
   toggleFavoriteRequest: (requestId: number) => void;
   getIsFavoriteRequest: (requestId: number) => boolean;
+  hideDelete?: boolean;
 }) {
   const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
   const isMyRequest = isMyRequestGroup(request.userId);
 
   return (
     <div className="glass rounded-2xl p-3 flex items-start gap-2">
-      <p className="text-sm text-foreground leading-relaxed flex-1">{request.text}</p>
-      {isMyRequest && (
+      <p className="text-sm text-foreground leading-relaxed flex-1">
+        {request.text}
+      </p>
+      {isMyRequest && !hideDelete && (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -144,17 +166,15 @@ function RequestItem({
   );
 }
 
-function RequestItemList({
-  request,
-}: {
-  request: Request;
-}) {
+function RequestItemList({ request }: { request: Request }) {
   const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
   const isMyRequest = isMyRequestGroup(request.userId);
 
   return (
     <div className="flex items-start gap-2">
-      <p className="text-sm text-foreground leading-relaxed flex-1">{request.text}</p>
+      <p className="text-sm text-foreground leading-relaxed flex-1">
+        {request.text}
+      </p>
       {isMyRequest && (
         <button
           onClick={() => handleDeleteRequest(request.requestId)}
