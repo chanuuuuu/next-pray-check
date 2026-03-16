@@ -5,6 +5,7 @@ import { attendanceService } from "@/server/services/attendance.service";
 import AttendanceClient from "@/app/component/Attendance/AttendanceClient";
 import { Suspense } from "react";
 import { AttendanceLoading } from "@/app/component/Attendance/AttendanceLoading";
+import { getWeekDay } from "@/app/utils/utils";
 
 export default async function Attendance() {
   const user = await verifySession();
@@ -28,6 +29,9 @@ async function AttendanceContent({
   groupId: number;
   cellId: number;
 }) {
-  const attendances = await attendanceService.getAttendances(groupId);
-  return <AttendanceClient attendances={attendances} myCellId={cellId} />;
+  const [attendances, weekId] = await Promise.all([
+    attendanceService.getAttendances(groupId),
+    getWeekDay(),
+  ]);
+  return <AttendanceClient attendances={attendances} myCellId={cellId} weekId={weekId} />;
 }

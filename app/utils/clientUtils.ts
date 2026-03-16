@@ -65,3 +65,19 @@ export function getCells<T extends CellMember>(users: T[]): Cell<T>[] {
 export function removeAtIndex<T>(array: T[], index: number): T[] {
   return array.filter((_, i) => i !== index);
 }
+
+// weekId = YYWW (예: 2610 → 26년 10주차)
+export function getAttendanceWeekLabel(weekId: number): string {
+  const weekStr = weekId.toString();
+  const yearStr = weekStr.slice(0, 2);
+  const week = parseInt(weekStr.slice(2));
+  const year = 2000 + parseInt(yearStr);
+
+  const jan1 = new Date(year, 0, 1);
+  const startDate = new Date(jan1.getTime() + (week - 1) * 7 * 24 * 60 * 60 * 1000);
+
+  const month = startDate.getMonth() + 1;
+  const day = startDate.getDate();
+
+  return `${yearStr}년 ${month}월 ${day}일 ${week}주차`;
+}

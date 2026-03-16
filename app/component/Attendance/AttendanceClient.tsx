@@ -2,12 +2,13 @@
 
 import { Attendance } from "@/types/attendance.type";
 import { useMemo, useState, useCallback, useTransition } from "react";
-import { getCells } from "@/app/utils/clientUtils";
+import { getCells, getAttendanceWeekLabel } from "@/app/utils/clientUtils";
 import { useRouter } from "next/navigation";
 import { actionAttendance } from "@/app/action/attendanceAction";
 import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
 import { BottomSheetSelect } from "@/app/component/Common/BottomSheetSelect";
 import { motion } from "motion/react";
+import { toast } from "sonner";
 
 function hasAttendanceChanged(
   local: Attendance[],
@@ -51,13 +52,14 @@ function AttendanceToggleButton({
 export default function AttendanceClient({
   attendances,
   myCellId,
+  weekId,
 }: {
   attendances: Attendance[];
   myCellId: number;
+  weekId: number;
 }) {
   const [localAttendances, setLocalAttendances] =
     useState<Attendance[]>(attendances);
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const [selectedCellId, setSelectedCellId] = useState<number>(myCellId);
   const router = useRouter();
@@ -67,9 +69,14 @@ export default function AttendanceClient({
     [localAttendances],
   );
 
-  const selectedCell = useMemo(
-    () => cells.find((c) => c.cellId === selectedCellId) ?? cells[0],
-    [cells, selectedCellId],
+  const isAllCells = selectedCellId === 0;
+
+  const selectedCells = useMemo(
+    () =>
+      isAllCells
+        ? cells
+        : cells.filter((c) => c.cellId === selectedCellId),
+    [cells, selectedCellId, isAllCells],
   );
 
   const toggle = useCallback(
@@ -85,18 +92,17 @@ export default function AttendanceClient({
 
   const handleRegist = () => {
     if (!hasAttendanceChanged(localAttendances, attendances)) {
-      setStatusMessage("변경된 내용이 없습니다.");
+      toast.info("변경된 내용이 없습니다.");
       return;
     }
 
-    setStatusMessage(null);
     startTransition(async () => {
       const result = await actionAttendance(localAttendances);
       if (result) {
         router.refresh();
-        setStatusMessage("출석 등록 성공");
+        toast.success("출석이 저장되었습니다.");
       } else {
-        setStatusMessage("출석 등록 실패");
+        toast.error("출석 등록에 실패했습니다.");
       }
     });
   };
@@ -108,33 +114,39 @@ export default function AttendanceClient({
       easing="ease-out"
       initialOpacity={0.1}
     >
-      <div className="min-h-screen bg-app-gradient pb-24">
+      <div data-component="AttendanceClient" className="min-h-screen bg-app-gradient pb-24">
         {/* 헤더 */}
         <div className="glass-strong sticky top-0 z-40 px-5 pt-3 pb-3 flex items-center justify-between gap-3">
-          <h1 className="text-lg font-bold text-foreground shrink-0">
-            출석 관리
-          </h1>
+          <div className="shrink-0">
+            <h1 className="text-lg font-bold text-foreground">출석 관리</h1>
+            <p className="text-xs text-muted-foreground font-medium mt-0.5">
+              {getAttendanceWeekLabel(weekId)}
+            </p>
+          </div>
           <BottomSheetSelect
-            options={cells.map((cell) => ({
-              value: cell.cellId,
-              label: `${cell.cellId}조${cell.leaderName ? ` ${cell.leaderName}` : ""}`,
-            }))}
+            options={[
+              { value: 0, label: "모든 조" },
+              ...cells.map((cell) => ({
+                value: cell.cellId,
+                label: `${cell.cellId}조${cell.leaderName ? ` ${cell.leaderName}` : ""}`,
+              })),
+            ]}
             value={selectedCellId}
             onChange={setSelectedCellId}
           />
         </div>
 
         {/* 조별 출석 목록 */}
-        <div className="px-5 pt-4 pb-8">
-          {selectedCell && (
+        <div className="px-5 pt-4 pb-8 space-y-4">
+          {selectedCells.map((cell) => (
             <motion.div
-              key={selectedCell.cellId}
+              key={cell.cellId}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <h2 className="text-xs font-semibold text-muted-foreground mb-2 px-1">
-                {selectedCell.cellId}조
-                {selectedCell.leaderName ? ` — ${selectedCell.leaderName}` : ""}
+                {cell.cellId}조
+                {cell.leaderName ? ` — ${cell.leaderName}` : ""}
               </h2>
               <div className="glass rounded-2xl overflow-hidden">
                 {/* 헤더 행 */}
@@ -150,11 +162,11 @@ export default function AttendanceClient({
                   </span>
                 </div>
                 {/* 멤버 행 */}
-                {selectedCell.users.map((user, i) => (
+                {cell.users.map((user, i) => (
                   <div
                     key={user.userId}
                     className={`flex items-center px-4 py-3 ${
-                      i < selectedCell.users.length - 1
+                      i < cell.users.length - 1
                         ? "border-b border-border/30"
                         : ""
                     }`}
@@ -182,14 +194,11 @@ export default function AttendanceClient({
                 ))}
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
 
         {/* 하단 고정 등록 버튼 */}
         <div className="fixed bottom-20 left-0 right-0 z-40 px-5 flex flex-col items-center gap-2">
-          {statusMessage && (
-            <p className="text-sm text-muted-foreground">{statusMessage}</p>
-          )}
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleRegist}

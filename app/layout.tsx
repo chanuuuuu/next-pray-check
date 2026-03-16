@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { AppShell } from "@/app/component/Common/AppShell";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const pretendard = localFont({
@@ -27,6 +28,7 @@ export default function RootLayout({
           {children}
         </main>
         <AppShell />
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );
