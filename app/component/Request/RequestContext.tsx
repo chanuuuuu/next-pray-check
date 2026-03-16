@@ -11,26 +11,30 @@ import { actionRequestDelete } from "@/app/action/requestAction";
 import { useRouter } from "next/navigation";
 
 // RequestContextType - 컨텍스트 구조
-interface RequestContextType {
+type RequestContextType = {
   deletedRequests: Set<number>;
   handleDeleteRequest: (requestId: number) => Promise<void>;
   isMyRequestGroup: (groupUserId: number) => boolean;
-}
+  getIsPrayedUser: (userId: number) => boolean;
+};
 
 // createContext<RequestContextType> - 컨텍스트 생성 및 초기값 선언
 const RequestContext = createContext<RequestContextType>({
   deletedRequests: new Set(),
   handleDeleteRequest: async () => {},
   isMyRequestGroup: () => false,
+  getIsPrayedUser: () => false,
 });
 
 // ContextProvider 생성
 export function RequestContextProvider({
   children,
   userId,
+  initialPrayedUserIds,
 }: {
   children: ReactNode;
   userId: number;
+  initialPrayedUserIds: number[];
 }) {
   const router = useRouter();
 
@@ -64,14 +68,20 @@ export function RequestContextProvider({
     [userId],
   );
 
+  const getIsPrayedUser = useCallback(
+    (targetUserId: number) => initialPrayedUserIds.includes(targetUserId),
+    [initialPrayedUserIds],
+  );
+
   // ✅ useMemo로 value 객체 메모이제이션
   const value = useMemo(
     () => ({
       deletedRequests,
       handleDeleteRequest,
       isMyRequestGroup,
+      getIsPrayedUser,
     }),
-    [deletedRequests, handleDeleteRequest, isMyRequestGroup],
+    [deletedRequests, handleDeleteRequest, isMyRequestGroup, getIsPrayedUser],
   );
 
   return (

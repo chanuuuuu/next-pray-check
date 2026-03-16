@@ -18,6 +18,7 @@ type RequestClientProps = {
   userId: number;
   cellId: number;
   initialFavoriteRequests: number[];
+  initialPrayedUserIds: number[];
 };
 
 function RequestClientInner({
@@ -25,7 +26,7 @@ function RequestClientInner({
   initialFavoriteRequests,
   userId,
   cellId,
-}: RequestClientProps) {
+}: Omit<RequestClientProps, "initialPrayedUserIds">) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStackView, setIsStackView] = useState(true);
 
@@ -56,7 +57,7 @@ function RequestClientInner({
   ];
 
   return (
-    <div className={`min-h-screen bg-app-gradient pb-24 relative`}>
+    <div data-component="RequestClient" className={`min-h-screen bg-app-gradient pb-24 relative`}>
       {/* Header */}
       <div className={`glass-strong ${styles.header}`}>
         <div className={styles.headerRow}>
@@ -165,11 +166,12 @@ function RequestClientInner({
 export function RequestClient({
   requests,
   initialFavoriteRequests,
+  initialPrayedUserIds,
   userId,
   cellId,
 }: RequestClientProps) {
   return (
-    <RequestContextProvider userId={userId}>
+    <RequestContextProvider userId={userId} initialPrayedUserIds={initialPrayedUserIds}>
       <FadeContent
         blur={false}
         duration={1000}

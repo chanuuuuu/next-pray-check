@@ -4,6 +4,7 @@ import { Request, RequestGroup } from "@/types/request.type";
 import { memo } from "react";
 import { useRequestContext } from "./RequestContext";
 import { Heart, Trash2 } from "lucide-react";
+import { PrayButton } from "./PrayButton";
 
 type CardInnerProps = {
   group: RequestGroup;
@@ -22,6 +23,7 @@ export function StackCard({
   toggleFavoriteRequest,
   getIsFavoriteRequest,
 }: CardInnerProps) {
+  const { getIsPrayedUser } = useRequestContext();
   const isFav =
     !!group.requests[0] &&
     getIsFavoriteRequest(group.requests[0].requestId);
@@ -84,6 +86,14 @@ export function StackCard({
             hideDelete
           />
         ))}
+      </div>
+
+      {/* 기도체크 버튼 */}
+      <div className="flex justify-center mt-1">
+        <PrayButton
+          targetUserId={group.userId}
+          initialIsChecked={getIsPrayedUser(group.userId)}
+        />
       </div>
     </div>
   );
