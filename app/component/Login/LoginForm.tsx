@@ -25,6 +25,7 @@ export default function LoginForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
+      data-component="LoginForm"
       className={styles.container}
     >
       {/* 로고 영역 */}

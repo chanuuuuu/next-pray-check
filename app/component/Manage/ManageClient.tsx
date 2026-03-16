@@ -51,7 +51,7 @@ export function ManageClient({ users }: ManageClientProps) {
 
   return (
     <FadeContent blur={false} duration={1000} easing="ease-out" initialOpacity={0.1}>
-      <div className="min-h-screen bg-app-gradient pb-24">
+      <div data-component="ManageClient" className="min-h-screen bg-app-gradient pb-24">
         {/* 헤더 */}
         <div className="glass-strong sticky top-0 z-40 px-5 pt-12 pb-3 flex items-center justify-between">
           <h1 className="text-lg font-bold text-foreground">팀원 관리</h1>

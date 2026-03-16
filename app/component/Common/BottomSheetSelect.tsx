@@ -78,10 +78,11 @@ export function BottomSheetSelect<T extends string | number>({
     <>
       {name && <input type="hidden" name={name} value={value ?? ""} readOnly />}
       <button
+        data-component="BottomSheetSelect"
         ref={triggerRef}
         type="button"
         onClick={handleOpen}
-        className={`flex items-center gap-1 glass rounded-xl pl-4 pr-4 px-2.5 py-1 ${className ?? ""}`}
+        className={`flex justify-between gap-3 glass rounded-xl pl-4 pr-4 px-2.5 py-1 ${className ?? ""}`}
         style={{
           fontSize: "0.8rem",
           fontWeight: 500,

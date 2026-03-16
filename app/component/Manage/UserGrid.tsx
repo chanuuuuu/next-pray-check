@@ -20,7 +20,7 @@ export const TeamGrid = memo(function TeamGrid({ users, onEdit, onDelete }: User
   const cells = getCells(users);
 
   return (
-    <section className="space-y-5">
+    <section data-component="TeamGrid" className="space-y-5">
       {cells.map((cell) => (
         <div key={cell.cellId}>
           <h2 className="text-xs font-semibold text-muted-foreground mb-2 px-1">
