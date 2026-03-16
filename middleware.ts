@@ -1,4 +1,4 @@
-import { getUserBySession } from "@/server/session";
+import { getUserBySession, refreshSessionIfNeeded } from "@/server/session";
 import { NextRequest, NextResponse } from "next/server";
 
 // 페이지 진입에 대해서만 권한을 체크한다. API 요청에 대해서는 API 측에서 관리한다.
@@ -24,5 +24,7 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  await refreshSessionIfNeeded(request, response);
+  return response;
 }

@@ -3,6 +3,7 @@ import { SignJWT, jwtVerify, JWTPayload } from "jose";
 import { User } from "@/types/user.type";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextRequest, NextResponse } from "next/server";
 
 const hmac = new TextEncoder().encode(process.env.JWT_SECRET!);
 
@@ -73,4 +74,25 @@ export async function verifySession(): Promise<User> {
 
 export async function deleteSession() {
   (await cookies()).delete(cookie.name);
+}
+
+export async function refreshSessionIfNeeded(
+  request: NextRequest,
+  response: NextResponse,
+): Promise<void> {
+  const sessionCookie = request.cookies.get(cookie.name)?.value;
+  if (!sessionCookie) return;
+
+  const payload = await decrypt(sessionCookie);
+  if (!payload) return;
+
+  const remaining = new Date(payload.expires as string).getTime() - Date.now();
+  if (remaining < 3 * 24 * 60 * 60 * 1000) {
+    const expires = new Date(Date.now() + cookie.duration);
+    const newSession = await encrypt({ ...payload, expires });
+    response.cookies.set(cookie.name, newSession, {
+      ...cookie.options,
+      expires,
+    });
+  }
 }
