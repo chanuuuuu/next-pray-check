@@ -25,8 +25,7 @@ export function StackCard({
 }: CardInnerProps) {
   const { getIsPrayedUser } = useRequestContext();
   const isFav =
-    !!group.requests[0] &&
-    getIsFavoriteRequest(group.requests[0].requestId);
+    !!group.requests[0] && getIsFavoriteRequest(group.requests[0].requestId);
 
   return (
     <div
@@ -105,11 +104,10 @@ export function ListCard({
   getIsFavoriteRequest,
 }: CardInnerProps) {
   const isFav =
-    !!group.requests[0] &&
-    getIsFavoriteRequest(group.requests[0].requestId);
+    !!group.requests[0] && getIsFavoriteRequest(group.requests[0].requestId);
 
   return (
-    <div className="glass rounded-2xl p-4">
+    <div className="glass rounded-2xl p-4 pt-2">
       {/* 카드 헤더 */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">

@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 type Option<T extends string | number> = {
   value: T;
   label: string;
+  sublabel?: string;
 };
 
 type BottomSheetSelectProps<T extends string | number> = {
@@ -89,7 +90,7 @@ export function BottomSheetSelect<T extends string | number>({
           color: "hsl(var(--foreground))",
         }}
       >
-        <span className="truncate max-w-[7rem]">{selectedLabel}</span>
+        <span className="truncate max-w-[10rem]">{selectedLabel}</span>
         <ChevronDown
           className="w-3 h-3 shrink-0"
           style={{ color: "hsl(var(--muted-foreground))" }}
@@ -128,21 +129,51 @@ export function BottomSheetSelect<T extends string | number>({
                     onClick={() => handleSelect(opt.value)}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all active:scale-[0.98]"
                     style={{
-                      fontSize: "11px",
-                      fontWeight: 600,
                       background:
                         value === opt.value
                           ? "hsl(var(--primary) / 0.1)"
                           : "transparent",
-                      color:
-                        value === opt.value
-                          ? "hsl(var(--primary))"
-                          : "hsl(var(--muted-foreground))",
                     }}
                   >
-                    <span>{opt.label}</span>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "0.25rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: 600,
+                          color:
+                            value === opt.value
+                              ? "hsl(var(--primary))"
+                              : "hsl(var(--muted-foreground))",
+                        }}
+                      >
+                        {opt.label}
+                      </span>
+                      {opt.sublabel && (
+                        <span
+                          style={{
+                            fontSize: "11px",
+                            fontWeight: 500,
+                            color:
+                              value === opt.value
+                                ? "hsl(var(--primary) / 0.7)"
+                                : "hsl(var(--muted-foreground) / 0.6)",
+                          }}
+                        >
+                          {opt.sublabel}
+                        </span>
+                      )}
+                    </span>
                     {value === opt.value && (
-                      <Check className="w-3.5 h-3.5 shrink-0" />
+                      <Check
+                        className="w-3.5 h-3.5 shrink-0"
+                        style={{ color: "hsl(var(--primary))" }}
+                      />
                     )}
                   </button>
                 ))}
