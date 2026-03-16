@@ -102,7 +102,7 @@ export default function Stack({
   const getStableRotation = (id: number): number => {
     if (!isClient) return 0;
     if (!rotationMapRef.current.has(id)) {
-      rotationMapRef.current.set(id, Math.random() * 10 - 9);
+      rotationMapRef.current.set(id, Math.random() * 4 - 3);
     }
     return rotationMapRef.current.get(id)!;
   };
@@ -236,7 +236,7 @@ export default function Stack({
                 sendToBack(card.id);
               }}
               animate={{
-                rotateZ: (stack.length - index - 1) * 4 + randomRotate,
+                rotateZ: (stack.length - index - 1) * 2 + randomRotate,
                 scale: 1 + index * 0.06 - stack.length * 0.06,
                 transformOrigin: "90% 90%",
               }}
