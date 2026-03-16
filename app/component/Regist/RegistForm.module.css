@@ -77,6 +77,16 @@
   transform: scale(0.98);
 }
 
+.inlineRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.inlineItem {
+  flex: 1;
+  min-width: 0;
+}
+
 .generalError {
   color: hsl(var(--destructive));
   font-size: 0.875rem;

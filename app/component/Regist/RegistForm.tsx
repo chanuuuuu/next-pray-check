@@ -60,7 +60,7 @@ export function RegistForm({
   }, [state.error]);
 
   return (
-    <form action={formAction} className={styles.container}>
+    <form data-component="RegistForm" action={formAction} className={styles.container}>
       <section className={styles.formSection}>
         <label htmlFor="name" className={styles.label}>이름</label>
         <input
@@ -103,37 +103,39 @@ export function RegistForm({
         </select>
       </section>
 
-      <section className={styles.formSection}>
-        <label className={styles.label}>셀 리더</label>
-        <BottomSheetSelect
-          key={state.success ? "cellId-reset" : "cellId-keep"}
-          name="cellId"
-          options={leaders.map((leader: Leader) => ({
-            value: leader.cellId,
-            label: leader.name,
-          }))}
-          defaultValue={state.placeholder?.cellId || leaders[0].cellId}
-        />
-        {state.error?.cellId && (
-          <p className={styles.errorMessage}>{state.error?.cellId}</p>
-        )}
-      </section>
+      <div className={styles.inlineRow}>
+        <section className={`${styles.formSection} ${styles.inlineItem}`}>
+          <label className={styles.label}>셀 리더</label>
+          <BottomSheetSelect
+            key={state.success ? "cellId-reset" : "cellId-keep"}
+            name="cellId"
+            options={leaders.map((leader: Leader) => ({
+              value: leader.cellId,
+              label: leader.name,
+            }))}
+            defaultValue={state.placeholder?.cellId || leaders[0].cellId}
+          />
+          {state.error?.cellId && (
+            <p className={styles.errorMessage}>{state.error?.cellId}</p>
+          )}
+        </section>
 
-      <section className={styles.formSection}>
-        <label className={styles.label}>권한</label>
-        <BottomSheetSelect
-          key={state.success ? "level-reset" : "level-keep"}
-          name="level"
-          options={Object.values(LEVEL_OPTIONS).map(({ label }) => ({
-            value: label,
-            label,
-          }))}
-          defaultValue={state.placeholder?.level || LEVEL_OPTIONS.TEAM_MEMBER.label}
-        />
-        {state.error?.level && (
-          <p className={styles.errorMessage}>{state.error?.level}</p>
-        )}
-      </section>
+        <section className={`${styles.formSection} ${styles.inlineItem}`}>
+          <label className={styles.label}>권한</label>
+          <BottomSheetSelect
+            key={state.success ? "level-reset" : "level-keep"}
+            name="level"
+            options={Object.values(LEVEL_OPTIONS).map(({ label }) => ({
+              value: label,
+              label,
+            }))}
+            defaultValue={state.placeholder?.level || LEVEL_OPTIONS.TEAM_MEMBER.label}
+          />
+          {state.error?.level && (
+            <p className={styles.errorMessage}>{state.error?.level}</p>
+          )}
+        </section>
+      </div>
 
       {state.error?.regist && (
         <div className={styles.generalError}>{state.error?.regist}</div>
