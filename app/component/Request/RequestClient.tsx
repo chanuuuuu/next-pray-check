@@ -1,7 +1,8 @@
 "use client";
 
 import { Request } from "@/types/request.type";
-import { useMemo, useState } from "react";
+import { User } from "@/types/user.type";
+import { useMemo, useState, useCallback } from "react";
 import { RequestRegistForm } from "./RequestRegistForm";
 import { RequestGrid } from "./RequestGrid";
 import { RequestContextProvider } from "./RequestContext";
@@ -19,6 +20,7 @@ type RequestClientProps = {
   cellId: number;
   initialFavoriteRequests: number[];
   initialPrayedUserIds: number[];
+  users: User[];
 };
 
 function RequestClientInner({
@@ -26,9 +28,15 @@ function RequestClientInner({
   initialFavoriteRequests,
   userId,
   cellId,
+  users,
 }: Omit<RequestClientProps, "initialPrayedUserIds">) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isStackView, setIsStackView] = useState(true);
+  const [targetUserId, setTargetUserId] = useState<number>(userId);
+
+  const handleTargetUserChange = useCallback((id: number) => {
+    setTargetUserId(id);
+  }, []);
 
   const { favoriteRequests, toggleFavoriteRequest, getIsFavoriteRequest } =
     useFavoriteRequest({
@@ -42,12 +50,12 @@ function RequestClientInner({
   const insertId = useMemo(
     () =>
       requests.reduce((cur, request) => {
-        if (request.userId === userId) {
+        if (request.userId === targetUserId) {
           return cur <= request.insertId ? request.insertId + 1 : cur;
         }
         return cur;
       }, 0),
-    [requests, userId],
+    [requests, targetUserId],
   );
 
   const filterOptions = [
@@ -152,6 +160,9 @@ function RequestClientInner({
                 <RequestRegistForm
                   insertId={insertId}
                   onClose={() => setIsModalOpen(false)}
+                  users={users}
+                  targetUserId={targetUserId}
+                  onTargetUserChange={handleTargetUserChange}
                 />
               </div>
             </motion.div>
@@ -169,6 +180,7 @@ export function RequestClient({
   initialPrayedUserIds,
   userId,
   cellId,
+  users,
 }: RequestClientProps) {
   return (
     <RequestContextProvider userId={userId} initialPrayedUserIds={initialPrayedUserIds}>
@@ -184,6 +196,7 @@ export function RequestClient({
           initialFavoriteRequests={initialFavoriteRequests}
           userId={userId}
           cellId={cellId}
+          users={users}
         />
       </FadeContent>
     </RequestContextProvider>

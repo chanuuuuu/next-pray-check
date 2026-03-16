@@ -2,6 +2,7 @@
 
 import { requestService } from "@/server/services/request.services";
 import { prayerCheckService } from "@/server/services/prayer_check.service";
+import { userService } from "@/server/services/user.services";
 import { verifySession } from "@/server/session";
 import { redirect } from "next/navigation";
 import { RequestClient } from "../component/Request/RequestClient";
@@ -37,10 +38,11 @@ async function RequestPageContent({
   userId: number;
   cellId: number;
 }) {
-  const [requests, favoriteRequests, prayedUserIds] = await Promise.all([
+  const [requests, favoriteRequests, prayedUserIds, users] = await Promise.all([
     requestService.fetchRequests(groupId),
     requestService.fetchFavoriteRequests(userId),
     prayerCheckService.getTodayCheckedTargets(userId),
+    userService.fetchUsers(groupId),
   ]);
 
   return (
@@ -50,6 +52,7 @@ async function RequestPageContent({
       cellId={cellId}
       initialFavoriteRequests={favoriteRequests}
       initialPrayedUserIds={prayedUserIds}
+      users={users}
     />
   );
 }

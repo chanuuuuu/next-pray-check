@@ -56,12 +56,15 @@ export async function actionRequest(
       };
     }
 
+    const targetUserIdRaw = formData.get("targetUserId");
+    const targetUserId = targetUserIdRaw ? Number(targetUserIdRaw) : user.userId;
+
     const weekId = await getWeekDay();
 
     const modifyRequests = nextRequestInputs.map(
       (request) =>
         ({
-          userId: user?.userId,
+          userId: targetUserId,
           text: request.text,
           insertId: state.insertId,
           weekId: weekId,

@@ -4,15 +4,23 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useRequestForm from "@/app/hooks/useRequestForm";
 import { X } from "lucide-react";
+import { User } from "@/types/user.type";
+import { BottomSheetSelect } from "@/app/component/Common/BottomSheetSelect";
 
 type RequestRegistFormProps = {
   insertId: number;
   onClose?: () => void;
+  users: User[];
+  targetUserId: number;
+  onTargetUserChange: (id: number) => void;
 };
 
 export function RequestRegistForm({
   insertId,
   onClose,
+  users,
+  targetUserId,
+  onTargetUserChange,
 }: RequestRegistFormProps) {
   const router = useRouter();
   const { state, formAction, inputs, keys, handleAppend, handleDelete } =
@@ -33,6 +41,18 @@ export function RequestRegistForm({
     <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
       {/* 숨겨진 입력 (기존 로직 유지) */}
       <input type="hidden" name="visibility" value={visibility} />
+      <input type="hidden" name="targetUserId" value={targetUserId} />
+
+      {/* 기도 대상 선택 */}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <span style={{ fontSize: "0.6875rem", color: "hsl(var(--muted-foreground))" }}>대상</span>
+        <BottomSheetSelect
+          options={users.map((u) => ({ value: u.userId, label: u.name, sublabel: `${u.gisu}기` }))}
+          value={targetUserId}
+          onChange={onTargetUserChange}
+          className="min-w-[8rem]"
+        />
+      </div>
 
       {/* Textarea 입력들 */}
       {inputs.map(({ text, error }, index) => (
