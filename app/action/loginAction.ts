@@ -4,7 +4,7 @@ import { userService } from "@/server/services/user.services";
 import { createSession, deleteSession } from "@/server/session";
 import { validateLoginInput } from "../utils/validation";
 
-export interface UserState {
+export type UserState = {
   success: boolean;
   error:
     | {
@@ -13,7 +13,7 @@ export interface UserState {
         user?: string;
       }
     | undefined;
-}
+};
 
 export async function actionLogin(
   state: UserState,
@@ -48,8 +48,9 @@ export async function actionLogin(
       },
     };
 
-  // session 생성하기.
-  await createSession(user);
+  // session 생성하기. (env 변수로 groupId 오버라이드)
+  const groupId = Number(process.env.DEFAULT_GROUP_ID ?? user.groupId);
+  await createSession({ ...user, groupId });
 
   return {
     success: true,
