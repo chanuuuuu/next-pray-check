@@ -65,7 +65,10 @@ function RequestClientInner({
   ];
 
   return (
-    <div data-component="RequestClient" className={`min-h-screen bg-app-gradient pb-24 relative`}>
+    <div
+      data-component="RequestClient"
+      className={`h-dvh bg-app-gradient flex flex-col relative`}
+    >
       {/* Header */}
       <div className={`glass-strong ${styles.header}`}>
         <div className={styles.headerRow}>
@@ -105,7 +108,11 @@ function RequestClientInner({
       </div>
 
       {/* Content */}
-      <div className="px-5 pt-4">
+      <div
+        id="requests-scroll"
+        className="flex-1 overflow-y-auto px-5 pt-4"
+        style={{ paddingBottom: "calc(var(--nav-height) + 1rem)" }}
+      >
         {isStackView ? (
           <div className="overflow-hidden">
             <RequestGrid
@@ -116,7 +123,7 @@ function RequestClientInner({
             />
           </div>
         ) : (
-          <div className="space-y-4 pb-20">
+          <div className="space-y-4">
             <RequestGrid
               requests={conditionalRequests}
               toggleFavoriteRequest={toggleFavoriteRequest}
@@ -183,7 +190,10 @@ export function RequestClient({
   users,
 }: RequestClientProps) {
   return (
-    <RequestContextProvider userId={userId} initialPrayedUserIds={initialPrayedUserIds}>
+    <RequestContextProvider
+      userId={userId}
+      initialPrayedUserIds={initialPrayedUserIds}
+    >
       <FadeContent
         blur={false}
         duration={1000}

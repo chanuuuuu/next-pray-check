@@ -114,9 +114,9 @@ export default function AttendanceClient({
       easing="ease-out"
       initialOpacity={0.1}
     >
-      <div data-component="AttendanceClient" className="min-h-screen bg-app-gradient pb-24">
+      <div data-component="AttendanceClient" className="h-dvh bg-app-gradient flex flex-col">
         {/* 헤더 */}
-        <div className="glass-strong sticky top-0 z-40 px-5 pt-3 pb-3 flex items-center justify-between gap-3">
+        <div className="glass-strong sticky top-0 z-40 px-5 pt-1 pb-3 flex items-center justify-between gap-3">
           <div className="shrink-0">
             <h1 className="text-lg font-bold text-foreground">출석 관리</h1>
             <p className="text-xs text-muted-foreground font-medium mt-0.5">
@@ -137,7 +137,10 @@ export default function AttendanceClient({
         </div>
 
         {/* 조별 출석 목록 */}
-        <div className="px-5 pt-4 pb-8 space-y-4">
+        <div
+          className="flex-1 overflow-y-auto px-5 pt-4 space-y-4"
+          style={{ paddingBottom: "calc(var(--nav-height) + 1rem)" }}
+        >
           {selectedCells.map((cell) => (
             <motion.div
               key={cell.cellId}
