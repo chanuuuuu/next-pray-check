@@ -6,12 +6,12 @@ export default function RequestLoading() {
   return (
     <div className="min-h-screen bg-app-gradient pb-24">
       {/* 헤더 스켈레톤 */}
-      <div className="glass-strong sticky top-0 z-40 px-5 pt-12 pb-3">
-        <div className="flex items-center justify-between mb-3">
+      <div className="glass-strong sticky top-0 z-40 px-5 pt-3 pb-1">
+        <div className="flex items-center justify-between mb-2">
           <SkeletonPulse className="h-5 w-20 rounded-lg" />
           <SkeletonPulse className="h-8 w-16 rounded-xl" />
         </div>
-        <div className="flex gap-2 pb-1">
+        <div className="flex gap-2 pb-3">
           {[1, 2, 3].map((i) => (
             <SkeletonPulse key={i} className="h-6 w-14 rounded-full" />
           ))}

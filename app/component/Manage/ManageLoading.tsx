@@ -4,7 +4,7 @@ export function ManageLoading() {
   return (
     <div className="min-h-screen bg-app-gradient pb-24">
       {/* 헤더 스켈레톤 */}
-      <div className="glass-strong sticky top-0 z-40 px-5 pt-12 pb-3 flex items-center justify-between">
+      <div className="glass-strong sticky top-0 z-40 px-5 pt-3 pb-3 flex items-center justify-between">
         <SkeletonPulse className="h-5 w-24 rounded-lg" />
         <SkeletonPulse className="w-8 h-8 rounded-xl" />
       </div>
