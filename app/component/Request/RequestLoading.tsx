@@ -1,10 +1,11 @@
 "use client";
 
 import { SkeletonPulse } from "@/app/component/Common/SkeletonPulse";
+import { PageSkeleton } from "@/app/component/Common/PageSkeleton";
 
 export default function RequestLoading() {
   return (
-    <div className="min-h-screen bg-app-gradient pb-24">
+    <PageSkeleton>
       {/* 헤더 스켈레톤 */}
       <div className="glass-strong sticky top-0 z-40 px-5 pt-3 pb-1">
         <div className="flex items-center justify-between mb-2">
@@ -31,6 +32,6 @@ export default function RequestLoading() {
           </div>
         ))}
       </div>
-    </div>
+    </PageSkeleton>
   );
 }
