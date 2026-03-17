@@ -14,9 +14,7 @@ type CardInnerProps = {
   getIsFavoriteRequest: (requestId: number) => boolean;
 };
 
-export const RequestCard = memo(function RequestCard(props: CardInnerProps) {
-  return <ListCard {...props} />;
-});
+export const RequestCard = memo(ListCard);
 
 export function StackCard({
   group,
@@ -135,7 +133,13 @@ export function ListCard({
       {/* 기도제목 리스트 */}
       <div className="space-y-1.5">
         {group.requests.map((request) => (
-          <RequestItemList key={request.requestId} request={request} />
+          <RequestItem
+            key={request.requestId}
+            request={request}
+            toggleFavoriteRequest={toggleFavoriteRequest}
+            getIsFavoriteRequest={getIsFavoriteRequest}
+            variant="list"
+          />
         ))}
       </div>
     </div>
@@ -144,15 +148,33 @@ export function ListCard({
 
 function RequestItem({
   request,
+  variant = "stack",
   hideDelete = false,
 }: {
   request: Request;
   toggleFavoriteRequest: (requestId: number) => void;
   getIsFavoriteRequest: (requestId: number) => boolean;
   hideDelete?: boolean;
+  variant?: "stack" | "list";
 }) {
   const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
   const isMyRequest = isMyRequestGroup(request.userId);
+
+  if (variant === "list") {
+    return (
+      <div className="flex items-start gap-2">
+        <p className="text-sm text-foreground leading-relaxed flex-1">{request.text}</p>
+        {isMyRequest && (
+          <button
+            onClick={() => handleDeleteRequest(request.requestId)}
+            className="p-1 shrink-0"
+          >
+            <Trash2 className="w-3.5 h-3.5 text-muted-foreground/30" />
+          </button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="glass rounded-2xl p-3 flex items-start gap-2">
@@ -168,27 +190,6 @@ function RequestItem({
           className="w-8 h-8 rounded-xl flex items-center justify-center bg-muted active:scale-90 transition-transform shrink-0"
         >
           <Trash2 className="w-3.5 h-3.5 text-muted-foreground/50" />
-        </button>
-      )}
-    </div>
-  );
-}
-
-function RequestItemList({ request }: { request: Request }) {
-  const { handleDeleteRequest, isMyRequestGroup } = useRequestContext();
-  const isMyRequest = isMyRequestGroup(request.userId);
-
-  return (
-    <div className="flex items-start gap-2">
-      <p className="text-sm text-foreground leading-relaxed flex-1">
-        {request.text}
-      </p>
-      {isMyRequest && (
-        <button
-          onClick={() => handleDeleteRequest(request.requestId)}
-          className="p-1 shrink-0"
-        >
-          <Trash2 className="w-3.5 h-3.5 text-muted-foreground/30" />
         </button>
       )}
     </div>
