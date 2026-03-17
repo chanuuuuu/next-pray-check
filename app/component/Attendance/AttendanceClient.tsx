@@ -206,11 +206,7 @@ export default function AttendanceClient({
             whileTap={{ scale: 0.97 }}
             onClick={handleRegist}
             disabled={isPending}
-            className="w-full py-3 rounded-2xl text-sm font-semibold shadow-lg transition-all disabled:opacity-60"
-            style={{
-              background: "hsl(var(--primary))",
-              color: "hsl(var(--primary-foreground))",
-            }}
+            className="w-full py-3 rounded-2xl text-sm font-semibold shadow-lg transition-all disabled:opacity-60 bg-primary text-primary-foreground"
           >
             {isPending ? "저장 중..." : "출석 등록"}
           </motion.button>
