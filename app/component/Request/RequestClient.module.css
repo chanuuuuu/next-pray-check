@@ -91,23 +91,6 @@
 }
 
 /* 모달 */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: hsl(var(--foreground) / 0.2);
-  backdrop-filter: blur(4px);
-  z-index: 60;
-}
-
-.bottomSheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 60;
-  padding: 1rem 1rem 5rem;
-}
-
 .bottomSheetInner {
   border-radius: 1.5rem;
   padding: 1.25rem;

@@ -10,9 +10,16 @@ import { REQUEST_GROUP_OPTIONS } from "@/app/utils/constants";
 import { useFavoriteRequest } from "@/app/hooks/useFavoriteRequest";
 import { useRequestFilter } from "@/app/hooks/useRequestFilter";
 import FadeContent from "@/app/component/Common/ReactBits/FadeContent";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { BottomSheet } from "@/app/component/Common/BottomSheet";
 import { Plus, Layers, List } from "lucide-react";
 import styles from "./RequestClient.module.css";
+
+const FILTER_OPTIONS = [
+  { key: REQUEST_GROUP_OPTIONS.TEAM.value, label: "전체" },
+  { key: REQUEST_GROUP_OPTIONS.CELL.value, label: "우리 조" },
+  { key: REQUEST_GROUP_OPTIONS.FAVORITE.value, label: "즐겨찾기" },
+] as const;
 
 type RequestClientProps = {
   requests: Request[];
@@ -58,12 +65,6 @@ function RequestClientInner({
     [requests, targetUserId],
   );
 
-  const filterOptions = [
-    { key: REQUEST_GROUP_OPTIONS.TEAM.value, label: "전체" },
-    { key: REQUEST_GROUP_OPTIONS.CELL.value, label: "우리 조" },
-    { key: REQUEST_GROUP_OPTIONS.FAVORITE.value, label: "즐겨찾기" },
-  ];
-
   return (
     <div
       data-component="RequestClient"
@@ -91,7 +92,7 @@ function RequestClientInner({
           </div>
         </div>
         <div className={styles.filterRow}>
-          {filterOptions.map((option) => (
+          {FILTER_OPTIONS.map((option) => (
             <button
               key={option.key}
               onClick={() => handleRequestTypeChange(option.key)}
@@ -145,37 +146,18 @@ function RequestClientInner({
       </motion.button>
 
       {/* Bottom Sheet Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={styles.overlay}
-              onClick={() => setIsModalOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 100 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className={styles.bottomSheet}
-            >
-              <div className={`glass-strong ${styles.bottomSheetInner}`}>
-                <h2 className={styles.modalTitle}>기도제목 등록</h2>
-                <RequestRegistForm
-                  insertId={insertId}
-                  onClose={() => setIsModalOpen(false)}
-                  users={users}
-                  targetUserId={targetUserId}
-                  onTargetUserChange={handleTargetUserChange}
-                />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <BottomSheet isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className={`glass-strong ${styles.bottomSheetInner}`}>
+          <h2 className={styles.modalTitle}>기도제목 등록</h2>
+          <RequestRegistForm
+            insertId={insertId}
+            onClose={() => setIsModalOpen(false)}
+            users={users}
+            targetUserId={targetUserId}
+            onTargetUserChange={handleTargetUserChange}
+          />
+        </div>
+      </BottomSheet>
     </div>
   );
 }
