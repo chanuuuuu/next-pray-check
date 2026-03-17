@@ -150,6 +150,9 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--font-pretendard), sans-serif;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 /**
@@ -511,66 +514,7 @@ template {
   display: none;
 }
 
-/* Custom Footer Styles */
-.app-footer {
-  font-family: sans-serif;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 20px;
-  background-color: transparent;
-  text-align: center;
-  opacity: 0.7;
-  z-index: 100;
-
-  /* 폰트 사이즈 축소 */
-  margin: 0;
-  color: #e5e7eb;
-  font-size: 14px;
-  font-weight: 500;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.app-footer strong {
-  color: #ffffff;
-  font-weight: 700;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-}
-
-/* page*/
-.page {
-  position: relative;
-  background-color: hsl(var(--background));
-}
-
-.title {
-  margin-bottom: 10px;
-  color: hsl(var(--foreground));
-  font-size: 24px;
-  font-weight: bold;
-  padding: 1rem;
-}
-
 /* 모바일 반응형 */
-
-@media (max-width: 768px) {
-  .title {
-    font-size: 20px;
-    padding: 0.75rem 1rem 1.5rem 1rem;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .app-footer {
-    font-size: 12px;
-    padding: 8px 16px;
-  }
-
-  .page {
-    height: 100vh; /* 헤더 높이 제외 */
-  }
-}
 
 @keyframes shimmer {
   0% {

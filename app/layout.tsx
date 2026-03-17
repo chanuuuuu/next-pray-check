@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={pretendard.variable}>
-      <body style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
+      <body>
         <main style={{ flex: 1, overflowY: "auto", paddingBottom: 0 }}>
           {children}
         </main>
