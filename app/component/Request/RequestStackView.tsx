@@ -29,16 +29,22 @@ export const RequestStackView = memo(function RequestStackView({
     );
   }
 
-  const stackCards = requestGroups.map((group) => (
-    <StackCard
-      key={group.userId}
-      group={group}
-      isCollapsed={collapsedGroups.has(group.userId)}
-      handleCollapse={handleCollapse}
-      toggleFavoriteRequest={toggleFavoriteRequest}
-      getIsFavoriteRequest={getIsFavoriteRequest}
-    />
-  ));
+  const stackCards = requestGroups.flatMap((group) => {
+    const chunks: typeof group[] = [];
+    for (let i = 0; i < group.requests.length; i += 3) {
+      chunks.push({ ...group, requests: group.requests.slice(i, i + 3) });
+    }
+    return chunks.map((chunk, chunkIdx) => (
+      <StackCard
+        key={`${group.userId}_${chunkIdx}`}
+        group={chunk}
+        isCollapsed={collapsedGroups.has(group.userId)}
+        handleCollapse={handleCollapse}
+        toggleFavoriteRequest={toggleFavoriteRequest}
+        getIsFavoriteRequest={getIsFavoriteRequest}
+      />
+    ));
+  });
 
   return (
     <div className={styles.container}>

@@ -75,7 +75,7 @@ export function StackCard({
       </div>
 
       {/* 기도제목 리스트 */}
-      <div className="space-y-2 flex-1 overflow-y-auto">
+      <div className="space-y-2 flex-1">
         {group.requests.map((request) => (
           <RequestItem
             key={request.requestId}
