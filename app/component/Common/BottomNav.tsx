@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { BookOpen, ClipboardCheck, Users, LogOut } from "lucide-react";
-import { useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { actionLogout } from "@/app/action/loginAction";
 import styles from "./BottomNav.module.css";
 
@@ -33,12 +33,31 @@ export function BottomNav({ userLevel }: BottomNavProps) {
     router.push("/login");
   }, [router]);
 
+  const [isAtTop, setIsAtTop] = useState(true);
+  const isRequestsPage = pathname === "/requests";
+
+  useEffect(() => {
+    if (!isRequestsPage) {
+      setIsAtTop(true);
+      return;
+    }
+    const scrollEl = document.getElementById("requests-scroll");
+    if (!scrollEl) return;
+
+    const handleScroll = () => {
+      setIsAtTop(scrollEl.scrollTop <= 0);
+    };
+
+    scrollEl.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollEl.removeEventListener("scroll", handleScroll);
+  }, [isRequestsPage]);
+
   if (pathname === "/login") return null;
 
   const visibleTabs = NAV_TABS.filter((tab) => tab.minLevel <= userLevel);
 
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav}${isRequestsPage && !isAtTop ? ` ${styles.navHidden}` : ""}`}>
       <div className={`glass-strong ${styles.inner}`}>
         {visibleTabs.map((tab) => {
           const active = pathname === tab.href;
