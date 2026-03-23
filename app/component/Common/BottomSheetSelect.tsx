@@ -98,94 +98,96 @@ export function BottomSheetSelect<T extends string | number>({
         />
       </button>
 
-      <AnimatePresence>
-        {isOpen && typeof document !== "undefined" && createPortal(
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[200]"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="fixed z-[201] glass-strong rounded-2xl overflow-hidden"
-              style={{
-                top: dropdownPos.top,
-                left: dropdownPos.left,
-                right: dropdownPos.right,
-                width: dropdownPos.width,
-                transformOrigin,
-                maxHeight: "min(50vh, calc(100dvh - " + dropdownPos.top + "px - 1rem))",
-                overflowY: "auto",
-              }}
-            >
-              <div className="py-2 space-y-0.5 px-2">
-                {options.map((opt) => (
-                  <button
-                    key={opt.value}
-                    type="button"
-                    onClick={() => handleSelect(opt.value)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all active:scale-[0.98]"
-                    style={{
-                      background:
-                        value === opt.value
-                          ? "hsl(var(--primary) / 0.1)"
-                          : "transparent",
-                    }}
-                  >
-                    <span
+      {typeof document !== "undefined" && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[200]"
+                onClick={() => setIsOpen(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                className="fixed z-[201] glass-strong rounded-2xl overflow-hidden"
+                style={{
+                  top: dropdownPos.top,
+                  left: dropdownPos.left,
+                  right: dropdownPos.right,
+                  width: dropdownPos.width,
+                  transformOrigin,
+                  maxHeight: "min(50vh, calc(100dvh - " + dropdownPos.top + "px - 1rem))",
+                  overflowY: "auto",
+                }}
+              >
+                <div className="py-2 space-y-0.5 px-2">
+                  {options.map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => handleSelect(opt.value)}
+                      className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all active:scale-[0.98]"
                       style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        gap: "0.25rem",
+                        background:
+                          value === opt.value
+                            ? "hsl(var(--primary) / 0.1)"
+                            : "transparent",
                       }}
                     >
                       <span
                         style={{
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          color:
-                            value === opt.value
-                              ? "hsl(var(--primary))"
-                              : "hsl(var(--muted-foreground))",
+                          display: "flex",
+                          alignItems: "baseline",
+                          gap: "0.25rem",
                         }}
                       >
-                        {opt.label}
-                      </span>
-                      {opt.sublabel && (
                         <span
                           style={{
                             fontSize: "11px",
-                            fontWeight: 500,
+                            fontWeight: 600,
                             color:
                               value === opt.value
-                                ? "hsl(var(--primary) / 0.7)"
-                                : "hsl(var(--muted-foreground) / 0.6)",
+                                ? "hsl(var(--primary))"
+                                : "hsl(var(--muted-foreground))",
                           }}
                         >
-                          {opt.sublabel}
+                          {opt.label}
                         </span>
+                        {opt.sublabel && (
+                          <span
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 500,
+                              color:
+                                value === opt.value
+                                  ? "hsl(var(--primary) / 0.7)"
+                                  : "hsl(var(--muted-foreground) / 0.6)",
+                            }}
+                          >
+                            {opt.sublabel}
+                          </span>
+                        )}
+                      </span>
+                      {value === opt.value && (
+                        <Check
+                          className="w-3.5 h-3.5 shrink-0"
+                          style={{ color: "hsl(var(--primary))" }}
+                        />
                       )}
-                    </span>
-                    {value === opt.value && (
-                      <Check
-                        className="w-3.5 h-3.5 shrink-0"
-                        style={{ color: "hsl(var(--primary))" }}
-                      />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          </>,
-          document.body
-        )}
-      </AnimatePresence>
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
