@@ -71,7 +71,7 @@ export function RequestRegistForm({
               backgroundColor: "hsl(var(--secondary) / 0.5)",
               border: "none",
               padding: "0.75rem 2.5rem 0.75rem 1rem",
-              fontSize: "0.875rem",
+              fontSize: "1rem",
               color: "hsl(var(--foreground))",
               resize: "none",
               outline: "none",

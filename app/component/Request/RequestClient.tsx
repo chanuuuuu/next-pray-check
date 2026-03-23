@@ -138,7 +138,7 @@ function RequestClientInner({
       {/* FAB */}
       <motion.button
         className={styles.fab}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => { setIsModalOpen(true); setTargetUserId(userId); }}
         whileTap={{ scale: 0.9 }}
         aria-label="기도제목 등록"
       >

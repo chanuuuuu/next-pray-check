@@ -30,7 +30,7 @@ export async function actionRegist(
   const inputData: UserFormType = {
     name: formData.get("name") as string,
     birth: formData.get("birth") as string,
-    groupId: Number(formData.get("groupId")) as number,
+    groupId: Number(process.env.DEFAULT_GROUP_ID ?? formData.get("groupId")) as number,
     cellId: Number(formData.get("cellId")) as number,
     level: formData.get("level") as string,
   };
