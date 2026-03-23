@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ChevronDown, Check } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -98,13 +99,13 @@ export function BottomSheetSelect<T extends string | number>({
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && typeof document !== "undefined" && createPortal(
           <>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50"
+              className="fixed inset-0 z-[200]"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -112,16 +113,18 @@ export function BottomSheetSelect<T extends string | number>({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.92 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="fixed z-50 glass-strong rounded-2xl overflow-hidden"
+              className="fixed z-[201] glass-strong rounded-2xl overflow-hidden"
               style={{
                 top: dropdownPos.top,
                 left: dropdownPos.left,
                 right: dropdownPos.right,
                 width: dropdownPos.width,
                 transformOrigin,
+                maxHeight: "min(50vh, calc(100dvh - " + dropdownPos.top + "px - 1rem))",
+                overflowY: "auto",
               }}
             >
-              <div className="py-2 space-y-0.5 max-h-[50vh] overflow-y-auto px-2">
+              <div className="py-2 space-y-0.5 px-2">
                 {options.map((opt) => (
                   <button
                     key={opt.value}
@@ -179,7 +182,8 @@ export function BottomSheetSelect<T extends string | number>({
                 ))}
               </div>
             </motion.div>
-          </>
+          </>,
+          document.body
         )}
       </AnimatePresence>
     </>

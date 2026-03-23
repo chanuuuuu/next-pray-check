@@ -139,7 +139,7 @@ export default function AttendanceClient({
         {/* 조별 출석 목록 */}
         <div
           className="flex-1 overflow-y-auto px-5 pt-4 space-y-4"
-          style={{ paddingBottom: "calc(var(--nav-height) + 1rem)" }}
+          style={{ paddingBottom: "calc(var(--nav-height) + 5rem)" }}
         >
           {selectedCells.map((cell) => (
             <motion.div
